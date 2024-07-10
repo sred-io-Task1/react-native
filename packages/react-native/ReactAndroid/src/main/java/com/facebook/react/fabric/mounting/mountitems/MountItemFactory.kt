@@ -9,8 +9,6 @@ package com.facebook.react.fabric.mounting.mountitems
 
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
-import com.facebook.react.fabric.events.EventEmitterWrapper
-import com.facebook.react.uimanager.StateWrapper
 
 /** Factory class that expose creation of [MountItem] */
 public object MountItemFactory {
@@ -49,12 +47,8 @@ public object MountItemFactory {
       reactTag: Int,
       component: String,
       props: ReadableMap?,
-      stateWrapper: StateWrapper?,
-      eventEmitterWrapper: EventEmitterWrapper?,
       isLayoutable: Boolean
-  ): MountItem =
-      PreAllocateViewMountItem(
-          surfaceId, reactTag, component, props, stateWrapper, eventEmitterWrapper, isLayoutable)
+  ): MountItem = PreAllocateViewMountItem(surfaceId, reactTag, component, props, isLayoutable)
 
   /**
    * @return a [MountItem] that will be read and execute a collection of MountItems serialized in
