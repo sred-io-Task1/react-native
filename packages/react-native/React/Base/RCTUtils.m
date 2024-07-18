@@ -503,7 +503,7 @@ RCTJSErrorFromCodeMessageAndNSError(NSString *code, NSString *message, NSError *
   NSArray<NSString *> *stackTrace = [NSThread callStackSymbols];
   NSMutableDictionary *userInfo;
   NSMutableDictionary<NSString *, id> *errorInfo = [NSMutableDictionary dictionaryWithObject:stackTrace
-                                                                                      forKey:@"nativeStackIOS"];
+                                                                                      forKey:@"stackSymbols"];
 
   if (error) {
     errorMessage = error.localizedDescription ?: @"Unknown error from a native module";

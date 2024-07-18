@@ -65,7 +65,8 @@ type ErrorExamples =
   | 'promiseThrows'
   | 'voidFuncAssert'
   | 'getObjectAssert'
-  | 'promiseAssert';
+  | 'promiseAssert'
+  | 'getObjectCppThrows';
 
 class SampleTurboModuleExample extends React.Component<{||}, State> {
   static contextType: React$Context<RootTag> = RootTagContext;
@@ -91,6 +92,7 @@ class SampleTurboModuleExample extends React.Component<{||}, State> {
         .then(() => {})
         .catch(e => {
           this._setResult('rejectPromise', e.message);
+          console.error('Error:', e, 'Stack: ', e.stack, 'Cause: ', e.cause);
         }),
     getConstants: () => NativeSampleTurboModule.getConstants(),
     voidFunc: () => NativeSampleTurboModule.voidFunc(),
@@ -122,7 +124,7 @@ class SampleTurboModuleExample extends React.Component<{||}, State> {
       try {
         NativeSampleTurboModule.voidFuncThrows?.();
       } catch (e) {
-        console.error(e);
+        console.error('Error:', e, 'Stack: ', e.stack, 'Cause: ', e.cause);
         return e.message;
       }
     },
@@ -130,7 +132,7 @@ class SampleTurboModuleExample extends React.Component<{||}, State> {
       try {
         NativeSampleTurboModule.getObjectThrows?.({a: 1, b: 'foo', c: null});
       } catch (e) {
-        console.error(e);
+        console.error('Error:', e, 'Stack: ', e.stack, 'Cause: ', e.cause);
         return e.message;
       }
     },
@@ -138,14 +140,15 @@ class SampleTurboModuleExample extends React.Component<{||}, State> {
       NativeSampleTurboModule.promiseThrows?.()
         .then(() => {})
         .catch(e => {
-          console.error(e);
+          this._setResult('promiseThrows', e.message);
+          console.error('Error:', e, 'Stack: ', e.stack, 'Cause: ', e.cause);
         });
     },
     voidFuncAssert: () => {
       try {
         NativeSampleTurboModule.voidFuncAssert?.();
       } catch (e) {
-        console.error(e);
+        console.error('Error:', e, 'Stack: ', e.stack, 'Cause: ', e.cause);
         return e.message;
       }
     },
@@ -153,7 +156,7 @@ class SampleTurboModuleExample extends React.Component<{||}, State> {
       try {
         NativeSampleTurboModule.getObjectAssert?.({a: 1, b: 'foo', c: null});
       } catch (e) {
-        console.error(e);
+        console.error('Error:', e, 'Stack: ', e.stack, 'Cause: ', e.cause);
         return e.message;
       }
     },
@@ -161,8 +164,17 @@ class SampleTurboModuleExample extends React.Component<{||}, State> {
       NativeSampleTurboModule.promiseAssert?.()
         .then(() => {})
         .catch(e => {
-          console.error(e);
+          this._setResult('promiseAssert', e.message);
+          console.error('Error:', e, 'Stack: ', e.stack, 'Cause: ', e.cause);
         });
+    },
+    getObjectCppThrows: () => {
+      try {
+        NativeSampleTurboModule.getObjectCppThrows?.({a: 1, b: 'foo', c: null});
+      } catch (e) {
+        console.error('Error:', e, 'Stack: ', e.stack, 'Cause: ', e.cause);
+        return e.message;
+      }
     },
     installJSIBindings: () => {
       return global.__SampleTurboModuleJSIBindings;
