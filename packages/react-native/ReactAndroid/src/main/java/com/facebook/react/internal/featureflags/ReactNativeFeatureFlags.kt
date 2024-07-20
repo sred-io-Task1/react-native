@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<9a33a6bc10cdb2b0f9fcb15805a06982>>
+ * @generated SignedSource<<3fa1a97be20aa80ef7a1e1595bee0dac>>
  */
 
 /**
@@ -53,16 +53,22 @@ public object ReactNativeFeatureFlags {
   public fun batchRenderingUpdatesInEventLoop(): Boolean = accessor.batchRenderingUpdatesInEventLoop()
 
   /**
+   * When enabled, insert of views on Android will be moved from the beginning of the IntBufferBatchMountItem to be after layout updates.
+   */
+  @JvmStatic
+  public fun changeOrderOfMountingInstructionsOnAndroid(): Boolean = accessor.changeOrderOfMountingInstructionsOnAndroid()
+
+  /**
    * When enabled, ReactInstanceManager will clean up Fabric surfaces on destroy().
    */
   @JvmStatic
   public fun destroyFabricSurfacesInReactInstanceManager(): Boolean = accessor.destroyFabricSurfacesInReactInstanceManager()
 
   /**
-   * Enables the use of a background executor to compute layout and commit updates on Fabric (this system is deprecated and should not be used).
+   * Kill-switch to turn off support for aling-items:baseline on Fabric iOS.
    */
   @JvmStatic
-  public fun enableBackgroundExecutor(): Boolean = accessor.enableBackgroundExecutor()
+  public fun enableAlignItemsBaselineOnFabricIOS(): Boolean = accessor.enableAlignItemsBaselineOnFabricIOS()
 
   /**
    * Clean yoga node when <TextInput /> does not change.
@@ -77,10 +83,22 @@ public object ReactNativeFeatureFlags {
   public fun enableGranularShadowTreeStateReconciliation(): Boolean = accessor.enableGranularShadowTreeStateReconciliation()
 
   /**
+   * Enables the reporting of long tasks through `PerformanceObserver`. Only works if the event loop is enabled.
+   */
+  @JvmStatic
+  public fun enableLongTaskAPI(): Boolean = accessor.enableLongTaskAPI()
+
+  /**
    * Enables the use of microtasks in Hermes (scheduling) and RuntimeScheduler (execution).
    */
   @JvmStatic
   public fun enableMicrotasks(): Boolean = accessor.enableMicrotasks()
+
+  /**
+   * When enabled, Android will receive prop updates based on the differences between the last rendered shadow node and the last committed shadow node.
+   */
+  @JvmStatic
+  public fun enablePropsUpdateReconciliationAndroid(): Boolean = accessor.enablePropsUpdateReconciliationAndroid()
 
   /**
    * Dispatches state updates synchronously in Fabric (e.g.: updates the scroll position in the shadow tree synchronously from the main thread).
@@ -95,16 +113,28 @@ public object ReactNativeFeatureFlags {
   public fun enableUIConsistency(): Boolean = accessor.enableUIConsistency()
 
   /**
+   * Start image fetching during view preallocation instead of waiting for layout pass
+   */
+  @JvmStatic
+  public fun fetchImagesInViewPreallocation(): Boolean = accessor.fetchImagesInViewPreallocation()
+
+  /**
+   * When doing a smooth scroll animation, it stops setting the state with the final scroll position in Fabric before the animation starts.
+   */
+  @JvmStatic
+  public fun fixIncorrectScrollViewStateUpdateOnAndroid(): Boolean = accessor.fixIncorrectScrollViewStateUpdateOnAndroid()
+
+  /**
    * Uses the default event priority instead of the discreet event priority by default when dispatching events from Fabric to React.
    */
   @JvmStatic
   public fun fixMappingOfEventPrioritiesBetweenFabricAndReact(): Boolean = accessor.fixMappingOfEventPrioritiesBetweenFabricAndReact()
 
   /**
-   * Fixes a leak in SurfaceMountingManager.mRemoveDeleteTreeUIFrameCallback
+   * Enables a fix to prevent the possibility of state updates in Fabric being missed due to race conditions with previous state updates.
    */
   @JvmStatic
-  public fun fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(): Boolean = accessor.fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak()
+  public fun fixMissedFabricStateUpdatesOnAndroid(): Boolean = accessor.fixMissedFabricStateUpdatesOnAndroid()
 
   /**
    * Forces the mounting layer on Android to always batch mount items instead of dispatching them immediately. This might fix some crashes related to synchronous state updates, where some views dispatch state updates during mount.
@@ -125,16 +155,22 @@ public object ReactNativeFeatureFlags {
   public fun fuseboxEnabledRelease(): Boolean = accessor.fuseboxEnabledRelease()
 
   /**
+   * Construct modules that requires eager init on the dedicate native modules thread
+   */
+  @JvmStatic
+  public fun initEagerTurboModulesOnNativeModulesQueueAndroid(): Boolean = accessor.initEagerTurboModulesOnNativeModulesQueueAndroid()
+
+  /**
    * Only enqueue Choreographer calls if there is an ongoing animation, instead of enqueueing every frame.
    */
   @JvmStatic
   public fun lazyAnimationCallbacks(): Boolean = accessor.lazyAnimationCallbacks()
 
   /**
-   * When enabled, ParagraphShadowNode will no longer call measure twice.
+   * Adds support for loading vector drawable assets in the Image component (only on Android)
    */
   @JvmStatic
-  public fun preventDoubleTextMeasure(): Boolean = accessor.preventDoubleTextMeasure()
+  public fun loadVectorDrawablesOnImages(): Boolean = accessor.loadVectorDrawablesOnImages()
 
   /**
    * Propagate layout direction to Android views.
@@ -159,6 +195,12 @@ public object ReactNativeFeatureFlags {
    */
   @JvmStatic
   public fun useNativeViewConfigsInBridgelessMode(): Boolean = accessor.useNativeViewConfigsInBridgelessMode()
+
+  /**
+   * Use shared background drawing code for ReactImageView instead of using Fresco to manipulate the bitmap
+   */
+  @JvmStatic
+  public fun useNewReactImageViewBackgroundDrawing(): Boolean = accessor.useNewReactImageViewBackgroundDrawing()
 
   /**
    * When enabled, cloning shadow nodes within react native will update the reference held by the current JS fiber tree.

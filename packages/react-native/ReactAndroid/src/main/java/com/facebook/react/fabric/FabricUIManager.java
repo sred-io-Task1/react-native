@@ -750,7 +750,6 @@ public class FabricUIManager
       final String componentName,
       @Nullable Object props,
       @Nullable Object stateWrapper,
-      @Nullable Object eventEmitterWrapper,
       boolean isLayoutable) {
 
     mMountItemDispatcher.addPreAllocateMountItem(
@@ -760,8 +759,15 @@ public class FabricUIManager
             componentName,
             (ReadableMap) props,
             (StateWrapper) stateWrapper,
-            (EventEmitterWrapper) eventEmitterWrapper,
             isLayoutable));
+  }
+
+  @SuppressLint("NotInvokedPrivateMethod")
+  @SuppressWarnings("unused")
+  @AnyThread
+  @ThreadConfined(ANY)
+  private boolean isOnMainThread() {
+    return UiThreadUtil.isOnUiThread();
   }
 
   @SuppressWarnings("unused")

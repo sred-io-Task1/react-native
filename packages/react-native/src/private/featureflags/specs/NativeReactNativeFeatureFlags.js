@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<6715ba4954b31464c591597c53a2a0de>>
+ * @generated SignedSource<<29f4ec3c941708dc99dd38adac52d6dc>>
  * @flow strict-local
  */
 
@@ -27,24 +27,31 @@ export interface Spec extends TurboModule {
   +allowCollapsableChildren?: () => boolean;
   +allowRecursiveCommitsWithSynchronousMountOnAndroid?: () => boolean;
   +batchRenderingUpdatesInEventLoop?: () => boolean;
+  +changeOrderOfMountingInstructionsOnAndroid?: () => boolean;
   +destroyFabricSurfacesInReactInstanceManager?: () => boolean;
-  +enableBackgroundExecutor?: () => boolean;
+  +enableAlignItemsBaselineOnFabricIOS?: () => boolean;
   +enableCleanTextInputYogaNode?: () => boolean;
   +enableGranularShadowTreeStateReconciliation?: () => boolean;
+  +enableLongTaskAPI?: () => boolean;
   +enableMicrotasks?: () => boolean;
+  +enablePropsUpdateReconciliationAndroid?: () => boolean;
   +enableSynchronousStateUpdates?: () => boolean;
   +enableUIConsistency?: () => boolean;
+  +fetchImagesInViewPreallocation?: () => boolean;
+  +fixIncorrectScrollViewStateUpdateOnAndroid?: () => boolean;
   +fixMappingOfEventPrioritiesBetweenFabricAndReact?: () => boolean;
-  +fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak?: () => boolean;
+  +fixMissedFabricStateUpdatesOnAndroid?: () => boolean;
   +forceBatchingMountItemsOnAndroid?: () => boolean;
   +fuseboxEnabledDebug?: () => boolean;
   +fuseboxEnabledRelease?: () => boolean;
+  +initEagerTurboModulesOnNativeModulesQueueAndroid?: () => boolean;
   +lazyAnimationCallbacks?: () => boolean;
-  +preventDoubleTextMeasure?: () => boolean;
+  +loadVectorDrawablesOnImages?: () => boolean;
   +setAndroidLayoutDirection?: () => boolean;
   +useImmediateExecutorInAndroidBridgeless?: () => boolean;
   +useModernRuntimeScheduler?: () => boolean;
   +useNativeViewConfigsInBridgelessMode?: () => boolean;
+  +useNewReactImageViewBackgroundDrawing?: () => boolean;
   +useRuntimeShadowNodeReferenceUpdate?: () => boolean;
   +useRuntimeShadowNodeReferenceUpdateOnLayout?: () => boolean;
   +useStateAlignmentMechanism?: () => boolean;

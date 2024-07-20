@@ -35,6 +35,8 @@ import com.facebook.common.logging.FLog;
 import com.facebook.infer.annotation.Assertions;
 import com.facebook.infer.annotation.Nullsafe;
 import com.facebook.react.R;
+import com.facebook.react.animated.NativeAnimatedModule;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.ReactConstants;
 import com.facebook.react.uimanager.MeasureSpecAssertions;
@@ -701,6 +703,14 @@ public class ReactScrollView extends ScrollView
                 if (mSendMomentumEvents) {
                   ReactScrollViewHelper.emitScrollMomentumEndEvent(ReactScrollView.this);
                 }
+                ReactContext context = (ReactContext) getContext();
+                if (context != null) {
+                  NativeAnimatedModule nativeAnimated =
+                      context.getNativeModule(NativeAnimatedModule.class);
+                  if (nativeAnimated != null) {
+                    nativeAnimated.userDrivenScrollEnded(ReactScrollView.this.getId());
+                  }
+                }
                 disableFpsListener();
               } else {
                 if (mPagingEnabled && !mSnappingToPage) {
@@ -1216,8 +1226,8 @@ public class ReactScrollView extends ScrollView
     mReactBackgroundManager.setBorderWidth(position, width);
   }
 
-  public void setBorderColor(int position, float color, float alpha) {
-    mReactBackgroundManager.setBorderColor(position, color, alpha);
+  public void setBorderColor(int position, @Nullable Integer color) {
+    mReactBackgroundManager.setBorderColor(position, color);
   }
 
   public void setBorderRadius(float borderRadius) {

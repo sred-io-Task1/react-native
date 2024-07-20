@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<6b8504e42d72611f4d4b6606d69c42aa>>
+ * @generated SignedSource<<36ba8783cdd7ccb5d745dffb978d13ec>>
  */
 
 /**
@@ -43,23 +43,33 @@ class NativeReactNativeFeatureFlags
 
   bool batchRenderingUpdatesInEventLoop(jsi::Runtime& runtime);
 
+  bool changeOrderOfMountingInstructionsOnAndroid(jsi::Runtime& runtime);
+
   bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime& runtime);
 
-  bool enableBackgroundExecutor(jsi::Runtime& runtime);
+  bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime& runtime);
 
   bool enableCleanTextInputYogaNode(jsi::Runtime& runtime);
 
   bool enableGranularShadowTreeStateReconciliation(jsi::Runtime& runtime);
 
+  bool enableLongTaskAPI(jsi::Runtime& runtime);
+
   bool enableMicrotasks(jsi::Runtime& runtime);
+
+  bool enablePropsUpdateReconciliationAndroid(jsi::Runtime& runtime);
 
   bool enableSynchronousStateUpdates(jsi::Runtime& runtime);
 
   bool enableUIConsistency(jsi::Runtime& runtime);
 
+  bool fetchImagesInViewPreallocation(jsi::Runtime& runtime);
+
+  bool fixIncorrectScrollViewStateUpdateOnAndroid(jsi::Runtime& runtime);
+
   bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime& runtime);
 
-  bool fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(jsi::Runtime& runtime);
+  bool fixMissedFabricStateUpdatesOnAndroid(jsi::Runtime& runtime);
 
   bool forceBatchingMountItemsOnAndroid(jsi::Runtime& runtime);
 
@@ -67,9 +77,11 @@ class NativeReactNativeFeatureFlags
 
   bool fuseboxEnabledRelease(jsi::Runtime& runtime);
 
+  bool initEagerTurboModulesOnNativeModulesQueueAndroid(jsi::Runtime& runtime);
+
   bool lazyAnimationCallbacks(jsi::Runtime& runtime);
 
-  bool preventDoubleTextMeasure(jsi::Runtime& runtime);
+  bool loadVectorDrawablesOnImages(jsi::Runtime& runtime);
 
   bool setAndroidLayoutDirection(jsi::Runtime& runtime);
 
@@ -78,6 +90,8 @@ class NativeReactNativeFeatureFlags
   bool useModernRuntimeScheduler(jsi::Runtime& runtime);
 
   bool useNativeViewConfigsInBridgelessMode(jsi::Runtime& runtime);
+
+  bool useNewReactImageViewBackgroundDrawing(jsi::Runtime& runtime);
 
   bool useRuntimeShadowNodeReferenceUpdate(jsi::Runtime& runtime);
 

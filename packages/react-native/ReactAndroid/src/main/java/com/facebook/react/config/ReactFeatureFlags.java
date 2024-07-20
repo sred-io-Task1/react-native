@@ -33,14 +33,6 @@ public class ReactFeatureFlags {
   public static volatile boolean unstable_useTurboModuleInterop = false;
 
   /**
-   * Temporary flag that will be used to validate the staibility of the TurboModule interop layer.
-   * Force all Java NativeModules that are TurboModule-compatible (that would have otherwise gone
-   * through the C++ codegen method dispatch path) instead through the TurboModule interop layer
-   * (i.e: the JavaInteropTurboModule method dispatch path).
-   */
-  public static volatile boolean unstable_useTurboModuleInteropForAllTurboModules = false;
-
-  /**
    * By default, native module methods that return void run asynchronously. This flag will make
    * execution of void methods in TurboModules stay on the JS thread.
    */
@@ -83,11 +75,6 @@ public class ReactFeatureFlags {
    * Enable prop iterator setter-style construction of Props in C++ (this flag is not used in Java).
    */
   public static boolean enableCppPropsIteratorSetter = false;
-
-  /**
-   * Allow Differentiator.cpp and FabricMountingManager.cpp to generate a RemoveDeleteTree mega-op.
-   */
-  public static boolean enableRemoveDeleteTreeInstruction = false;
 
   /** When enabled, rawProps in Props will not include Yoga specific props. */
   public static boolean excludeYogaFromRawProps = false;

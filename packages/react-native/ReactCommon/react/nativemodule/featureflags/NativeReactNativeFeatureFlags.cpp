@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<82399968da4f450b87c908031466a38a>>
+ * @generated SignedSource<<8240a36100c3657e90d6388afdcf26e8>>
  */
 
 /**
@@ -57,14 +57,19 @@ bool NativeReactNativeFeatureFlags::batchRenderingUpdatesInEventLoop(
   return ReactNativeFeatureFlags::batchRenderingUpdatesInEventLoop();
 }
 
+bool NativeReactNativeFeatureFlags::changeOrderOfMountingInstructionsOnAndroid(
+    jsi::Runtime& /*runtime*/) {
+  return ReactNativeFeatureFlags::changeOrderOfMountingInstructionsOnAndroid();
+}
+
 bool NativeReactNativeFeatureFlags::destroyFabricSurfacesInReactInstanceManager(
     jsi::Runtime& /*runtime*/) {
   return ReactNativeFeatureFlags::destroyFabricSurfacesInReactInstanceManager();
 }
 
-bool NativeReactNativeFeatureFlags::enableBackgroundExecutor(
+bool NativeReactNativeFeatureFlags::enableAlignItemsBaselineOnFabricIOS(
     jsi::Runtime& /*runtime*/) {
-  return ReactNativeFeatureFlags::enableBackgroundExecutor();
+  return ReactNativeFeatureFlags::enableAlignItemsBaselineOnFabricIOS();
 }
 
 bool NativeReactNativeFeatureFlags::enableCleanTextInputYogaNode(
@@ -77,9 +82,19 @@ bool NativeReactNativeFeatureFlags::enableGranularShadowTreeStateReconciliation(
   return ReactNativeFeatureFlags::enableGranularShadowTreeStateReconciliation();
 }
 
+bool NativeReactNativeFeatureFlags::enableLongTaskAPI(
+    jsi::Runtime& /*runtime*/) {
+  return ReactNativeFeatureFlags::enableLongTaskAPI();
+}
+
 bool NativeReactNativeFeatureFlags::enableMicrotasks(
     jsi::Runtime& /*runtime*/) {
   return ReactNativeFeatureFlags::enableMicrotasks();
+}
+
+bool NativeReactNativeFeatureFlags::enablePropsUpdateReconciliationAndroid(
+    jsi::Runtime& /*runtime*/) {
+  return ReactNativeFeatureFlags::enablePropsUpdateReconciliationAndroid();
 }
 
 bool NativeReactNativeFeatureFlags::enableSynchronousStateUpdates(
@@ -92,14 +107,24 @@ bool NativeReactNativeFeatureFlags::enableUIConsistency(
   return ReactNativeFeatureFlags::enableUIConsistency();
 }
 
+bool NativeReactNativeFeatureFlags::fetchImagesInViewPreallocation(
+    jsi::Runtime& /*runtime*/) {
+  return ReactNativeFeatureFlags::fetchImagesInViewPreallocation();
+}
+
+bool NativeReactNativeFeatureFlags::fixIncorrectScrollViewStateUpdateOnAndroid(
+    jsi::Runtime& /*runtime*/) {
+  return ReactNativeFeatureFlags::fixIncorrectScrollViewStateUpdateOnAndroid();
+}
+
 bool NativeReactNativeFeatureFlags::fixMappingOfEventPrioritiesBetweenFabricAndReact(
     jsi::Runtime& /*runtime*/) {
   return ReactNativeFeatureFlags::fixMappingOfEventPrioritiesBetweenFabricAndReact();
 }
 
-bool NativeReactNativeFeatureFlags::fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(
+bool NativeReactNativeFeatureFlags::fixMissedFabricStateUpdatesOnAndroid(
     jsi::Runtime& /*runtime*/) {
-  return ReactNativeFeatureFlags::fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak();
+  return ReactNativeFeatureFlags::fixMissedFabricStateUpdatesOnAndroid();
 }
 
 bool NativeReactNativeFeatureFlags::forceBatchingMountItemsOnAndroid(
@@ -117,14 +142,19 @@ bool NativeReactNativeFeatureFlags::fuseboxEnabledRelease(
   return ReactNativeFeatureFlags::fuseboxEnabledRelease();
 }
 
+bool NativeReactNativeFeatureFlags::initEagerTurboModulesOnNativeModulesQueueAndroid(
+    jsi::Runtime& /*runtime*/) {
+  return ReactNativeFeatureFlags::initEagerTurboModulesOnNativeModulesQueueAndroid();
+}
+
 bool NativeReactNativeFeatureFlags::lazyAnimationCallbacks(
     jsi::Runtime& /*runtime*/) {
   return ReactNativeFeatureFlags::lazyAnimationCallbacks();
 }
 
-bool NativeReactNativeFeatureFlags::preventDoubleTextMeasure(
+bool NativeReactNativeFeatureFlags::loadVectorDrawablesOnImages(
     jsi::Runtime& /*runtime*/) {
-  return ReactNativeFeatureFlags::preventDoubleTextMeasure();
+  return ReactNativeFeatureFlags::loadVectorDrawablesOnImages();
 }
 
 bool NativeReactNativeFeatureFlags::setAndroidLayoutDirection(
@@ -145,6 +175,11 @@ bool NativeReactNativeFeatureFlags::useModernRuntimeScheduler(
 bool NativeReactNativeFeatureFlags::useNativeViewConfigsInBridgelessMode(
     jsi::Runtime& /*runtime*/) {
   return ReactNativeFeatureFlags::useNativeViewConfigsInBridgelessMode();
+}
+
+bool NativeReactNativeFeatureFlags::useNewReactImageViewBackgroundDrawing(
+    jsi::Runtime& /*runtime*/) {
+  return ReactNativeFeatureFlags::useNewReactImageViewBackgroundDrawing();
 }
 
 bool NativeReactNativeFeatureFlags::useRuntimeShadowNodeReferenceUpdate(

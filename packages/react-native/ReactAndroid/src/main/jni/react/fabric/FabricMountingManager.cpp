@@ -53,8 +53,6 @@ static inline int getIntBufferSizeForType(CppMountItem::Type mountItemType) {
     case CppMountItem::Type::Insert:
     case CppMountItem::Type::Remove:
       return 3; // tag, parentTag, index
-    case CppMountItem::Type::RemoveDeleteTree:
-      return 3; // tag, parentTag, index
     case CppMountItem::Type::Delete:
     case CppMountItem::Type::UpdateProps:
     case CppMountItem::Type::UpdateState:
@@ -287,25 +285,15 @@ void FabricMountingManager::executeMount(
           break;
         }
         case ShadowViewMutation::Remove: {
-          if (!isVirtual && !mutation.isRedundantOperation) {
+          if (!isVirtual) {
             cppCommonMountItems.push_back(CppMountItem::RemoveMountItem(
                 parentShadowView, oldChildShadowView, index));
           }
           break;
         }
-        case ShadowViewMutation::RemoveDeleteTree: {
-          if (!isVirtual) {
-            cppCommonMountItems.push_back(
-                CppMountItem::RemoveDeleteTreeMountItem(
-                    parentShadowView, oldChildShadowView, index));
-          }
-          break;
-        }
         case ShadowViewMutation::Delete: {
-          if (!mutation.isRedundantOperation) {
-            cppDeleteMountItems.push_back(
-                CppMountItem::DeleteMountItem(oldChildShadowView));
-          }
+          cppDeleteMountItems.push_back(
+              CppMountItem::DeleteMountItem(oldChildShadowView));
           break;
         }
         case ShadowViewMutation::Update: {
@@ -499,9 +487,17 @@ void FabricMountingManager::executeMount(
   int objBufferPosition = 0;
   int prevMountItemType = -1;
   jint temp[8];
+  // Fill in CREATE instructions.
   for (int i = 0; i < cppCommonMountItems.size(); i++) {
     const auto& mountItem = cppCommonMountItems[i];
     const auto& mountItemType = mountItem.type;
+
+    if (ReactNativeFeatureFlags::changeOrderOfMountingInstructionsOnAndroid() &&
+        mountItemType != CppMountItem::Type::Create) {
+      prevMountItemType = -1;
+      // Skip all mount items except Create.
+      continue;
+    }
 
     // Get type here, and count forward how many items of this type are in a
     // row. Write preamble to any common type here.
@@ -522,7 +518,6 @@ void FabricMountingManager::executeMount(
     }
     prevMountItemType = mountItemType;
 
-    // TODO: multi-create, multi-insert, etc
     if (mountItemType == CppMountItem::Type::Create) {
       auto componentName =
           getPlatformComponentName(mountItem.newChildShadowView);
@@ -540,7 +535,7 @@ void FabricMountingManager::executeMount(
       if (mountItem.newChildShadowView.state != nullptr) {
         javaStateWrapper = StateWrapperImpl::newObjectJavaArgs();
         StateWrapperImpl* cStateWrapper = cthis(javaStateWrapper);
-        cStateWrapper->state_ = mountItem.newChildShadowView.state;
+        cStateWrapper->setState(mountItem.newChildShadowView.state);
       }
 
       // Do not hold a reference to javaEventEmitter from the C++ side.
@@ -568,16 +563,11 @@ void FabricMountingManager::executeMount(
       temp[2] = mountItem.index;
       env->SetIntArrayRegion(intBufferArray, intBufferPosition, 3, temp);
       intBufferPosition += 3;
-    } else if (mountItemType == CppMountItem::RemoveDeleteTree) {
-      temp[0] = mountItem.oldChildShadowView.tag;
-      temp[1] = mountItem.parentShadowView.tag;
-      temp[2] = mountItem.index;
-      env->SetIntArrayRegion(intBufferArray, intBufferPosition, 3, temp);
-      intBufferPosition += 3;
     } else {
-      LOG(ERROR) << "Unexpected CppMountItem type";
+      LOG(ERROR) << "Unexpected CppMountItem type: " << mountItemType;
     }
   }
+
   if (!cppUpdatePropsMountItems.empty()) {
     writeIntBufferTypePreamble(
         CppMountItem::Type::UpdateProps,
@@ -615,7 +605,7 @@ void FabricMountingManager::executeMount(
       if (state != nullptr) {
         javaStateWrapper = StateWrapperImpl::newObjectJavaArgs();
         StateWrapperImpl* cStateWrapper = cthis(javaStateWrapper);
-        cStateWrapper->state_ = state;
+        cStateWrapper->setState(state);
       }
 
       (*objBufferArray)[objBufferPosition++] =
@@ -737,6 +727,55 @@ void FabricMountingManager::executeMount(
     }
   }
 
+  if (ReactNativeFeatureFlags::changeOrderOfMountingInstructionsOnAndroid()) {
+    // Fill in all other instructions.
+    prevMountItemType = -1;
+    for (int i = 0; i < cppCommonMountItems.size(); i++) {
+      const auto& mountItem = cppCommonMountItems[i];
+      const auto& mountItemType = mountItem.type;
+
+      if (mountItemType == CppMountItem::Type::Create) {
+        prevMountItemType = -1;
+        continue;
+      }
+
+      // Get type here, and count forward how many items of this type are in
+      // row. Write preamble to any common type here.
+      if (prevMountItemType != mountItemType) {
+        int numSameItemTypes = 1;
+        for (int j = i + 1; j < cppCommonMountItems.size() &&
+             cppCommonMountItems[j].type == mountItemType;
+             j++) {
+          numSameItemTypes++;
+        }
+
+        writeIntBufferTypePreamble(
+            mountItemType,
+            numSameItemTypes,
+            env,
+            intBufferArray,
+            intBufferPosition);
+      }
+      prevMountItemType = mountItemType;
+
+      if (mountItemType == CppMountItem::Type::Insert) {
+        temp[0] = mountItem.newChildShadowView.tag;
+        temp[1] = mountItem.parentShadowView.tag;
+        temp[2] = mountItem.index;
+        env->SetIntArrayRegion(intBufferArray, intBufferPosition, 3, temp);
+        intBufferPosition += 3;
+      } else if (mountItemType == CppMountItem::Remove) {
+        temp[0] = mountItem.oldChildShadowView.tag;
+        temp[1] = mountItem.parentShadowView.tag;
+        temp[2] = mountItem.index;
+        env->SetIntArrayRegion(intBufferArray, intBufferPosition, 3, temp);
+        intBufferPosition += 3;
+      } else {
+        LOG(ERROR) << "Unexpected CppMountItem type: " << mountItemType;
+      }
+    }
+  }
+
   // Write deletes last - so that all prop updates, etc, for the tag in the same
   // batch don't fail. Without additional machinery, moving deletes here
   // requires that the differ never produces "DELETE...CREATE" in that order for
@@ -784,9 +823,14 @@ void FabricMountingManager::executeMount(
   env->DeleteLocalRef(intBufferArray);
 }
 
-void FabricMountingManager::preallocateShadowView(
+void FabricMountingManager::maybePreallocateShadowView(
     const ShadowNode& shadowNode) {
   if (!shadowNode.getTraits().check(ShadowNodeTraits::Trait::FormsView)) {
+    return;
+  }
+  static thread_local bool onMainThread = isOnMainThread();
+  if (onMainThread) {
+    // View preallocation is not beneficial when rendering on the main thread
     return;
   }
 
@@ -812,8 +856,7 @@ void FabricMountingManager::preallocateShadowView(
 
   static auto preallocateView =
       JFabricUIManager::javaClassStatic()
-          ->getMethod<void(
-              jint, jint, jstring, jobject, jobject, jobject, jboolean)>(
+          ->getMethod<void(jint, jint, jstring, jobject, jobject, jboolean)>(
               "preallocateView");
 
   // Do not hold onto Java object from C
@@ -823,11 +866,8 @@ void FabricMountingManager::preallocateShadowView(
   if (shadowView.state != nullptr) {
     javaStateWrapper = StateWrapperImpl::newObjectJavaArgs();
     StateWrapperImpl* cStateWrapper = cthis(javaStateWrapper);
-    cStateWrapper->state_ = shadowView.state;
+    cStateWrapper->setState(shadowView.state);
   }
-
-  // Do not hold a reference to javaEventEmitter from the C++ side.
-  jni::local_ref<EventEmitterWrapper::JavaPart> javaEventEmitter = nullptr;
 
   jni::local_ref<jobject> props = getProps({}, shadowView);
 
@@ -840,8 +880,14 @@ void FabricMountingManager::preallocateShadowView(
       component.get(),
       props.get(),
       (javaStateWrapper != nullptr ? javaStateWrapper.get() : nullptr),
-      (javaEventEmitter != nullptr ? javaEventEmitter.get() : nullptr),
       isLayoutableShadowNode);
+}
+
+bool FabricMountingManager::isOnMainThread() {
+  static auto isOnMainThread =
+      JFabricUIManager::javaClassStatic()->getMethod<jboolean()>(
+          "isOnMainThread");
+  return isOnMainThread(javaUIManager_);
 }
 
 void FabricMountingManager::dispatchCommand(

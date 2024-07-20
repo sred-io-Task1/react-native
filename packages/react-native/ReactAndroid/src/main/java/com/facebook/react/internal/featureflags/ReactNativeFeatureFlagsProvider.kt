@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<aae9b8936680c1cd6db2c1c0135e1cef>>
+ * @generated SignedSource<<13469640e36f5985531f872b28ff0c30>>
  */
 
 /**
@@ -31,23 +31,33 @@ public interface ReactNativeFeatureFlagsProvider {
 
   @DoNotStrip public fun batchRenderingUpdatesInEventLoop(): Boolean
 
+  @DoNotStrip public fun changeOrderOfMountingInstructionsOnAndroid(): Boolean
+
   @DoNotStrip public fun destroyFabricSurfacesInReactInstanceManager(): Boolean
 
-  @DoNotStrip public fun enableBackgroundExecutor(): Boolean
+  @DoNotStrip public fun enableAlignItemsBaselineOnFabricIOS(): Boolean
 
   @DoNotStrip public fun enableCleanTextInputYogaNode(): Boolean
 
   @DoNotStrip public fun enableGranularShadowTreeStateReconciliation(): Boolean
 
+  @DoNotStrip public fun enableLongTaskAPI(): Boolean
+
   @DoNotStrip public fun enableMicrotasks(): Boolean
+
+  @DoNotStrip public fun enablePropsUpdateReconciliationAndroid(): Boolean
 
   @DoNotStrip public fun enableSynchronousStateUpdates(): Boolean
 
   @DoNotStrip public fun enableUIConsistency(): Boolean
 
+  @DoNotStrip public fun fetchImagesInViewPreallocation(): Boolean
+
+  @DoNotStrip public fun fixIncorrectScrollViewStateUpdateOnAndroid(): Boolean
+
   @DoNotStrip public fun fixMappingOfEventPrioritiesBetweenFabricAndReact(): Boolean
 
-  @DoNotStrip public fun fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(): Boolean
+  @DoNotStrip public fun fixMissedFabricStateUpdatesOnAndroid(): Boolean
 
   @DoNotStrip public fun forceBatchingMountItemsOnAndroid(): Boolean
 
@@ -55,9 +65,11 @@ public interface ReactNativeFeatureFlagsProvider {
 
   @DoNotStrip public fun fuseboxEnabledRelease(): Boolean
 
+  @DoNotStrip public fun initEagerTurboModulesOnNativeModulesQueueAndroid(): Boolean
+
   @DoNotStrip public fun lazyAnimationCallbacks(): Boolean
 
-  @DoNotStrip public fun preventDoubleTextMeasure(): Boolean
+  @DoNotStrip public fun loadVectorDrawablesOnImages(): Boolean
 
   @DoNotStrip public fun setAndroidLayoutDirection(): Boolean
 
@@ -66,6 +78,8 @@ public interface ReactNativeFeatureFlagsProvider {
   @DoNotStrip public fun useModernRuntimeScheduler(): Boolean
 
   @DoNotStrip public fun useNativeViewConfigsInBridgelessMode(): Boolean
+
+  @DoNotStrip public fun useNewReactImageViewBackgroundDrawing(): Boolean
 
   @DoNotStrip public fun useRuntimeShadowNodeReferenceUpdate(): Boolean
 

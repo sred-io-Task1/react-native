@@ -15,7 +15,10 @@
 #include <react/renderer/core/LayoutMetrics.h>
 #include <react/renderer/core/PropsParserContext.h>
 #include <react/renderer/core/RawProps.h>
+#include <react/renderer/graphics/BlendMode.h>
+#include <react/renderer/graphics/BoxShadow.h>
 #include <react/renderer/graphics/Filter.h>
+#include <react/renderer/graphics/PlatformColorParser.h>
 #include <react/renderer/graphics/Transform.h>
 #include <react/renderer/graphics/ValueUnit.h>
 #include <stdlib.h>
@@ -930,16 +933,112 @@ inline void fromRawValue(
 }
 
 inline void fromRawValue(
-    const PropsParserContext& /*context*/,
+    const PropsParserContext& context,
     const RawValue& value,
-    std::vector<FilterPrimitive>& result) {
+    std::vector<BoxShadow>& result) {
   react_native_expect(value.hasType<std::vector<RawValue>>());
   if (!value.hasType<std::vector<RawValue>>()) {
     result = {};
     return;
   }
 
-  std::vector<FilterPrimitive> filter{};
+  std::vector<BoxShadow> boxShadows{};
+  auto rawBoxShadows = static_cast<std::vector<RawValue>>(value);
+  for (const auto& rawBoxShadow : rawBoxShadows) {
+    bool isMap =
+        rawBoxShadow.hasType<std::unordered_map<std::string, RawValue>>();
+    react_native_expect(isMap);
+    if (!isMap) {
+      // If any box shadow is malformed then we should not apply any of them
+      // which is the web behavior.
+      result = {};
+      return;
+    }
+
+    auto rawBoxShadowMap =
+        static_cast<std::unordered_map<std::string, RawValue>>(rawBoxShadow);
+    BoxShadow boxShadow{};
+    auto offsetX = rawBoxShadowMap.find("offsetX");
+    react_native_expect(offsetX != rawBoxShadowMap.end());
+    if (offsetX == rawBoxShadowMap.end()) {
+      result = {};
+      return;
+    }
+    react_native_expect(offsetX->second.hasType<Float>());
+    if (!offsetX->second.hasType<Float>()) {
+      result = {};
+      return;
+    }
+    boxShadow.offsetX = (Float)offsetX->second;
+
+    auto offsetY = rawBoxShadowMap.find("offsetY");
+    react_native_expect(offsetY != rawBoxShadowMap.end());
+    if (offsetY == rawBoxShadowMap.end()) {
+      result = {};
+      return;
+    }
+    react_native_expect(offsetY->second.hasType<Float>());
+    if (!offsetY->second.hasType<Float>()) {
+      result = {};
+      return;
+    }
+    boxShadow.offsetY = (Float)offsetY->second;
+
+    auto blurRadius = rawBoxShadowMap.find("blurRadius");
+    if (blurRadius != rawBoxShadowMap.end()) {
+      react_native_expect(blurRadius->second.hasType<Float>());
+      if (!blurRadius->second.hasType<Float>()) {
+        result = {};
+        return;
+      }
+      boxShadow.blurRadius = (Float)blurRadius->second;
+    }
+
+    auto spreadDistance = rawBoxShadowMap.find("spreadDistance");
+    if (spreadDistance != rawBoxShadowMap.end()) {
+      react_native_expect(spreadDistance->second.hasType<Float>());
+      if (!spreadDistance->second.hasType<Float>()) {
+        result = {};
+        return;
+      }
+      boxShadow.spreadDistance = (Float)spreadDistance->second;
+    }
+
+    auto inset = rawBoxShadowMap.find("inset");
+    if (inset != rawBoxShadowMap.end()) {
+      react_native_expect(inset->second.hasType<bool>());
+      if (!inset->second.hasType<bool>()) {
+        result = {};
+        return;
+      }
+      boxShadow.inset = (bool)inset->second;
+    }
+
+    auto color = rawBoxShadowMap.find("color");
+    if (color != rawBoxShadowMap.end()) {
+      fromRawValue(
+          context.contextContainer,
+          context.surfaceId,
+          color->second,
+          boxShadow.color);
+    }
+
+    boxShadows.push_back(boxShadow);
+  }
+
+  result = boxShadows;
+}
+inline void fromRawValue(
+    const PropsParserContext& /*context*/,
+    const RawValue& value,
+    std::vector<FilterFunction>& result) {
+  react_native_expect(value.hasType<std::vector<RawValue>>());
+  if (!value.hasType<std::vector<RawValue>>()) {
+    result = {};
+    return;
+  }
+
+  std::vector<FilterFunction> filter{};
   auto rawFilter = static_cast<std::vector<RawValue>>(value);
   for (const auto& rawFilterPrimitive : rawFilter) {
     bool isMap =
@@ -955,20 +1054,41 @@ inline void fromRawValue(
     auto rawFilterPrimitiveMap =
         static_cast<std::unordered_map<std::string, RawValue>>(
             rawFilterPrimitive);
-    FilterPrimitive filterPrimitive{};
+    FilterFunction filterFunction{};
     try {
-      filterPrimitive.type =
+      filterFunction.type =
           filterTypeFromString(rawFilterPrimitiveMap.begin()->first);
-      filterPrimitive.amount = (float)rawFilterPrimitiveMap.begin()->second;
-      filter.push_back(filterPrimitive);
+      filterFunction.amount = (float)rawFilterPrimitiveMap.begin()->second;
+      filter.push_back(std::move(filterFunction));
     } catch (const std::exception& e) {
-      LOG(ERROR) << "Could not parse FilterPrimitive: " << e.what();
+      LOG(ERROR) << "Could not parse FilterFunction: " << e.what();
       result = {};
       return;
     }
   }
 
   result = filter;
+}
+
+inline void fromRawValue(
+    const PropsParserContext& /*context*/,
+    const RawValue& value,
+    BlendMode& result) {
+  react_native_expect(value.hasType<std::string>());
+  result = BlendMode::Normal;
+  if (!value.hasType<std::string>()) {
+    return;
+  }
+
+  auto rawBlendMode = static_cast<std::string>(value);
+  std::optional<BlendMode> blendMode = blendModeFromString(rawBlendMode);
+
+  if (!blendMode) {
+    LOG(ERROR) << "Could not parse blend mode: " << rawBlendMode;
+    return;
+  }
+
+  result = blendMode.value();
 }
 
 template <size_t N>

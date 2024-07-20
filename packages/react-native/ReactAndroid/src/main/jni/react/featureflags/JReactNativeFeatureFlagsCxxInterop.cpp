@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<88f5b83b8a3d7902eaab333246b59ed3>>
+ * @generated SignedSource<<8efce8efb9cc312512b8736ed0073b30>>
  */
 
 /**
@@ -63,15 +63,21 @@ class ReactNativeFeatureFlagsProviderHolder
     return method(javaProvider_);
   }
 
+  bool changeOrderOfMountingInstructionsOnAndroid() override {
+    static const auto method =
+        getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("changeOrderOfMountingInstructionsOnAndroid");
+    return method(javaProvider_);
+  }
+
   bool destroyFabricSurfacesInReactInstanceManager() override {
     static const auto method =
         getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("destroyFabricSurfacesInReactInstanceManager");
     return method(javaProvider_);
   }
 
-  bool enableBackgroundExecutor() override {
+  bool enableAlignItemsBaselineOnFabricIOS() override {
     static const auto method =
-        getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("enableBackgroundExecutor");
+        getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("enableAlignItemsBaselineOnFabricIOS");
     return method(javaProvider_);
   }
 
@@ -87,9 +93,21 @@ class ReactNativeFeatureFlagsProviderHolder
     return method(javaProvider_);
   }
 
+  bool enableLongTaskAPI() override {
+    static const auto method =
+        getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("enableLongTaskAPI");
+    return method(javaProvider_);
+  }
+
   bool enableMicrotasks() override {
     static const auto method =
         getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("enableMicrotasks");
+    return method(javaProvider_);
+  }
+
+  bool enablePropsUpdateReconciliationAndroid() override {
+    static const auto method =
+        getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("enablePropsUpdateReconciliationAndroid");
     return method(javaProvider_);
   }
 
@@ -105,15 +123,27 @@ class ReactNativeFeatureFlagsProviderHolder
     return method(javaProvider_);
   }
 
+  bool fetchImagesInViewPreallocation() override {
+    static const auto method =
+        getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("fetchImagesInViewPreallocation");
+    return method(javaProvider_);
+  }
+
+  bool fixIncorrectScrollViewStateUpdateOnAndroid() override {
+    static const auto method =
+        getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("fixIncorrectScrollViewStateUpdateOnAndroid");
+    return method(javaProvider_);
+  }
+
   bool fixMappingOfEventPrioritiesBetweenFabricAndReact() override {
     static const auto method =
         getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("fixMappingOfEventPrioritiesBetweenFabricAndReact");
     return method(javaProvider_);
   }
 
-  bool fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak() override {
+  bool fixMissedFabricStateUpdatesOnAndroid() override {
     static const auto method =
-        getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak");
+        getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("fixMissedFabricStateUpdatesOnAndroid");
     return method(javaProvider_);
   }
 
@@ -135,15 +165,21 @@ class ReactNativeFeatureFlagsProviderHolder
     return method(javaProvider_);
   }
 
+  bool initEagerTurboModulesOnNativeModulesQueueAndroid() override {
+    static const auto method =
+        getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("initEagerTurboModulesOnNativeModulesQueueAndroid");
+    return method(javaProvider_);
+  }
+
   bool lazyAnimationCallbacks() override {
     static const auto method =
         getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("lazyAnimationCallbacks");
     return method(javaProvider_);
   }
 
-  bool preventDoubleTextMeasure() override {
+  bool loadVectorDrawablesOnImages() override {
     static const auto method =
-        getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("preventDoubleTextMeasure");
+        getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("loadVectorDrawablesOnImages");
     return method(javaProvider_);
   }
 
@@ -168,6 +204,12 @@ class ReactNativeFeatureFlagsProviderHolder
   bool useNativeViewConfigsInBridgelessMode() override {
     static const auto method =
         getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("useNativeViewConfigsInBridgelessMode");
+    return method(javaProvider_);
+  }
+
+  bool useNewReactImageViewBackgroundDrawing() override {
+    static const auto method =
+        getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("useNewReactImageViewBackgroundDrawing");
     return method(javaProvider_);
   }
 
@@ -213,14 +255,19 @@ bool JReactNativeFeatureFlagsCxxInterop::batchRenderingUpdatesInEventLoop(
   return ReactNativeFeatureFlags::batchRenderingUpdatesInEventLoop();
 }
 
+bool JReactNativeFeatureFlagsCxxInterop::changeOrderOfMountingInstructionsOnAndroid(
+    facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
+  return ReactNativeFeatureFlags::changeOrderOfMountingInstructionsOnAndroid();
+}
+
 bool JReactNativeFeatureFlagsCxxInterop::destroyFabricSurfacesInReactInstanceManager(
     facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
   return ReactNativeFeatureFlags::destroyFabricSurfacesInReactInstanceManager();
 }
 
-bool JReactNativeFeatureFlagsCxxInterop::enableBackgroundExecutor(
+bool JReactNativeFeatureFlagsCxxInterop::enableAlignItemsBaselineOnFabricIOS(
     facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
-  return ReactNativeFeatureFlags::enableBackgroundExecutor();
+  return ReactNativeFeatureFlags::enableAlignItemsBaselineOnFabricIOS();
 }
 
 bool JReactNativeFeatureFlagsCxxInterop::enableCleanTextInputYogaNode(
@@ -233,9 +280,19 @@ bool JReactNativeFeatureFlagsCxxInterop::enableGranularShadowTreeStateReconcilia
   return ReactNativeFeatureFlags::enableGranularShadowTreeStateReconciliation();
 }
 
+bool JReactNativeFeatureFlagsCxxInterop::enableLongTaskAPI(
+    facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
+  return ReactNativeFeatureFlags::enableLongTaskAPI();
+}
+
 bool JReactNativeFeatureFlagsCxxInterop::enableMicrotasks(
     facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
   return ReactNativeFeatureFlags::enableMicrotasks();
+}
+
+bool JReactNativeFeatureFlagsCxxInterop::enablePropsUpdateReconciliationAndroid(
+    facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
+  return ReactNativeFeatureFlags::enablePropsUpdateReconciliationAndroid();
 }
 
 bool JReactNativeFeatureFlagsCxxInterop::enableSynchronousStateUpdates(
@@ -248,14 +305,24 @@ bool JReactNativeFeatureFlagsCxxInterop::enableUIConsistency(
   return ReactNativeFeatureFlags::enableUIConsistency();
 }
 
+bool JReactNativeFeatureFlagsCxxInterop::fetchImagesInViewPreallocation(
+    facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
+  return ReactNativeFeatureFlags::fetchImagesInViewPreallocation();
+}
+
+bool JReactNativeFeatureFlagsCxxInterop::fixIncorrectScrollViewStateUpdateOnAndroid(
+    facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
+  return ReactNativeFeatureFlags::fixIncorrectScrollViewStateUpdateOnAndroid();
+}
+
 bool JReactNativeFeatureFlagsCxxInterop::fixMappingOfEventPrioritiesBetweenFabricAndReact(
     facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
   return ReactNativeFeatureFlags::fixMappingOfEventPrioritiesBetweenFabricAndReact();
 }
 
-bool JReactNativeFeatureFlagsCxxInterop::fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(
+bool JReactNativeFeatureFlagsCxxInterop::fixMissedFabricStateUpdatesOnAndroid(
     facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
-  return ReactNativeFeatureFlags::fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak();
+  return ReactNativeFeatureFlags::fixMissedFabricStateUpdatesOnAndroid();
 }
 
 bool JReactNativeFeatureFlagsCxxInterop::forceBatchingMountItemsOnAndroid(
@@ -273,14 +340,19 @@ bool JReactNativeFeatureFlagsCxxInterop::fuseboxEnabledRelease(
   return ReactNativeFeatureFlags::fuseboxEnabledRelease();
 }
 
+bool JReactNativeFeatureFlagsCxxInterop::initEagerTurboModulesOnNativeModulesQueueAndroid(
+    facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
+  return ReactNativeFeatureFlags::initEagerTurboModulesOnNativeModulesQueueAndroid();
+}
+
 bool JReactNativeFeatureFlagsCxxInterop::lazyAnimationCallbacks(
     facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
   return ReactNativeFeatureFlags::lazyAnimationCallbacks();
 }
 
-bool JReactNativeFeatureFlagsCxxInterop::preventDoubleTextMeasure(
+bool JReactNativeFeatureFlagsCxxInterop::loadVectorDrawablesOnImages(
     facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
-  return ReactNativeFeatureFlags::preventDoubleTextMeasure();
+  return ReactNativeFeatureFlags::loadVectorDrawablesOnImages();
 }
 
 bool JReactNativeFeatureFlagsCxxInterop::setAndroidLayoutDirection(
@@ -301,6 +373,11 @@ bool JReactNativeFeatureFlagsCxxInterop::useModernRuntimeScheduler(
 bool JReactNativeFeatureFlagsCxxInterop::useNativeViewConfigsInBridgelessMode(
     facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
   return ReactNativeFeatureFlags::useNativeViewConfigsInBridgelessMode();
+}
+
+bool JReactNativeFeatureFlagsCxxInterop::useNewReactImageViewBackgroundDrawing(
+    facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
+  return ReactNativeFeatureFlags::useNewReactImageViewBackgroundDrawing();
 }
 
 bool JReactNativeFeatureFlagsCxxInterop::useRuntimeShadowNodeReferenceUpdate(
@@ -348,11 +425,14 @@ void JReactNativeFeatureFlagsCxxInterop::registerNatives() {
         "batchRenderingUpdatesInEventLoop",
         JReactNativeFeatureFlagsCxxInterop::batchRenderingUpdatesInEventLoop),
       makeNativeMethod(
+        "changeOrderOfMountingInstructionsOnAndroid",
+        JReactNativeFeatureFlagsCxxInterop::changeOrderOfMountingInstructionsOnAndroid),
+      makeNativeMethod(
         "destroyFabricSurfacesInReactInstanceManager",
         JReactNativeFeatureFlagsCxxInterop::destroyFabricSurfacesInReactInstanceManager),
       makeNativeMethod(
-        "enableBackgroundExecutor",
-        JReactNativeFeatureFlagsCxxInterop::enableBackgroundExecutor),
+        "enableAlignItemsBaselineOnFabricIOS",
+        JReactNativeFeatureFlagsCxxInterop::enableAlignItemsBaselineOnFabricIOS),
       makeNativeMethod(
         "enableCleanTextInputYogaNode",
         JReactNativeFeatureFlagsCxxInterop::enableCleanTextInputYogaNode),
@@ -360,8 +440,14 @@ void JReactNativeFeatureFlagsCxxInterop::registerNatives() {
         "enableGranularShadowTreeStateReconciliation",
         JReactNativeFeatureFlagsCxxInterop::enableGranularShadowTreeStateReconciliation),
       makeNativeMethod(
+        "enableLongTaskAPI",
+        JReactNativeFeatureFlagsCxxInterop::enableLongTaskAPI),
+      makeNativeMethod(
         "enableMicrotasks",
         JReactNativeFeatureFlagsCxxInterop::enableMicrotasks),
+      makeNativeMethod(
+        "enablePropsUpdateReconciliationAndroid",
+        JReactNativeFeatureFlagsCxxInterop::enablePropsUpdateReconciliationAndroid),
       makeNativeMethod(
         "enableSynchronousStateUpdates",
         JReactNativeFeatureFlagsCxxInterop::enableSynchronousStateUpdates),
@@ -369,11 +455,17 @@ void JReactNativeFeatureFlagsCxxInterop::registerNatives() {
         "enableUIConsistency",
         JReactNativeFeatureFlagsCxxInterop::enableUIConsistency),
       makeNativeMethod(
+        "fetchImagesInViewPreallocation",
+        JReactNativeFeatureFlagsCxxInterop::fetchImagesInViewPreallocation),
+      makeNativeMethod(
+        "fixIncorrectScrollViewStateUpdateOnAndroid",
+        JReactNativeFeatureFlagsCxxInterop::fixIncorrectScrollViewStateUpdateOnAndroid),
+      makeNativeMethod(
         "fixMappingOfEventPrioritiesBetweenFabricAndReact",
         JReactNativeFeatureFlagsCxxInterop::fixMappingOfEventPrioritiesBetweenFabricAndReact),
       makeNativeMethod(
-        "fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak",
-        JReactNativeFeatureFlagsCxxInterop::fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak),
+        "fixMissedFabricStateUpdatesOnAndroid",
+        JReactNativeFeatureFlagsCxxInterop::fixMissedFabricStateUpdatesOnAndroid),
       makeNativeMethod(
         "forceBatchingMountItemsOnAndroid",
         JReactNativeFeatureFlagsCxxInterop::forceBatchingMountItemsOnAndroid),
@@ -384,11 +476,14 @@ void JReactNativeFeatureFlagsCxxInterop::registerNatives() {
         "fuseboxEnabledRelease",
         JReactNativeFeatureFlagsCxxInterop::fuseboxEnabledRelease),
       makeNativeMethod(
+        "initEagerTurboModulesOnNativeModulesQueueAndroid",
+        JReactNativeFeatureFlagsCxxInterop::initEagerTurboModulesOnNativeModulesQueueAndroid),
+      makeNativeMethod(
         "lazyAnimationCallbacks",
         JReactNativeFeatureFlagsCxxInterop::lazyAnimationCallbacks),
       makeNativeMethod(
-        "preventDoubleTextMeasure",
-        JReactNativeFeatureFlagsCxxInterop::preventDoubleTextMeasure),
+        "loadVectorDrawablesOnImages",
+        JReactNativeFeatureFlagsCxxInterop::loadVectorDrawablesOnImages),
       makeNativeMethod(
         "setAndroidLayoutDirection",
         JReactNativeFeatureFlagsCxxInterop::setAndroidLayoutDirection),
@@ -401,6 +496,9 @@ void JReactNativeFeatureFlagsCxxInterop::registerNatives() {
       makeNativeMethod(
         "useNativeViewConfigsInBridgelessMode",
         JReactNativeFeatureFlagsCxxInterop::useNativeViewConfigsInBridgelessMode),
+      makeNativeMethod(
+        "useNewReactImageViewBackgroundDrawing",
+        JReactNativeFeatureFlagsCxxInterop::useNewReactImageViewBackgroundDrawing),
       makeNativeMethod(
         "useRuntimeShadowNodeReferenceUpdate",
         JReactNativeFeatureFlagsCxxInterop::useRuntimeShadowNodeReferenceUpdate),

@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<dd5872a21f84a41bea247e137541ddfc>>
+ * @generated SignedSource<<ce0749b4f2ccf11b420cb9762012c02b>>
  */
 
 /**
@@ -37,12 +37,16 @@ bool ReactNativeFeatureFlags::batchRenderingUpdatesInEventLoop() {
   return getAccessor().batchRenderingUpdatesInEventLoop();
 }
 
+bool ReactNativeFeatureFlags::changeOrderOfMountingInstructionsOnAndroid() {
+  return getAccessor().changeOrderOfMountingInstructionsOnAndroid();
+}
+
 bool ReactNativeFeatureFlags::destroyFabricSurfacesInReactInstanceManager() {
   return getAccessor().destroyFabricSurfacesInReactInstanceManager();
 }
 
-bool ReactNativeFeatureFlags::enableBackgroundExecutor() {
-  return getAccessor().enableBackgroundExecutor();
+bool ReactNativeFeatureFlags::enableAlignItemsBaselineOnFabricIOS() {
+  return getAccessor().enableAlignItemsBaselineOnFabricIOS();
 }
 
 bool ReactNativeFeatureFlags::enableCleanTextInputYogaNode() {
@@ -53,8 +57,16 @@ bool ReactNativeFeatureFlags::enableGranularShadowTreeStateReconciliation() {
   return getAccessor().enableGranularShadowTreeStateReconciliation();
 }
 
+bool ReactNativeFeatureFlags::enableLongTaskAPI() {
+  return getAccessor().enableLongTaskAPI();
+}
+
 bool ReactNativeFeatureFlags::enableMicrotasks() {
   return getAccessor().enableMicrotasks();
+}
+
+bool ReactNativeFeatureFlags::enablePropsUpdateReconciliationAndroid() {
+  return getAccessor().enablePropsUpdateReconciliationAndroid();
 }
 
 bool ReactNativeFeatureFlags::enableSynchronousStateUpdates() {
@@ -65,12 +77,20 @@ bool ReactNativeFeatureFlags::enableUIConsistency() {
   return getAccessor().enableUIConsistency();
 }
 
+bool ReactNativeFeatureFlags::fetchImagesInViewPreallocation() {
+  return getAccessor().fetchImagesInViewPreallocation();
+}
+
+bool ReactNativeFeatureFlags::fixIncorrectScrollViewStateUpdateOnAndroid() {
+  return getAccessor().fixIncorrectScrollViewStateUpdateOnAndroid();
+}
+
 bool ReactNativeFeatureFlags::fixMappingOfEventPrioritiesBetweenFabricAndReact() {
   return getAccessor().fixMappingOfEventPrioritiesBetweenFabricAndReact();
 }
 
-bool ReactNativeFeatureFlags::fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak() {
-  return getAccessor().fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak();
+bool ReactNativeFeatureFlags::fixMissedFabricStateUpdatesOnAndroid() {
+  return getAccessor().fixMissedFabricStateUpdatesOnAndroid();
 }
 
 bool ReactNativeFeatureFlags::forceBatchingMountItemsOnAndroid() {
@@ -85,12 +105,16 @@ bool ReactNativeFeatureFlags::fuseboxEnabledRelease() {
   return getAccessor().fuseboxEnabledRelease();
 }
 
+bool ReactNativeFeatureFlags::initEagerTurboModulesOnNativeModulesQueueAndroid() {
+  return getAccessor().initEagerTurboModulesOnNativeModulesQueueAndroid();
+}
+
 bool ReactNativeFeatureFlags::lazyAnimationCallbacks() {
   return getAccessor().lazyAnimationCallbacks();
 }
 
-bool ReactNativeFeatureFlags::preventDoubleTextMeasure() {
-  return getAccessor().preventDoubleTextMeasure();
+bool ReactNativeFeatureFlags::loadVectorDrawablesOnImages() {
+  return getAccessor().loadVectorDrawablesOnImages();
 }
 
 bool ReactNativeFeatureFlags::setAndroidLayoutDirection() {
@@ -107,6 +131,10 @@ bool ReactNativeFeatureFlags::useModernRuntimeScheduler() {
 
 bool ReactNativeFeatureFlags::useNativeViewConfigsInBridgelessMode() {
   return getAccessor().useNativeViewConfigsInBridgelessMode();
+}
+
+bool ReactNativeFeatureFlags::useNewReactImageViewBackgroundDrawing() {
+  return getAccessor().useNewReactImageViewBackgroundDrawing();
 }
 
 bool ReactNativeFeatureFlags::useRuntimeShadowNodeReferenceUpdate() {

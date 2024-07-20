@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<0f6ca616cc516096ec250d61be440952>>
+ * @generated SignedSource<<c6b9aaa642199af1c7669d78054b061d>>
  */
 
 /**
@@ -43,12 +43,16 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
     return false;
   }
 
+  bool changeOrderOfMountingInstructionsOnAndroid() override {
+    return false;
+  }
+
   bool destroyFabricSurfacesInReactInstanceManager() override {
     return false;
   }
 
-  bool enableBackgroundExecutor() override {
-    return false;
+  bool enableAlignItemsBaselineOnFabricIOS() override {
+    return true;
   }
 
   bool enableCleanTextInputYogaNode() override {
@@ -59,7 +63,15 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
     return false;
   }
 
+  bool enableLongTaskAPI() override {
+    return false;
+  }
+
   bool enableMicrotasks() override {
+    return false;
+  }
+
+  bool enablePropsUpdateReconciliationAndroid() override {
     return false;
   }
 
@@ -71,11 +83,19 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
     return false;
   }
 
+  bool fetchImagesInViewPreallocation() override {
+    return false;
+  }
+
+  bool fixIncorrectScrollViewStateUpdateOnAndroid() override {
+    return false;
+  }
+
   bool fixMappingOfEventPrioritiesBetweenFabricAndReact() override {
     return false;
   }
 
-  bool fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak() override {
+  bool fixMissedFabricStateUpdatesOnAndroid() override {
     return false;
   }
 
@@ -84,10 +104,14 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
   }
 
   bool fuseboxEnabledDebug() override {
-    return false;
+    return true;
   }
 
   bool fuseboxEnabledRelease() override {
+    return false;
+  }
+
+  bool initEagerTurboModulesOnNativeModulesQueueAndroid() override {
     return false;
   }
 
@@ -95,12 +119,12 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
     return false;
   }
 
-  bool preventDoubleTextMeasure() override {
-    return true;
+  bool loadVectorDrawablesOnImages() override {
+    return false;
   }
 
   bool setAndroidLayoutDirection() override {
-    return false;
+    return true;
   }
 
   bool useImmediateExecutorInAndroidBridgeless() override {
@@ -112,6 +136,10 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
   }
 
   bool useNativeViewConfigsInBridgelessMode() override {
+    return false;
+  }
+
+  bool useNewReactImageViewBackgroundDrawing() override {
     return false;
   }
 
