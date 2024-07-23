@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<36ba8783cdd7ccb5d745dffb978d13ec>>
+ * @generated SignedSource<<a8dd4b26b34c797efe9e2c2f9959f7b3>>
  */
 
 /**
@@ -45,11 +45,15 @@ class NativeReactNativeFeatureFlags
 
   bool changeOrderOfMountingInstructionsOnAndroid(jsi::Runtime& runtime);
 
+  bool completeReactInstanceCreationOnBgThreadOnAndroid(jsi::Runtime& runtime);
+
   bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime& runtime);
 
   bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime& runtime);
 
   bool enableCleanTextInputYogaNode(jsi::Runtime& runtime);
+
+  bool enableFabricRendererExclusively(jsi::Runtime& runtime);
 
   bool enableGranularShadowTreeStateReconciliation(jsi::Runtime& runtime);
 
@@ -62,6 +66,8 @@ class NativeReactNativeFeatureFlags
   bool enableSynchronousStateUpdates(jsi::Runtime& runtime);
 
   bool enableUIConsistency(jsi::Runtime& runtime);
+
+  bool excludeYogaFromRawProps(jsi::Runtime& runtime);
 
   bool fetchImagesInViewPreallocation(jsi::Runtime& runtime);
 
@@ -92,6 +98,8 @@ class NativeReactNativeFeatureFlags
   bool useNativeViewConfigsInBridgelessMode(jsi::Runtime& runtime);
 
   bool useNewReactImageViewBackgroundDrawing(jsi::Runtime& runtime);
+
+  bool useOptimisedViewPreallocationOnAndroid(jsi::Runtime& runtime);
 
   bool useRuntimeShadowNodeReferenceUpdate(jsi::Runtime& runtime);
 

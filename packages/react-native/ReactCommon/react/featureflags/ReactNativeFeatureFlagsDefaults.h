@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<c6b9aaa642199af1c7669d78054b061d>>
+ * @generated SignedSource<<f81d116e79fc7397ddc767ee3e458bd6>>
  */
 
 /**
@@ -47,6 +47,10 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
     return false;
   }
 
+  bool completeReactInstanceCreationOnBgThreadOnAndroid() override {
+    return false;
+  }
+
   bool destroyFabricSurfacesInReactInstanceManager() override {
     return false;
   }
@@ -56,6 +60,10 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
   }
 
   bool enableCleanTextInputYogaNode() override {
+    return false;
+  }
+
+  bool enableFabricRendererExclusively() override {
     return false;
   }
 
@@ -80,6 +88,10 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
   }
 
   bool enableUIConsistency() override {
+    return false;
+  }
+
+  bool excludeYogaFromRawProps() override {
     return false;
   }
 
@@ -140,6 +152,10 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
   }
 
   bool useNewReactImageViewBackgroundDrawing() override {
+    return false;
+  }
+
+  bool useOptimisedViewPreallocationOnAndroid() override {
     return false;
   }
 

@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<13469640e36f5985531f872b28ff0c30>>
+ * @generated SignedSource<<c3138a9a6b90f5a35bcdda2928b759ed>>
  */
 
 /**
@@ -33,11 +33,15 @@ public interface ReactNativeFeatureFlagsProvider {
 
   @DoNotStrip public fun changeOrderOfMountingInstructionsOnAndroid(): Boolean
 
+  @DoNotStrip public fun completeReactInstanceCreationOnBgThreadOnAndroid(): Boolean
+
   @DoNotStrip public fun destroyFabricSurfacesInReactInstanceManager(): Boolean
 
   @DoNotStrip public fun enableAlignItemsBaselineOnFabricIOS(): Boolean
 
   @DoNotStrip public fun enableCleanTextInputYogaNode(): Boolean
+
+  @DoNotStrip public fun enableFabricRendererExclusively(): Boolean
 
   @DoNotStrip public fun enableGranularShadowTreeStateReconciliation(): Boolean
 
@@ -50,6 +54,8 @@ public interface ReactNativeFeatureFlagsProvider {
   @DoNotStrip public fun enableSynchronousStateUpdates(): Boolean
 
   @DoNotStrip public fun enableUIConsistency(): Boolean
+
+  @DoNotStrip public fun excludeYogaFromRawProps(): Boolean
 
   @DoNotStrip public fun fetchImagesInViewPreallocation(): Boolean
 
@@ -80,6 +86,8 @@ public interface ReactNativeFeatureFlagsProvider {
   @DoNotStrip public fun useNativeViewConfigsInBridgelessMode(): Boolean
 
   @DoNotStrip public fun useNewReactImageViewBackgroundDrawing(): Boolean
+
+  @DoNotStrip public fun useOptimisedViewPreallocationOnAndroid(): Boolean
 
   @DoNotStrip public fun useRuntimeShadowNodeReferenceUpdate(): Boolean
 

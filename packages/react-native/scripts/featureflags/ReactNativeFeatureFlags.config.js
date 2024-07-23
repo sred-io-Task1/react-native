@@ -59,6 +59,11 @@ const definitions: FeatureFlagDefinitions = {
       description:
         'When enabled, insert of views on Android will be moved from the beginning of the IntBufferBatchMountItem to be after layout updates.',
     },
+    completeReactInstanceCreationOnBgThreadOnAndroid: {
+      defaultValue: false,
+      description:
+        'Do not wait for a main-thread dispatch to complete init to start executing work on the JS thread on Android',
+    },
     destroyFabricSurfacesInReactInstanceManager: {
       defaultValue: false,
       description:
@@ -72,6 +77,11 @@ const definitions: FeatureFlagDefinitions = {
     enableCleanTextInputYogaNode: {
       defaultValue: false,
       description: 'Clean yoga node when <TextInput /> does not change.',
+    },
+    enableFabricRendererExclusively: {
+      defaultValue: false,
+      description:
+        'When the app is completely migrated to Fabric, set this flag to true to disable parts of Paper infrastructure that are not needed anymore but consume memory and CPU. Specifically, UIViewOperationQueue and EventDispatcherImpl will no longer work as they will not subscribe to ReactChoreographer for updates.',
     },
     enableGranularShadowTreeStateReconciliation: {
       defaultValue: false,
@@ -102,6 +112,11 @@ const definitions: FeatureFlagDefinitions = {
       defaultValue: false,
       description:
         'Ensures that JavaScript always has a consistent view of the state of the UI (e.g.: commits done in other threads are not immediately propagated to JS during its execution).',
+    },
+    excludeYogaFromRawProps: {
+      defaultValue: false,
+      description:
+        'When enabled, rawProps in Props will not include Yoga specific props.',
     },
     fetchImagesInViewPreallocation: {
       defaultValue: false,
@@ -176,6 +191,11 @@ const definitions: FeatureFlagDefinitions = {
       defaultValue: false,
       description:
         'Use shared background drawing code for ReactImageView instead of using Fresco to manipulate the bitmap',
+    },
+    useOptimisedViewPreallocationOnAndroid: {
+      defaultValue: false,
+      description:
+        'Moves more of the work in view preallocation to the main thread to free up JS thread.',
     },
     useRuntimeShadowNodeReferenceUpdate: {
       defaultValue: false,

@@ -14,13 +14,7 @@ repositories { mavenCentral() }
 
 group = "com.facebook.react"
 
-dependencies {
-  implementation(libs.gson)
-  implementation(libs.guava)
-  testImplementation(libs.junit)
-  testImplementation(libs.assertj)
-  testImplementation(project(":shared-testutil"))
-}
+dependencies { implementation(libs.junit) }
 
 java { targetCompatibility = JavaVersion.VERSION_11 }
 
