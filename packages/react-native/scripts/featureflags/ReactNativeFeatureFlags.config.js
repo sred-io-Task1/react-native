@@ -78,6 +78,20 @@ const definitions: FeatureFlagDefinitions = {
       defaultValue: false,
       description: 'Clean yoga node when <TextInput /> does not change.',
     },
+    enableCppPropsIteratorSetter: {
+      defaultValue: false,
+      description:
+        'Enable prop iterator setter-style construction of Props in C++ (this flag is not used in Java).',
+    },
+    enableEagerRootViewAttachment: {
+      defaultValue: false,
+      description:
+        'Feature flag to configure eager attachment of the root view/initialisation of the JS code.',
+    },
+    enableFabricLogs: {
+      defaultValue: false,
+      description: 'This feature flag enables logs for Fabric.',
+    },
     enableFabricRendererExclusively: {
       defaultValue: false,
       description:
@@ -176,6 +190,16 @@ const definitions: FeatureFlagDefinitions = {
     setAndroidLayoutDirection: {
       defaultValue: true,
       description: 'Propagate layout direction to Android views.',
+    },
+    traceTurboModulePromiseRejectionsOnAndroid: {
+      defaultValue: false,
+      description:
+        'Enables storing js caller stack when creating promise in native module. This is useful in case of Promise rejection and tracing the cause.',
+    },
+    unstable_enableTurboModuleSyncVoidMethods: {
+      defaultValue: false,
+      description:
+        'By default, native module methods that return void run asynchronously. This flag will make execution of void methods in TurboModules stay on the JS thread.',
     },
     useImmediateExecutorInAndroidBridgeless: {
       defaultValue: false,

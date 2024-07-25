@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<436dd66c962b5bd70cc574d573ddfc0a>>
+ * @generated SignedSource<<d736c6185a79867b46f99029e84c771d>>
  */
 
 /**
@@ -60,6 +60,18 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
   }
 
   bool enableCleanTextInputYogaNode() override {
+    return false;
+  }
+
+  bool enableCppPropsIteratorSetter() override {
+    return false;
+  }
+
+  bool enableEagerRootViewAttachment() override {
+    return false;
+  }
+
+  bool enableFabricLogs() override {
     return false;
   }
 
@@ -141,6 +153,14 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
 
   bool setAndroidLayoutDirection() override {
     return true;
+  }
+
+  bool traceTurboModulePromiseRejectionsOnAndroid() override {
+    return false;
+  }
+
+  bool unstable_enableTurboModuleSyncVoidMethods() override {
+    return false;
   }
 
   bool useImmediateExecutorInAndroidBridgeless() override {
