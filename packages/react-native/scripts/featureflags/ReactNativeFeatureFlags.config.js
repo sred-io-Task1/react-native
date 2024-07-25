@@ -78,10 +78,20 @@ const definitions: FeatureFlagDefinitions = {
       defaultValue: false,
       description: 'Clean yoga node when <TextInput /> does not change.',
     },
+    enableCppPropsIteratorSetter: {
+      defaultValue: false,
+      description:
+        'Enable prop iterator setter-style construction of Props in C++ (this flag is not used in Java).',
+    },
     enableFabricRendererExclusively: {
       defaultValue: false,
       description:
         'When the app is completely migrated to Fabric, set this flag to true to disable parts of Paper infrastructure that are not needed anymore but consume memory and CPU. Specifically, UIViewOperationQueue and EventDispatcherImpl will no longer work as they will not subscribe to ReactChoreographer for updates.',
+    },
+    enableGranularScrollViewStateUpdatesIOS: {
+      defaultValue: false,
+      description:
+        'When enabled, RCTScrollViewComponentView will trigger ShadowTree state updates for all changes in scroll position.',
     },
     enableGranularShadowTreeStateReconciliation: {
       defaultValue: false,

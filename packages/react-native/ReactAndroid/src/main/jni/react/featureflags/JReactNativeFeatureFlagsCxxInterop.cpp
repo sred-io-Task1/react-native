@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<7c14f956fd20226acfb532d806c6eb7a>>
+ * @generated SignedSource<<40d29cb73bc0c81f27a789d4899ed2db>>
  */
 
 /**
@@ -93,9 +93,21 @@ class ReactNativeFeatureFlagsProviderHolder
     return method(javaProvider_);
   }
 
+  bool enableCppPropsIteratorSetter() override {
+    static const auto method =
+        getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("enableCppPropsIteratorSetter");
+    return method(javaProvider_);
+  }
+
   bool enableFabricRendererExclusively() override {
     static const auto method =
         getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("enableFabricRendererExclusively");
+    return method(javaProvider_);
+  }
+
+  bool enableGranularScrollViewStateUpdatesIOS() override {
+    static const auto method =
+        getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("enableGranularScrollViewStateUpdatesIOS");
     return method(javaProvider_);
   }
 
@@ -310,9 +322,19 @@ bool JReactNativeFeatureFlagsCxxInterop::enableCleanTextInputYogaNode(
   return ReactNativeFeatureFlags::enableCleanTextInputYogaNode();
 }
 
+bool JReactNativeFeatureFlagsCxxInterop::enableCppPropsIteratorSetter(
+    facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
+  return ReactNativeFeatureFlags::enableCppPropsIteratorSetter();
+}
+
 bool JReactNativeFeatureFlagsCxxInterop::enableFabricRendererExclusively(
     facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
   return ReactNativeFeatureFlags::enableFabricRendererExclusively();
+}
+
+bool JReactNativeFeatureFlagsCxxInterop::enableGranularScrollViewStateUpdatesIOS(
+    facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
+  return ReactNativeFeatureFlags::enableGranularScrollViewStateUpdatesIOS();
 }
 
 bool JReactNativeFeatureFlagsCxxInterop::enableGranularShadowTreeStateReconciliation(
@@ -495,8 +517,14 @@ void JReactNativeFeatureFlagsCxxInterop::registerNatives() {
         "enableCleanTextInputYogaNode",
         JReactNativeFeatureFlagsCxxInterop::enableCleanTextInputYogaNode),
       makeNativeMethod(
+        "enableCppPropsIteratorSetter",
+        JReactNativeFeatureFlagsCxxInterop::enableCppPropsIteratorSetter),
+      makeNativeMethod(
         "enableFabricRendererExclusively",
         JReactNativeFeatureFlagsCxxInterop::enableFabricRendererExclusively),
+      makeNativeMethod(
+        "enableGranularScrollViewStateUpdatesIOS",
+        JReactNativeFeatureFlagsCxxInterop::enableGranularScrollViewStateUpdatesIOS),
       makeNativeMethod(
         "enableGranularShadowTreeStateReconciliation",
         JReactNativeFeatureFlagsCxxInterop::enableGranularShadowTreeStateReconciliation),

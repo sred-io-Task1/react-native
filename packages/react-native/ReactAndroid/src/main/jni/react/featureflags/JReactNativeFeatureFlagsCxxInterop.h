@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<f06779455d65f78f561eaca745262a99>>
+ * @generated SignedSource<<f35a8eb00f716ed544f31c322a5f7ce6>>
  */
 
 /**
@@ -57,7 +57,13 @@ class JReactNativeFeatureFlagsCxxInterop
   static bool enableCleanTextInputYogaNode(
     facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop>);
 
+  static bool enableCppPropsIteratorSetter(
+    facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop>);
+
   static bool enableFabricRendererExclusively(
+    facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop>);
+
+  static bool enableGranularScrollViewStateUpdatesIOS(
     facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop>);
 
   static bool enableGranularShadowTreeStateReconciliation(

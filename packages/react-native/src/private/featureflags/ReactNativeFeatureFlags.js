@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<b914ca36b2ab729f1262384d83b684b7>>
+ * @generated SignedSource<<66f06989eaccf137813ba2f30240ffa9>>
  * @flow strict-local
  */
 
@@ -53,7 +53,9 @@ export type ReactNativeFeatureFlags = {
   destroyFabricSurfacesInReactInstanceManager: Getter<boolean>,
   enableAlignItemsBaselineOnFabricIOS: Getter<boolean>,
   enableCleanTextInputYogaNode: Getter<boolean>,
+  enableCppPropsIteratorSetter: Getter<boolean>,
   enableFabricRendererExclusively: Getter<boolean>,
+  enableGranularScrollViewStateUpdatesIOS: Getter<boolean>,
   enableGranularShadowTreeStateReconciliation: Getter<boolean>,
   enableLongTaskAPI: Getter<boolean>,
   enableMicrotasks: Getter<boolean>,
@@ -180,9 +182,17 @@ export const enableAlignItemsBaselineOnFabricIOS: Getter<boolean> = createNative
  */
 export const enableCleanTextInputYogaNode: Getter<boolean> = createNativeFlagGetter('enableCleanTextInputYogaNode', false);
 /**
+ * Enable prop iterator setter-style construction of Props in C++ (this flag is not used in Java).
+ */
+export const enableCppPropsIteratorSetter: Getter<boolean> = createNativeFlagGetter('enableCppPropsIteratorSetter', false);
+/**
  * When the app is completely migrated to Fabric, set this flag to true to disable parts of Paper infrastructure that are not needed anymore but consume memory and CPU. Specifically, UIViewOperationQueue and EventDispatcherImpl will no longer work as they will not subscribe to ReactChoreographer for updates.
  */
 export const enableFabricRendererExclusively: Getter<boolean> = createNativeFlagGetter('enableFabricRendererExclusively', false);
+/**
+ * When enabled, RCTScrollViewComponentView will trigger ShadowTree state updates for all changes in scroll position.
+ */
+export const enableGranularScrollViewStateUpdatesIOS: Getter<boolean> = createNativeFlagGetter('enableGranularScrollViewStateUpdatesIOS', false);
 /**
  * When enabled, the renderer would only fail commits when they propagate state and the last commit that updated state changed before committing.
  */

@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<e79765ccb9d4b2d46c428b09d65ac12c>>
+ * @generated SignedSource<<74c41fd691b950649a3b23cf7e61485b>>
  */
 
 /**
@@ -53,7 +53,11 @@ class NativeReactNativeFeatureFlags
 
   bool enableCleanTextInputYogaNode(jsi::Runtime& runtime);
 
+  bool enableCppPropsIteratorSetter(jsi::Runtime& runtime);
+
   bool enableFabricRendererExclusively(jsi::Runtime& runtime);
+
+  bool enableGranularScrollViewStateUpdatesIOS(jsi::Runtime& runtime);
 
   bool enableGranularShadowTreeStateReconciliation(jsi::Runtime& runtime);
 

@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<c3317cfbf03b60568e509dccc4cdacde>>
+ * @generated SignedSource<<0409dd1ed38ef41526152d3998c9e867>>
  */
 
 /**
@@ -82,9 +82,19 @@ bool NativeReactNativeFeatureFlags::enableCleanTextInputYogaNode(
   return ReactNativeFeatureFlags::enableCleanTextInputYogaNode();
 }
 
+bool NativeReactNativeFeatureFlags::enableCppPropsIteratorSetter(
+    jsi::Runtime& /*runtime*/) {
+  return ReactNativeFeatureFlags::enableCppPropsIteratorSetter();
+}
+
 bool NativeReactNativeFeatureFlags::enableFabricRendererExclusively(
     jsi::Runtime& /*runtime*/) {
   return ReactNativeFeatureFlags::enableFabricRendererExclusively();
+}
+
+bool NativeReactNativeFeatureFlags::enableGranularScrollViewStateUpdatesIOS(
+    jsi::Runtime& /*runtime*/) {
+  return ReactNativeFeatureFlags::enableGranularScrollViewStateUpdatesIOS();
 }
 
 bool NativeReactNativeFeatureFlags::enableGranularShadowTreeStateReconciliation(
