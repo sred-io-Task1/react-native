@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<55d6c0f7ab8abe8411194235ab362cd2>>
+ * @generated SignedSource<<fb82dfb059a684192d8217f33c868341>>
  */
 
 /**
@@ -83,9 +83,29 @@ class ReactNativeFeatureFlags {
   RN_EXPORT static bool enableCleanTextInputYogaNode();
 
   /**
+   * Enable prop iterator setter-style construction of Props in C++ (this flag is not used in Java).
+   */
+  RN_EXPORT static bool enableCppPropsIteratorSetter();
+
+  /**
+   * Feature flag to configure eager attachment of the root view/initialisation of the JS code.
+   */
+  RN_EXPORT static bool enableEagerRootViewAttachment();
+
+  /**
+   * This feature flag enables logs for Fabric.
+   */
+  RN_EXPORT static bool enableFabricLogs();
+
+  /**
    * When the app is completely migrated to Fabric, set this flag to true to disable parts of Paper infrastructure that are not needed anymore but consume memory and CPU. Specifically, UIViewOperationQueue and EventDispatcherImpl will no longer work as they will not subscribe to ReactChoreographer for updates.
    */
   RN_EXPORT static bool enableFabricRendererExclusively();
+
+  /**
+   * When enabled, RCTScrollViewComponentView will trigger ShadowTree state updates for all changes in scroll position.
+   */
+  RN_EXPORT static bool enableGranularScrollViewStateUpdatesIOS();
 
   /**
    * When enabled, the renderer would only fail commits when they propagate state and the last commit that updated state changed before committing.
@@ -181,6 +201,16 @@ class ReactNativeFeatureFlags {
    * Propagate layout direction to Android views.
    */
   RN_EXPORT static bool setAndroidLayoutDirection();
+
+  /**
+   * Enables storing js caller stack when creating promise in native module. This is useful in case of Promise rejection and tracing the cause.
+   */
+  RN_EXPORT static bool traceTurboModulePromiseRejectionsOnAndroid();
+
+  /**
+   * By default, native module methods that return void run asynchronously. This flag will make execution of void methods in TurboModules stay on the JS thread.
+   */
+  RN_EXPORT static bool unstable_enableTurboModuleSyncVoidMethods();
 
   /**
    * Invoke callbacks immediately on the ReactInstance rather than going through a background thread for synchronization

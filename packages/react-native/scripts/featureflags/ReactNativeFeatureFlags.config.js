@@ -78,10 +78,29 @@ const definitions: FeatureFlagDefinitions = {
       defaultValue: false,
       description: 'Clean yoga node when <TextInput /> does not change.',
     },
+    enableCppPropsIteratorSetter: {
+      defaultValue: false,
+      description:
+        'Enable prop iterator setter-style construction of Props in C++ (this flag is not used in Java).',
+    },
+    enableEagerRootViewAttachment: {
+      defaultValue: false,
+      description:
+        'Feature flag to configure eager attachment of the root view/initialisation of the JS code.',
+    },
+    enableFabricLogs: {
+      defaultValue: false,
+      description: 'This feature flag enables logs for Fabric.',
+    },
     enableFabricRendererExclusively: {
       defaultValue: false,
       description:
         'When the app is completely migrated to Fabric, set this flag to true to disable parts of Paper infrastructure that are not needed anymore but consume memory and CPU. Specifically, UIViewOperationQueue and EventDispatcherImpl will no longer work as they will not subscribe to ReactChoreographer for updates.',
+    },
+    enableGranularScrollViewStateUpdatesIOS: {
+      defaultValue: false,
+      description:
+        'When enabled, RCTScrollViewComponentView will trigger ShadowTree state updates for all changes in scroll position.',
     },
     enableGranularShadowTreeStateReconciliation: {
       defaultValue: false,
@@ -176,6 +195,16 @@ const definitions: FeatureFlagDefinitions = {
     setAndroidLayoutDirection: {
       defaultValue: true,
       description: 'Propagate layout direction to Android views.',
+    },
+    traceTurboModulePromiseRejectionsOnAndroid: {
+      defaultValue: false,
+      description:
+        'Enables storing js caller stack when creating promise in native module. This is useful in case of Promise rejection and tracing the cause.',
+    },
+    unstable_enableTurboModuleSyncVoidMethods: {
+      defaultValue: false,
+      description:
+        'By default, native module methods that return void run asynchronously. This flag will make execution of void methods in TurboModules stay on the JS thread.',
     },
     useImmediateExecutorInAndroidBridgeless: {
       defaultValue: false,

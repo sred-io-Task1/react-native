@@ -9,7 +9,6 @@ package com.facebook.react.config;
 
 import com.facebook.infer.annotation.Nullsafe;
 import com.facebook.proguard.annotations.DoNotStripAny;
-import com.facebook.react.common.build.ReactBuildConfig;
 
 /**
  * Hi there, traveller! This configuration class is not meant to be used by end-users of RN. It
@@ -33,12 +32,6 @@ public class ReactFeatureFlags {
   public static volatile boolean unstable_useTurboModuleInterop = false;
 
   /**
-   * By default, native module methods that return void run asynchronously. This flag will make
-   * execution of void methods in TurboModules stay on the JS thread.
-   */
-  public static volatile boolean unstable_enableTurboModuleSyncVoidMethods = false;
-
-  /**
    * Should this application use the new (Fabric) Renderer? If yes, all rendering in this app will
    * use Fabric instead of the legacy renderer.
    */
@@ -58,27 +51,10 @@ public class ReactFeatureFlags {
    */
   public static boolean enableBridgelessArchitecture = false;
 
-  /** This feature flag enables logs for Fabric */
-  public static boolean enableFabricLogs = false;
-
-  /** Feature flag to configure eager attachment of the root view/initialisation of the JS code */
-  public static boolean enableEagerRootViewAttachment = false;
-
   public static boolean dispatchPointerEvents = false;
 
   /**
    * Feature Flag to enable View Recycling. When enabled, individual ViewManagers must still opt-in.
    */
   public static boolean enableViewRecycling = false;
-
-  /**
-   * Enable prop iterator setter-style construction of Props in C++ (this flag is not used in Java).
-   */
-  public static boolean enableCppPropsIteratorSetter = false;
-
-  /**
-   * Enables storing js caller stack when creating promise in native module. This is useful in case
-   * of Promise rejection and tracing the cause.
-   */
-  public static boolean traceTurboModulePromiseRejections = ReactBuildConfig.DEBUG;
 }
