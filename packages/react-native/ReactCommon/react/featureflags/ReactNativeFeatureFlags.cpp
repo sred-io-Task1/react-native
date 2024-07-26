@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<bab53ba585938b3bf458dbe0874931f8>>
+ * @generated SignedSource<<28774a13fbf6808e82941099710da95b>>
  */
 
 /**
@@ -55,6 +55,14 @@ bool ReactNativeFeatureFlags::enableAlignItemsBaselineOnFabricIOS() {
 
 bool ReactNativeFeatureFlags::enableCleanTextInputYogaNode() {
   return getAccessor().enableCleanTextInputYogaNode();
+}
+
+bool ReactNativeFeatureFlags::enableEagerRootViewAttachment() {
+  return getAccessor().enableEagerRootViewAttachment();
+}
+
+bool ReactNativeFeatureFlags::enableFabricLogs() {
+  return getAccessor().enableFabricLogs();
 }
 
 bool ReactNativeFeatureFlags::enableFabricRendererExclusively() {
@@ -135,6 +143,14 @@ bool ReactNativeFeatureFlags::loadVectorDrawablesOnImages() {
 
 bool ReactNativeFeatureFlags::setAndroidLayoutDirection() {
   return getAccessor().setAndroidLayoutDirection();
+}
+
+bool ReactNativeFeatureFlags::traceTurboModulePromiseRejectionsOnAndroid() {
+  return getAccessor().traceTurboModulePromiseRejectionsOnAndroid();
+}
+
+bool ReactNativeFeatureFlags::unstable_useFabricInterop() {
+  return getAccessor().unstable_useFabricInterop();
 }
 
 bool ReactNativeFeatureFlags::useImmediateExecutorInAndroidBridgeless() {

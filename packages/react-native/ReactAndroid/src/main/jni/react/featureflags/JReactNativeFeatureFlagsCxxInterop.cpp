@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<7c14f956fd20226acfb532d806c6eb7a>>
+ * @generated SignedSource<<d2dbd82d66b67494cc341b64e5bd4c11>>
  */
 
 /**
@@ -90,6 +90,18 @@ class ReactNativeFeatureFlagsProviderHolder
   bool enableCleanTextInputYogaNode() override {
     static const auto method =
         getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("enableCleanTextInputYogaNode");
+    return method(javaProvider_);
+  }
+
+  bool enableEagerRootViewAttachment() override {
+    static const auto method =
+        getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("enableEagerRootViewAttachment");
+    return method(javaProvider_);
+  }
+
+  bool enableFabricLogs() override {
+    static const auto method =
+        getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("enableFabricLogs");
     return method(javaProvider_);
   }
 
@@ -213,6 +225,18 @@ class ReactNativeFeatureFlagsProviderHolder
     return method(javaProvider_);
   }
 
+  bool traceTurboModulePromiseRejectionsOnAndroid() override {
+    static const auto method =
+        getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("traceTurboModulePromiseRejectionsOnAndroid");
+    return method(javaProvider_);
+  }
+
+  bool unstable_useFabricInterop() override {
+    static const auto method =
+        getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("unstable_useFabricInterop");
+    return method(javaProvider_);
+  }
+
   bool useImmediateExecutorInAndroidBridgeless() override {
     static const auto method =
         getReactNativeFeatureFlagsProviderJavaClass()->getMethod<jboolean()>("useImmediateExecutorInAndroidBridgeless");
@@ -308,6 +332,16 @@ bool JReactNativeFeatureFlagsCxxInterop::enableAlignItemsBaselineOnFabricIOS(
 bool JReactNativeFeatureFlagsCxxInterop::enableCleanTextInputYogaNode(
     facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
   return ReactNativeFeatureFlags::enableCleanTextInputYogaNode();
+}
+
+bool JReactNativeFeatureFlagsCxxInterop::enableEagerRootViewAttachment(
+    facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
+  return ReactNativeFeatureFlags::enableEagerRootViewAttachment();
+}
+
+bool JReactNativeFeatureFlagsCxxInterop::enableFabricLogs(
+    facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
+  return ReactNativeFeatureFlags::enableFabricLogs();
 }
 
 bool JReactNativeFeatureFlagsCxxInterop::enableFabricRendererExclusively(
@@ -410,6 +444,16 @@ bool JReactNativeFeatureFlagsCxxInterop::setAndroidLayoutDirection(
   return ReactNativeFeatureFlags::setAndroidLayoutDirection();
 }
 
+bool JReactNativeFeatureFlagsCxxInterop::traceTurboModulePromiseRejectionsOnAndroid(
+    facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
+  return ReactNativeFeatureFlags::traceTurboModulePromiseRejectionsOnAndroid();
+}
+
+bool JReactNativeFeatureFlagsCxxInterop::unstable_useFabricInterop(
+    facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
+  return ReactNativeFeatureFlags::unstable_useFabricInterop();
+}
+
 bool JReactNativeFeatureFlagsCxxInterop::useImmediateExecutorInAndroidBridgeless(
     facebook::jni::alias_ref<JReactNativeFeatureFlagsCxxInterop> /*unused*/) {
   return ReactNativeFeatureFlags::useImmediateExecutorInAndroidBridgeless();
@@ -495,6 +539,12 @@ void JReactNativeFeatureFlagsCxxInterop::registerNatives() {
         "enableCleanTextInputYogaNode",
         JReactNativeFeatureFlagsCxxInterop::enableCleanTextInputYogaNode),
       makeNativeMethod(
+        "enableEagerRootViewAttachment",
+        JReactNativeFeatureFlagsCxxInterop::enableEagerRootViewAttachment),
+      makeNativeMethod(
+        "enableFabricLogs",
+        JReactNativeFeatureFlagsCxxInterop::enableFabricLogs),
+      makeNativeMethod(
         "enableFabricRendererExclusively",
         JReactNativeFeatureFlagsCxxInterop::enableFabricRendererExclusively),
       makeNativeMethod(
@@ -554,6 +604,12 @@ void JReactNativeFeatureFlagsCxxInterop::registerNatives() {
       makeNativeMethod(
         "setAndroidLayoutDirection",
         JReactNativeFeatureFlagsCxxInterop::setAndroidLayoutDirection),
+      makeNativeMethod(
+        "traceTurboModulePromiseRejectionsOnAndroid",
+        JReactNativeFeatureFlagsCxxInterop::traceTurboModulePromiseRejectionsOnAndroid),
+      makeNativeMethod(
+        "unstable_useFabricInterop",
+        JReactNativeFeatureFlagsCxxInterop::unstable_useFabricInterop),
       makeNativeMethod(
         "useImmediateExecutorInAndroidBridgeless",
         JReactNativeFeatureFlagsCxxInterop::useImmediateExecutorInAndroidBridgeless),

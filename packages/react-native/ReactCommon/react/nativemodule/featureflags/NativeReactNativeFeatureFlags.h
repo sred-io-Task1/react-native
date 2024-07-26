@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<e79765ccb9d4b2d46c428b09d65ac12c>>
+ * @generated SignedSource<<2690fb6173ab1bf762d351ac452fe39b>>
  */
 
 /**
@@ -53,6 +53,10 @@ class NativeReactNativeFeatureFlags
 
   bool enableCleanTextInputYogaNode(jsi::Runtime& runtime);
 
+  bool enableEagerRootViewAttachment(jsi::Runtime& runtime);
+
+  bool enableFabricLogs(jsi::Runtime& runtime);
+
   bool enableFabricRendererExclusively(jsi::Runtime& runtime);
 
   bool enableGranularShadowTreeStateReconciliation(jsi::Runtime& runtime);
@@ -92,6 +96,10 @@ class NativeReactNativeFeatureFlags
   bool loadVectorDrawablesOnImages(jsi::Runtime& runtime);
 
   bool setAndroidLayoutDirection(jsi::Runtime& runtime);
+
+  bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime& runtime);
+
+  bool unstable_useFabricInterop(jsi::Runtime& runtime);
 
   bool useImmediateExecutorInAndroidBridgeless(jsi::Runtime& runtime);
 

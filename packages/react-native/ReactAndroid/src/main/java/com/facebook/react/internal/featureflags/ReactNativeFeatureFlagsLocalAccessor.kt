@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<82f6d4eda4011bee81810af366f5d677>>
+ * @generated SignedSource<<aeefc4f103894e13bf865d8618f2981f>>
  */
 
 /**
@@ -33,6 +33,8 @@ public class ReactNativeFeatureFlagsLocalAccessor : ReactNativeFeatureFlagsAcces
   private var destroyFabricSurfacesInReactInstanceManagerCache: Boolean? = null
   private var enableAlignItemsBaselineOnFabricIOSCache: Boolean? = null
   private var enableCleanTextInputYogaNodeCache: Boolean? = null
+  private var enableEagerRootViewAttachmentCache: Boolean? = null
+  private var enableFabricLogsCache: Boolean? = null
   private var enableFabricRendererExclusivelyCache: Boolean? = null
   private var enableGranularShadowTreeStateReconciliationCache: Boolean? = null
   private var enableLongTaskAPICache: Boolean? = null
@@ -53,6 +55,8 @@ public class ReactNativeFeatureFlagsLocalAccessor : ReactNativeFeatureFlagsAcces
   private var lazyAnimationCallbacksCache: Boolean? = null
   private var loadVectorDrawablesOnImagesCache: Boolean? = null
   private var setAndroidLayoutDirectionCache: Boolean? = null
+  private var traceTurboModulePromiseRejectionsOnAndroidCache: Boolean? = null
+  private var unstable_useFabricInteropCache: Boolean? = null
   private var useImmediateExecutorInAndroidBridgelessCache: Boolean? = null
   private var useModernRuntimeSchedulerCache: Boolean? = null
   private var useNativeViewConfigsInBridgelessModeCache: Boolean? = null
@@ -148,6 +152,26 @@ public class ReactNativeFeatureFlagsLocalAccessor : ReactNativeFeatureFlagsAcces
       cached = currentProvider.enableCleanTextInputYogaNode()
       accessedFeatureFlags.add("enableCleanTextInputYogaNode")
       enableCleanTextInputYogaNodeCache = cached
+    }
+    return cached
+  }
+
+  override fun enableEagerRootViewAttachment(): Boolean {
+    var cached = enableEagerRootViewAttachmentCache
+    if (cached == null) {
+      cached = currentProvider.enableEagerRootViewAttachment()
+      accessedFeatureFlags.add("enableEagerRootViewAttachment")
+      enableEagerRootViewAttachmentCache = cached
+    }
+    return cached
+  }
+
+  override fun enableFabricLogs(): Boolean {
+    var cached = enableFabricLogsCache
+    if (cached == null) {
+      cached = currentProvider.enableFabricLogs()
+      accessedFeatureFlags.add("enableFabricLogs")
+      enableFabricLogsCache = cached
     }
     return cached
   }
@@ -348,6 +372,26 @@ public class ReactNativeFeatureFlagsLocalAccessor : ReactNativeFeatureFlagsAcces
       cached = currentProvider.setAndroidLayoutDirection()
       accessedFeatureFlags.add("setAndroidLayoutDirection")
       setAndroidLayoutDirectionCache = cached
+    }
+    return cached
+  }
+
+  override fun traceTurboModulePromiseRejectionsOnAndroid(): Boolean {
+    var cached = traceTurboModulePromiseRejectionsOnAndroidCache
+    if (cached == null) {
+      cached = currentProvider.traceTurboModulePromiseRejectionsOnAndroid()
+      accessedFeatureFlags.add("traceTurboModulePromiseRejectionsOnAndroid")
+      traceTurboModulePromiseRejectionsOnAndroidCache = cached
+    }
+    return cached
+  }
+
+  override fun unstable_useFabricInterop(): Boolean {
+    var cached = unstable_useFabricInteropCache
+    if (cached == null) {
+      cached = currentProvider.unstable_useFabricInterop()
+      accessedFeatureFlags.add("unstable_useFabricInterop")
+      unstable_useFabricInteropCache = cached
     }
     return cached
   }

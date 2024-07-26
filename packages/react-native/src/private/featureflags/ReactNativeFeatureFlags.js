@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<b914ca36b2ab729f1262384d83b684b7>>
+ * @generated SignedSource<<b8dd8a453c7c149c77fa5a8a531ddefe>>
  * @flow strict-local
  */
 
@@ -53,6 +53,8 @@ export type ReactNativeFeatureFlags = {
   destroyFabricSurfacesInReactInstanceManager: Getter<boolean>,
   enableAlignItemsBaselineOnFabricIOS: Getter<boolean>,
   enableCleanTextInputYogaNode: Getter<boolean>,
+  enableEagerRootViewAttachment: Getter<boolean>,
+  enableFabricLogs: Getter<boolean>,
   enableFabricRendererExclusively: Getter<boolean>,
   enableGranularShadowTreeStateReconciliation: Getter<boolean>,
   enableLongTaskAPI: Getter<boolean>,
@@ -73,6 +75,8 @@ export type ReactNativeFeatureFlags = {
   lazyAnimationCallbacks: Getter<boolean>,
   loadVectorDrawablesOnImages: Getter<boolean>,
   setAndroidLayoutDirection: Getter<boolean>,
+  traceTurboModulePromiseRejectionsOnAndroid: Getter<boolean>,
+  unstable_useFabricInterop: Getter<boolean>,
   useImmediateExecutorInAndroidBridgeless: Getter<boolean>,
   useModernRuntimeScheduler: Getter<boolean>,
   useNativeViewConfigsInBridgelessMode: Getter<boolean>,
@@ -180,6 +184,14 @@ export const enableAlignItemsBaselineOnFabricIOS: Getter<boolean> = createNative
  */
 export const enableCleanTextInputYogaNode: Getter<boolean> = createNativeFlagGetter('enableCleanTextInputYogaNode', false);
 /**
+ * Feature flag to configure eager attachment of the root view/initialisation of the JS code.
+ */
+export const enableEagerRootViewAttachment: Getter<boolean> = createNativeFlagGetter('enableEagerRootViewAttachment', false);
+/**
+ * This feature flag enables logs for Fabric.
+ */
+export const enableFabricLogs: Getter<boolean> = createNativeFlagGetter('enableFabricLogs', false);
+/**
  * When the app is completely migrated to Fabric, set this flag to true to disable parts of Paper infrastructure that are not needed anymore but consume memory and CPU. Specifically, UIViewOperationQueue and EventDispatcherImpl will no longer work as they will not subscribe to ReactChoreographer for updates.
  */
 export const enableFabricRendererExclusively: Getter<boolean> = createNativeFlagGetter('enableFabricRendererExclusively', false);
@@ -259,6 +271,14 @@ export const loadVectorDrawablesOnImages: Getter<boolean> = createNativeFlagGett
  * Propagate layout direction to Android views.
  */
 export const setAndroidLayoutDirection: Getter<boolean> = createNativeFlagGetter('setAndroidLayoutDirection', true);
+/**
+ * Enables storing js caller stack when creating promise in native module. This is useful in case of Promise rejection and tracing the cause.
+ */
+export const traceTurboModulePromiseRejectionsOnAndroid: Getter<boolean> = createNativeFlagGetter('traceTurboModulePromiseRejectionsOnAndroid', false);
+/**
+ * Should this application enable the Fabric Interop Layer for Android? If yes, the application will behave so that it can accept non-Fabric components and render them on Fabric. This toggle is controlling extra logic such as custom event dispatching that are needed for the Fabric Interop Layer to work correctly.
+ */
+export const unstable_useFabricInterop: Getter<boolean> = createNativeFlagGetter('unstable_useFabricInterop', false);
 /**
  * Invoke callbacks immediately on the ReactInstance rather than going through a background thread for synchronization
  */

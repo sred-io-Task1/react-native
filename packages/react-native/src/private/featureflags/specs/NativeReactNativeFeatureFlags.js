@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<b190bdb77d71a851ab40661eedccac05>>
+ * @generated SignedSource<<4c15176876de91ce16aac8b795563258>>
  * @flow strict-local
  */
 
@@ -32,6 +32,8 @@ export interface Spec extends TurboModule {
   +destroyFabricSurfacesInReactInstanceManager?: () => boolean;
   +enableAlignItemsBaselineOnFabricIOS?: () => boolean;
   +enableCleanTextInputYogaNode?: () => boolean;
+  +enableEagerRootViewAttachment?: () => boolean;
+  +enableFabricLogs?: () => boolean;
   +enableFabricRendererExclusively?: () => boolean;
   +enableGranularShadowTreeStateReconciliation?: () => boolean;
   +enableLongTaskAPI?: () => boolean;
@@ -52,6 +54,8 @@ export interface Spec extends TurboModule {
   +lazyAnimationCallbacks?: () => boolean;
   +loadVectorDrawablesOnImages?: () => boolean;
   +setAndroidLayoutDirection?: () => boolean;
+  +traceTurboModulePromiseRejectionsOnAndroid?: () => boolean;
+  +unstable_useFabricInterop?: () => boolean;
   +useImmediateExecutorInAndroidBridgeless?: () => boolean;
   +useModernRuntimeScheduler?: () => boolean;
   +useNativeViewConfigsInBridgelessMode?: () => boolean;

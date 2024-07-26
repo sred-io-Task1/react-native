@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<abdee8d0b85b0d9940207b9cbe6d3f78>>
+ * @generated SignedSource<<a4e951eb07ce179ab267840b52fe8f04>>
  */
 
 /**
@@ -40,6 +40,10 @@ public open class ReactNativeFeatureFlagsDefaults : ReactNativeFeatureFlagsProvi
   override fun enableAlignItemsBaselineOnFabricIOS(): Boolean = true
 
   override fun enableCleanTextInputYogaNode(): Boolean = false
+
+  override fun enableEagerRootViewAttachment(): Boolean = false
+
+  override fun enableFabricLogs(): Boolean = false
 
   override fun enableFabricRendererExclusively(): Boolean = false
 
@@ -80,6 +84,10 @@ public open class ReactNativeFeatureFlagsDefaults : ReactNativeFeatureFlagsProvi
   override fun loadVectorDrawablesOnImages(): Boolean = false
 
   override fun setAndroidLayoutDirection(): Boolean = true
+
+  override fun traceTurboModulePromiseRejectionsOnAndroid(): Boolean = false
+
+  override fun unstable_useFabricInterop(): Boolean = false
 
   override fun useImmediateExecutorInAndroidBridgeless(): Boolean = false
 
