@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<bab53ba585938b3bf458dbe0874931f8>>
+ * @generated SignedSource<<003171b5ce3055ef281d041408ca146e>>
  */
 
 /**
@@ -53,8 +53,20 @@ bool ReactNativeFeatureFlags::enableAlignItemsBaselineOnFabricIOS() {
   return getAccessor().enableAlignItemsBaselineOnFabricIOS();
 }
 
+bool ReactNativeFeatureFlags::enableBackgroundStyleApplicator() {
+  return getAccessor().enableBackgroundStyleApplicator();
+}
+
 bool ReactNativeFeatureFlags::enableCleanTextInputYogaNode() {
   return getAccessor().enableCleanTextInputYogaNode();
+}
+
+bool ReactNativeFeatureFlags::enableEagerRootViewAttachment() {
+  return getAccessor().enableEagerRootViewAttachment();
+}
+
+bool ReactNativeFeatureFlags::enableFabricLogs() {
+  return getAccessor().enableFabricLogs();
 }
 
 bool ReactNativeFeatureFlags::enableFabricRendererExclusively() {
@@ -137,6 +149,14 @@ bool ReactNativeFeatureFlags::setAndroidLayoutDirection() {
   return getAccessor().setAndroidLayoutDirection();
 }
 
+bool ReactNativeFeatureFlags::traceTurboModulePromiseRejectionsOnAndroid() {
+  return getAccessor().traceTurboModulePromiseRejectionsOnAndroid();
+}
+
+bool ReactNativeFeatureFlags::useFabricInterop() {
+  return getAccessor().useFabricInterop();
+}
+
 bool ReactNativeFeatureFlags::useImmediateExecutorInAndroidBridgeless() {
   return getAccessor().useImmediateExecutorInAndroidBridgeless();
 }
@@ -167,6 +187,10 @@ bool ReactNativeFeatureFlags::useRuntimeShadowNodeReferenceUpdateOnLayout() {
 
 bool ReactNativeFeatureFlags::useStateAlignmentMechanism() {
   return getAccessor().useStateAlignmentMechanism();
+}
+
+bool ReactNativeFeatureFlags::useTurboModuleInterop() {
+  return getAccessor().useTurboModuleInterop();
 }
 
 void ReactNativeFeatureFlags::override(

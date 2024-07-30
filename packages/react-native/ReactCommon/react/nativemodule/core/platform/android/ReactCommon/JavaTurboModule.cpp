@@ -20,6 +20,7 @@
 #include <jsi/JSIDynamic.h>
 #include <react/bridging/Bridging.h>
 #include <react/debug/react_native_assert.h>
+#include <react/featureflags/ReactNativeFeatureFlags.h>
 #include <react/jni/NativeMap.h>
 #include <react/jni/ReadableNativeMap.h>
 #include <react/jni/WritableNativeMap.h>
@@ -33,8 +34,7 @@ namespace TMPL = TurboModulePerfLogger;
 JavaTurboModule::JavaTurboModule(const InitParams& params)
     : TurboModule(params.moduleName, params.jsInvoker),
       instance_(jni::make_global(params.instance)),
-      nativeMethodCallInvoker_(params.nativeMethodCallInvoker),
-      shouldVoidMethodsExecuteSync_(params.shouldVoidMethodsExecuteSync) {}
+      nativeMethodCallInvoker_(params.nativeMethodCallInvoker) {}
 
 JavaTurboModule::~JavaTurboModule() {
   /**
@@ -58,22 +58,6 @@ JavaTurboModule::~JavaTurboModule() {
 }
 
 namespace {
-
-constexpr auto kReactFeatureFlagsJavaDescriptor =
-    "com/facebook/react/config/ReactFeatureFlags";
-
-bool getFeatureFlagBoolValue(const char* name) {
-  static const auto reactFeatureFlagsClass =
-      facebook::jni::findClassStatic(kReactFeatureFlagsJavaDescriptor);
-  const auto field = reactFeatureFlagsClass->getStaticField<jboolean>(name);
-  return reactFeatureFlagsClass->getStaticFieldValue(field);
-}
-
-bool traceTurboModulePromiseRejections() {
-  static bool traceRejections =
-      getFeatureFlagBoolValue("traceTurboModulePromiseRejections");
-  return traceRejections;
-}
 
 struct JNIArgs {
   JNIArgs(size_t count) : args(count) {}
@@ -531,9 +515,7 @@ jsi::Value JavaTurboModule::invokeJavaMethod(
   const char* methodName = methodNameStr.c_str();
   const char* moduleName = name_.c_str();
 
-  bool isMethodSync =
-      (valueKind == VoidKind && shouldVoidMethodsExecuteSync_) ||
-      !(valueKind == VoidKind || valueKind == PromiseKind);
+  bool isMethodSync = !(valueKind == VoidKind || valueKind == PromiseKind);
 
   if (isMethodSync) {
     TMPL::syncMethodCallStart(moduleName, methodName);
@@ -813,15 +795,6 @@ jsi::Value JavaTurboModule::invokeJavaMethod(
       return returnValue;
     }
     case VoidKind: {
-      if (shouldVoidMethodsExecuteSync_) {
-        env->CallVoidMethodA(instance, methodID, jargs.data());
-        checkJNIErrorForMethodCall();
-
-        TMPL::syncMethodCallExecutionEnd(moduleName, methodName);
-        TMPL::syncMethodCallEnd(moduleName, methodName);
-        return jsi::Value::undefined();
-      }
-
       TMPL::asyncMethodCallArgConversionEnd(moduleName, methodName);
       TMPL::asyncMethodCallDispatch(moduleName, methodName);
 
@@ -919,7 +892,8 @@ jsi::Value JavaTurboModule::invokeJavaMethod(
 
       // JS Stack at the time when the promise is created.
       std::optional<std::string> jsInvocationStack;
-      if (traceTurboModulePromiseRejections()) {
+      if (ReactNativeFeatureFlags::
+              traceTurboModulePromiseRejectionsOnAndroid()) {
         jsInvocationStack =
             createJSRuntimeError(runtime, jsi::Value::undefined())
                 .asObject(runtime)
