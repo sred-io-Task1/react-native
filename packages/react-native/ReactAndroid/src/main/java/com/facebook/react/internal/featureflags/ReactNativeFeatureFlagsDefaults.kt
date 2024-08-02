@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<f954cbf175ce33373e3ba3e471d4b25f>>
+ * @generated SignedSource<<2fe2a37cfa83ae9a6a53d1e2e17382b7>>
  */
 
 /**
@@ -39,7 +39,7 @@ public open class ReactNativeFeatureFlagsDefaults : ReactNativeFeatureFlagsProvi
 
   override fun enableAlignItemsBaselineOnFabricIOS(): Boolean = true
 
-  override fun enableBackgroundStyleApplicator(): Boolean = false
+  override fun enableBackgroundStyleApplicator(): Boolean = true
 
   override fun enableCleanTextInputYogaNode(): Boolean = false
 
@@ -62,6 +62,8 @@ public open class ReactNativeFeatureFlagsDefaults : ReactNativeFeatureFlagsProvi
   override fun enableSynchronousStateUpdates(): Boolean = false
 
   override fun enableUIConsistency(): Boolean = false
+
+  override fun enableViewRecycling(): Boolean = false
 
   override fun excludeYogaFromRawProps(): Boolean = false
 

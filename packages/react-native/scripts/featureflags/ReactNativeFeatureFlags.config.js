@@ -75,7 +75,7 @@ const definitions: FeatureFlagDefinitions = {
         'Kill-switch to turn off support for aling-items:baseline on Fabric iOS.',
     },
     enableBackgroundStyleApplicator: {
-      defaultValue: false,
+      defaultValue: true,
       description:
         'Use BackgroundStyleApplicator in place of other background/border drawing code',
     },
@@ -131,6 +131,11 @@ const definitions: FeatureFlagDefinitions = {
       defaultValue: false,
       description:
         'Ensures that JavaScript always has a consistent view of the state of the UI (e.g.: commits done in other threads are not immediately propagated to JS during its execution).',
+    },
+    enableViewRecycling: {
+      defaultValue: false,
+      description:
+        'Enables View Recycling. When enabled, individual ViewManagers must still opt-in.',
     },
     excludeYogaFromRawProps: {
       defaultValue: false,

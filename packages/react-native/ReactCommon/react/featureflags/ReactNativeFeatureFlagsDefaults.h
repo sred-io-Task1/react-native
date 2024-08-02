@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<aa2efffaa77468a9d9862bee095cb9e6>>
+ * @generated SignedSource<<06d4d5356769bc25529b987aa7e0abb8>>
  */
 
 /**
@@ -60,7 +60,7 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
   }
 
   bool enableBackgroundStyleApplicator() override {
-    return false;
+    return true;
   }
 
   bool enableCleanTextInputYogaNode() override {
@@ -104,6 +104,10 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
   }
 
   bool enableUIConsistency() override {
+    return false;
+  }
+
+  bool enableViewRecycling() override {
     return false;
   }
 

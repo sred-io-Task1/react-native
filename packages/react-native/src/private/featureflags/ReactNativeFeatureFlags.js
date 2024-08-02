@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<99fb6b4b2fef8c0c0aef3e46ed7b0632>>
+ * @generated SignedSource<<0b57a2e853d1f2872ddf0c0b610805bb>>
  * @flow strict-local
  */
 
@@ -64,6 +64,7 @@ export type ReactNativeFeatureFlags = {
   enableReportEventPaintTime: Getter<boolean>,
   enableSynchronousStateUpdates: Getter<boolean>,
   enableUIConsistency: Getter<boolean>,
+  enableViewRecycling: Getter<boolean>,
   excludeYogaFromRawProps: Getter<boolean>,
   fetchImagesInViewPreallocation: Getter<boolean>,
   fixIncorrectScrollViewStateUpdateOnAndroid: Getter<boolean>,
@@ -184,7 +185,7 @@ export const enableAlignItemsBaselineOnFabricIOS: Getter<boolean> = createNative
 /**
  * Use BackgroundStyleApplicator in place of other background/border drawing code
  */
-export const enableBackgroundStyleApplicator: Getter<boolean> = createNativeFlagGetter('enableBackgroundStyleApplicator', false);
+export const enableBackgroundStyleApplicator: Getter<boolean> = createNativeFlagGetter('enableBackgroundStyleApplicator', true);
 /**
  * Clean yoga node when <TextInput /> does not change.
  */
@@ -229,6 +230,10 @@ export const enableSynchronousStateUpdates: Getter<boolean> = createNativeFlagGe
  * Ensures that JavaScript always has a consistent view of the state of the UI (e.g.: commits done in other threads are not immediately propagated to JS during its execution).
  */
 export const enableUIConsistency: Getter<boolean> = createNativeFlagGetter('enableUIConsistency', false);
+/**
+ * Enables View Recycling. When enabled, individual ViewManagers must still opt-in.
+ */
+export const enableViewRecycling: Getter<boolean> = createNativeFlagGetter('enableViewRecycling', false);
 /**
  * When enabled, rawProps in Props will not include Yoga specific props.
  */

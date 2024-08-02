@@ -10,6 +10,7 @@ package com.facebook.react.uimanager
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Rect
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.view.View
 import androidx.annotation.ColorInt
@@ -91,16 +92,19 @@ public object BackgroundStyleApplicator {
   @JvmStatic
   @RequiresApi(31)
   public fun setBoxShadow(view: View, shadows: List<BoxShadow>): Unit {
-    val shadowDrawables =
-        shadows.map { boxShadow ->
-          val offsetX = boxShadow.offsetX
-          val offsetY = boxShadow.offsetY
-          val color = boxShadow.color ?: Color.BLACK
-          val blurRadius = boxShadow.blurRadius ?: 0f
-          val spreadDistance = boxShadow.spreadDistance ?: 0f
-          val inset = boxShadow.inset ?: false
+    val outerShadows = mutableListOf<OutsetBoxShadowDrawable>()
+    val innerShadows = mutableListOf<InsetBoxShadowDrawable>()
 
-          if (inset) {
+    for (boxShadow in shadows) {
+      val offsetX = boxShadow.offsetX
+      val offsetY = boxShadow.offsetY
+      val color = boxShadow.color ?: Color.BLACK
+      val blurRadius = boxShadow.blurRadius ?: 0f
+      val spreadDistance = boxShadow.spreadDistance ?: 0f
+      val inset = boxShadow.inset ?: false
+
+      if (inset) {
+        innerShadows.add(
             InsetBoxShadowDrawable(
                 context = view.context,
                 background = ensureCSSBackground(view),
@@ -108,8 +112,9 @@ public object BackgroundStyleApplicator {
                 offsetX = offsetX,
                 offsetY = offsetY,
                 blurRadius = blurRadius,
-                spread = spreadDistance)
-          } else {
+                spread = spreadDistance))
+      } else {
+        outerShadows.add(
             OutsetBoxShadowDrawable(
                 context = view.context,
                 background = ensureCSSBackground(view),
@@ -117,24 +122,37 @@ public object BackgroundStyleApplicator {
                 offsetX = offsetX,
                 offsetY = offsetY,
                 blurRadius = blurRadius,
-                spread = spreadDistance)
-          }
-        }
+                spread = spreadDistance))
+      }
+    }
 
-    view.background = ensureCompositeBackgroundDrawable(view).withNewShadows(shadowDrawables)
+    view.background =
+        ensureCompositeBackgroundDrawable(view)
+            .withNewShadows(outerShadows = outerShadows, innerShadows = innerShadows)
   }
 
   @JvmStatic
-  public fun setBoxShadow(view: View, shadows: ReadableArray): Unit {
+  public fun setBoxShadow(view: View, shadows: ReadableArray?): Unit {
     if (Build.VERSION.SDK_INT < 31) {
       FLog.w("BackgroundStyleApplicator", "\"boxShadow\" requires Android 12 or later")
-    } else {
-      val shadowStyles = mutableListOf<BoxShadow>()
-      for (i in 0..<shadows.size()) {
-        shadowStyles.add(checkNotNull(BoxShadow.parse(shadows.getMap(i))))
-      }
-      BackgroundStyleApplicator.setBoxShadow(view, shadowStyles)
+      return
     }
+
+    if (shadows == null) {
+      BackgroundStyleApplicator.setBoxShadow(view, emptyList())
+      return
+    }
+
+    val shadowStyles = mutableListOf<BoxShadow>()
+    for (i in 0..<shadows.size()) {
+      shadowStyles.add(checkNotNull(BoxShadow.parse(shadows.getMap(i))))
+    }
+    BackgroundStyleApplicator.setBoxShadow(view, shadowStyles)
+  }
+
+  @JvmStatic
+  public fun setFeedbackUnderlay(view: View, drawable: Drawable?): Unit {
+    view.background = ensureCompositeBackgroundDrawable(view).withNewFeedbackUnderlay(drawable)
   }
 
   @JvmStatic
@@ -160,12 +178,19 @@ public object BackgroundStyleApplicator {
     }
   }
 
+  @JvmStatic
+  public fun reset(view: View): Unit {
+    if (view.background is CompositeBackgroundDrawable) {
+      view.background = (view.background as CompositeBackgroundDrawable).originalBackground
+    }
+  }
+
   private fun ensureCompositeBackgroundDrawable(view: View): CompositeBackgroundDrawable {
     if (view.background is CompositeBackgroundDrawable) {
       return view.background as CompositeBackgroundDrawable
     }
 
-    val compositeDrawable = CompositeBackgroundDrawable(view.background, null, emptyList(), null)
+    val compositeDrawable = CompositeBackgroundDrawable(originalBackground = view.background)
     view.background = compositeDrawable
     return compositeDrawable
   }
