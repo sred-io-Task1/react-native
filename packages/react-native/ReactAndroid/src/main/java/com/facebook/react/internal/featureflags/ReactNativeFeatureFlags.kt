@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<ea2ffa17af587ce1889472a5fd1bb0ee>>
+ * @generated SignedSource<<b352d8e6c8dd42936ee48024320f6b77>>
  */
 
 /**
@@ -33,12 +33,6 @@ public object ReactNativeFeatureFlags {
    */
   @JvmStatic
   public fun commonTestFlag(): Boolean = accessor.commonTestFlag()
-
-  /**
-   * Enables the differentiator to understand the "collapsableChildren" prop
-   */
-  @JvmStatic
-  public fun allowCollapsableChildren(): Boolean = accessor.allowCollapsableChildren()
 
   /**
    * Adds support for recursively processing commits that mount synchronously (Android only).
@@ -77,6 +71,12 @@ public object ReactNativeFeatureFlags {
   public fun enableAlignItemsBaselineOnFabricIOS(): Boolean = accessor.enableAlignItemsBaselineOnFabricIOS()
 
   /**
+   * Enables mix-blend-mode prop on Android.
+   */
+  @JvmStatic
+  public fun enableAndroidMixBlendModeProp(): Boolean = accessor.enableAndroidMixBlendModeProp()
+
+  /**
    * Use BackgroundStyleApplicator in place of other background/border drawing code
    */
   @JvmStatic
@@ -93,6 +93,12 @@ public object ReactNativeFeatureFlags {
    */
   @JvmStatic
   public fun enableEagerRootViewAttachment(): Boolean = accessor.enableEagerRootViewAttachment()
+
+  /**
+   * Enables the retention of EventEmitterWrapper on Android till the touch gesture is over to fix a bug on pressable (#44610)
+   */
+  @JvmStatic
+  public fun enableEventEmitterRetentionDuringGesturesOnAndroid(): Boolean = accessor.enableEventEmitterRetentionDuringGesturesOnAndroid()
 
   /**
    * This feature flag enables logs for Fabric.

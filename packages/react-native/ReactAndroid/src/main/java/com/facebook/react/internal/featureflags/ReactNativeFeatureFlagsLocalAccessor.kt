@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<9df3a3025e104c4dd9ce4fb99b8acbcd>>
+ * @generated SignedSource<<b460c7106715c0ea405dd6b284802d27>>
  */
 
 /**
@@ -25,16 +25,17 @@ public class ReactNativeFeatureFlagsLocalAccessor : ReactNativeFeatureFlagsAcces
   private val accessedFeatureFlags = mutableSetOf<String>()
 
   private var commonTestFlagCache: Boolean? = null
-  private var allowCollapsableChildrenCache: Boolean? = null
   private var allowRecursiveCommitsWithSynchronousMountOnAndroidCache: Boolean? = null
   private var batchRenderingUpdatesInEventLoopCache: Boolean? = null
   private var changeOrderOfMountingInstructionsOnAndroidCache: Boolean? = null
   private var completeReactInstanceCreationOnBgThreadOnAndroidCache: Boolean? = null
   private var destroyFabricSurfacesInReactInstanceManagerCache: Boolean? = null
   private var enableAlignItemsBaselineOnFabricIOSCache: Boolean? = null
+  private var enableAndroidMixBlendModePropCache: Boolean? = null
   private var enableBackgroundStyleApplicatorCache: Boolean? = null
   private var enableCleanTextInputYogaNodeCache: Boolean? = null
   private var enableEagerRootViewAttachmentCache: Boolean? = null
+  private var enableEventEmitterRetentionDuringGesturesOnAndroidCache: Boolean? = null
   private var enableFabricLogsCache: Boolean? = null
   private var enableFabricRendererExclusivelyCache: Boolean? = null
   private var enableGranularShadowTreeStateReconciliationCache: Boolean? = null
@@ -75,16 +76,6 @@ public class ReactNativeFeatureFlagsLocalAccessor : ReactNativeFeatureFlagsAcces
       cached = currentProvider.commonTestFlag()
       accessedFeatureFlags.add("commonTestFlag")
       commonTestFlagCache = cached
-    }
-    return cached
-  }
-
-  override fun allowCollapsableChildren(): Boolean {
-    var cached = allowCollapsableChildrenCache
-    if (cached == null) {
-      cached = currentProvider.allowCollapsableChildren()
-      accessedFeatureFlags.add("allowCollapsableChildren")
-      allowCollapsableChildrenCache = cached
     }
     return cached
   }
@@ -149,6 +140,16 @@ public class ReactNativeFeatureFlagsLocalAccessor : ReactNativeFeatureFlagsAcces
     return cached
   }
 
+  override fun enableAndroidMixBlendModeProp(): Boolean {
+    var cached = enableAndroidMixBlendModePropCache
+    if (cached == null) {
+      cached = currentProvider.enableAndroidMixBlendModeProp()
+      accessedFeatureFlags.add("enableAndroidMixBlendModeProp")
+      enableAndroidMixBlendModePropCache = cached
+    }
+    return cached
+  }
+
   override fun enableBackgroundStyleApplicator(): Boolean {
     var cached = enableBackgroundStyleApplicatorCache
     if (cached == null) {
@@ -175,6 +176,16 @@ public class ReactNativeFeatureFlagsLocalAccessor : ReactNativeFeatureFlagsAcces
       cached = currentProvider.enableEagerRootViewAttachment()
       accessedFeatureFlags.add("enableEagerRootViewAttachment")
       enableEagerRootViewAttachmentCache = cached
+    }
+    return cached
+  }
+
+  override fun enableEventEmitterRetentionDuringGesturesOnAndroid(): Boolean {
+    var cached = enableEventEmitterRetentionDuringGesturesOnAndroidCache
+    if (cached == null) {
+      cached = currentProvider.enableEventEmitterRetentionDuringGesturesOnAndroid()
+      accessedFeatureFlags.add("enableEventEmitterRetentionDuringGesturesOnAndroid")
+      enableEventEmitterRetentionDuringGesturesOnAndroidCache = cached
     }
     return cached
   }

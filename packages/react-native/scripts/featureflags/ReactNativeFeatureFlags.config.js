@@ -39,11 +39,6 @@ const testDefinitions: FeatureFlagDefinitions = {
 const definitions: FeatureFlagDefinitions = {
   common: {
     ...testDefinitions.common,
-    allowCollapsableChildren: {
-      defaultValue: true,
-      description:
-        'Enables the differentiator to understand the "collapsableChildren" prop',
-    },
     allowRecursiveCommitsWithSynchronousMountOnAndroid: {
       defaultValue: false,
       description:
@@ -74,6 +69,10 @@ const definitions: FeatureFlagDefinitions = {
       description:
         'Kill-switch to turn off support for aling-items:baseline on Fabric iOS.',
     },
+    enableAndroidMixBlendModeProp: {
+      defaultValue: false,
+      description: 'Enables mix-blend-mode prop on Android.',
+    },
     enableBackgroundStyleApplicator: {
       defaultValue: true,
       description:
@@ -87,6 +86,11 @@ const definitions: FeatureFlagDefinitions = {
       defaultValue: false,
       description:
         'Feature flag to configure eager attachment of the root view/initialisation of the JS code.',
+    },
+    enableEventEmitterRetentionDuringGesturesOnAndroid: {
+      defaultValue: false,
+      description:
+        'Enables the retention of EventEmitterWrapper on Android till the touch gesture is over to fix a bug on pressable (#44610)',
     },
     enableFabricLogs: {
       defaultValue: false,
@@ -285,6 +289,11 @@ const definitions: FeatureFlagDefinitions = {
       defaultValue: false,
       description:
         'Enables use of AnimatedObject for animating transform values.',
+    },
+    shouldUseDebouncedEffectsForAnimated: {
+      defaultValue: false,
+      description:
+        'Use new `useDebouncedEffects` hook for manging animated props lifecycle.',
     },
     shouldUseRemoveClippedSubviewsAsDefaultOnIOS: {
       defaultValue: false,

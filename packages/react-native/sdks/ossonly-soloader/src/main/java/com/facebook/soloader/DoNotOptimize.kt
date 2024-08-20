@@ -5,10 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#include <fbjni/fbjni.h>
+package com.facebook.soloader
 
-JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void*) {
-  return facebook::jni::initialize(vm, [] {
-
-  });
-}
+public annotation class DoNotOptimize {}

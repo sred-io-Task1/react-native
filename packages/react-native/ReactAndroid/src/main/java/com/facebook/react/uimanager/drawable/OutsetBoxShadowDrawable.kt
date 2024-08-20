@@ -8,25 +8,23 @@
 package com.facebook.react.uimanager.drawable
 
 import android.content.Context
+import android.graphics.BlurMaskFilter
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.ColorFilter
+import android.graphics.Paint
 import android.graphics.Path
-import android.graphics.Rect
 import android.graphics.RectF
-import android.graphics.RenderNode
 import android.graphics.drawable.Drawable
 import androidx.annotation.RequiresApi
-import com.facebook.common.logging.FLog
-import com.facebook.react.common.annotations.UnstableReactNativeAPI
 import com.facebook.react.uimanager.FilterHelper
-import com.facebook.react.uimanager.LengthPercentage
-import com.facebook.react.uimanager.LengthPercentageType
 import com.facebook.react.uimanager.PixelUtil
 import com.facebook.react.uimanager.style.BorderRadiusStyle
 import com.facebook.react.uimanager.style.ComputedBorderRadius
+import com.facebook.react.uimanager.style.CornerRadii
 import kotlin.math.roundToInt
 
-private const val TAG = "OutsetBoxShadowDrawable"
+internal const val MIN_OUTSET_BOX_SHADOW_SDK_VERSION = 28
 
 // "the resulting shadow must approximate {...} a Gaussian blur with a standard deviation equal
 // to half the blur radius"
@@ -34,123 +32,136 @@ private const val TAG = "OutsetBoxShadowDrawable"
 private const val BLUR_RADIUS_SIGMA_SCALE = 0.5f
 
 /** Draws an outer box-shadow https://www.w3.org/TR/css-backgrounds-3/#shadow-shape */
-@RequiresApi(31)
-@OptIn(UnstableReactNativeAPI::class)
+@RequiresApi(MIN_OUTSET_BOX_SHADOW_SDK_VERSION)
 internal class OutsetBoxShadowDrawable(
     private val context: Context,
-    private val background: CSSBackgroundDrawable,
-    shadowColor: Int,
+    borderRadius: BorderRadiusStyle? = null,
+    private val shadowColor: Int,
     private val offsetX: Float,
     private val offsetY: Float,
     private val blurRadius: Float,
     private val spread: Float,
 ) : Drawable() {
-  private val shadowShapeDrawable = CSSBackgroundDrawable(context).apply { color = shadowColor }
-
-  private val renderNode =
-      RenderNode(TAG).apply {
-        clipToBounds = false
-        setRenderEffect(FilterHelper.createBlurEffect(blurRadius * BLUR_RADIUS_SIGMA_SCALE))
+  public var borderRadius = borderRadius
+    set(value) {
+      if (value != field) {
+        field = value
+        invalidateSelf()
       }
-
-  private val shadowClipOutPath: Path = Path()
-
-  override fun setAlpha(alpha: Int) {
-    renderNode.alpha = alpha / 255f
-  }
-
-  override fun setColorFilter(colorFilter: ColorFilter?): Unit = Unit
-
-  override fun getOpacity(): Int = (renderNode.alpha * 255).roundToInt()
-
-  override fun draw(canvas: Canvas) {
-    if (!canvas.isHardwareAccelerated) {
-      FLog.w(TAG, "OutsetBoxShadowDrawable requires a hardware accelerated canvas")
-      return
     }
 
-    val spreadExtent = PixelUtil.toPixelFromDIP(spread).roundToInt().coerceAtLeast(0)
-    val shadowShapeFrame = Rect(bounds).apply { inset(-spreadExtent, -spreadExtent) }
-    val shadowShapeBounds = Rect(0, 0, shadowShapeFrame.width(), shadowShapeFrame.height())
-
-    val resolutionWidth = bounds.width().toFloat()
-    val resolutionHeight = bounds.height().toFloat()
-    val computedBorderRadii =
-        background.borderRadius.resolve(layoutDirection, context, resolutionWidth, resolutionHeight)
-    val shadowBorderRadii =
-        ComputedBorderRadius(
-            topLeft = adjustRadiusForSpread(computedBorderRadii.topLeft, spreadExtent.toFloat()),
-            topRight = adjustRadiusForSpread(computedBorderRadii.topRight, spreadExtent.toFloat()),
-            bottomRight =
-                adjustRadiusForSpread(computedBorderRadii.bottomRight, spreadExtent.toFloat()),
-            bottomLeft =
-                adjustRadiusForSpread(computedBorderRadii.bottomLeft, spreadExtent.toFloat()),
-        )
-
-    if (!renderNode.hasDisplayList() ||
-        shadowShapeDrawable.bounds != shadowShapeBounds ||
-        shadowShapeDrawable.layoutDirection != layoutDirection ||
-        shadowShapeDrawable.computedBorderRadius != shadowBorderRadii ||
-        shadowShapeDrawable.colorFilter != colorFilter) {
-      shadowShapeDrawable.bounds = shadowShapeBounds
-      shadowShapeDrawable.layoutDirection = layoutDirection
-      shadowShapeDrawable.borderRadius =
-          BorderRadiusStyle(
-              topLeft = LengthPercentage(shadowBorderRadii.topLeft, LengthPercentageType.POINT),
-              topRight = LengthPercentage(shadowBorderRadii.topRight, LengthPercentageType.POINT),
-              bottomLeft =
-                  LengthPercentage(shadowBorderRadii.bottomLeft, LengthPercentageType.POINT),
-              bottomRight =
-                  LengthPercentage(shadowBorderRadii.bottomRight, LengthPercentageType.POINT))
-      shadowShapeDrawable.colorFilter = colorFilter
-
-      // We remove the portion of the shadow which overlaps the background border box, to avoid
-      // showing the shadow shape e.g. behind a transparent background. There may be a subpixel gap
-      // between the border box path, and the edge of border rendering, so we slightly inflate the
-      // shadow to cover it, placing it below the borders.
-      shadowClipOutPath.rewind()
-      if (background.hasRoundedBorders()) {
-        val subpixelInsetBounds = RectF(bounds).apply { inset(0.4f, 0.4f) }
-        shadowClipOutPath.addRoundRect(
-            subpixelInsetBounds,
-            floatArrayOf(
-                computedBorderRadii.topLeft,
-                computedBorderRadii.topLeft,
-                computedBorderRadii.topRight,
-                computedBorderRadii.topRight,
-                computedBorderRadii.bottomRight,
-                computedBorderRadii.bottomRight,
-                computedBorderRadii.bottomLeft,
-                computedBorderRadii.bottomLeft),
-            Path.Direction.CW)
-      }
-
-      with(renderNode) {
-        setPosition(
-            Rect(shadowShapeFrame).apply {
-              offset(
-                  PixelUtil.toPixelFromDIP(offsetX).roundToInt(),
-                  PixelUtil.toPixelFromDIP(offsetY).roundToInt())
-            })
-
-        beginRecording().let { renderNodeCanvas ->
-          shadowShapeDrawable.draw(renderNodeCanvas)
-          endRecording()
+  private val shadowPaint =
+      Paint().apply {
+        color = shadowColor
+        if (blurRadius > 0) {
+          maskFilter =
+              BlurMaskFilter(
+                  FilterHelper.sigmaToRadius(blurRadius * BLUR_RADIUS_SIGMA_SCALE),
+                  BlurMaskFilter.Blur.NORMAL)
         }
       }
-    }
 
-    with(canvas) {
-      save()
+  override fun setAlpha(alpha: Int) {
+    shadowPaint.alpha = (((alpha / 255f) * (Color.alpha(shadowColor) / 255f)) * 255f).roundToInt()
+    invalidateSelf()
+  }
 
-      if (background.hasRoundedBorders()) {
-        clipOutPath(shadowClipOutPath)
+  override fun setColorFilter(colorFilter: ColorFilter?) {
+    shadowPaint.colorFilter = colorFilter
+    invalidateSelf()
+  }
+
+  override fun getOpacity(): Int =
+      ((shadowPaint.alpha / 255f) / (Color.alpha(shadowColor) / 255f) * 255f).roundToInt()
+
+  override fun draw(canvas: Canvas) {
+    val resolutionWidth = PixelUtil.toDIPFromPixel(bounds.width().toFloat())
+    val resolutionHeight = PixelUtil.toDIPFromPixel(bounds.height().toFloat())
+    val computedBorderRadii =
+        borderRadius?.resolve(layoutDirection, context, resolutionWidth, resolutionHeight)?.let {
+          ComputedBorderRadius(
+              topLeft =
+                  CornerRadii(
+                      PixelUtil.toPixelFromDIP(it.topLeft.horizontal),
+                      PixelUtil.toPixelFromDIP(it.topLeft.vertical)),
+              topRight =
+                  CornerRadii(
+                      PixelUtil.toPixelFromDIP(it.topRight.horizontal),
+                      PixelUtil.toPixelFromDIP(it.topRight.vertical)),
+              bottomLeft =
+                  CornerRadii(
+                      PixelUtil.toPixelFromDIP(it.bottomLeft.horizontal),
+                      PixelUtil.toPixelFromDIP(it.bottomLeft.vertical)),
+              bottomRight =
+                  CornerRadii(
+                      PixelUtil.toPixelFromDIP(it.bottomRight.horizontal),
+                      PixelUtil.toPixelFromDIP(it.bottomRight.vertical)),
+          )
+        }
+
+    val spreadExtent = PixelUtil.toPixelFromDIP(spread)
+    val shadowRect =
+        RectF(bounds).apply {
+          inset(-spreadExtent, -spreadExtent)
+          offset(PixelUtil.toPixelFromDIP(offsetX), PixelUtil.toPixelFromDIP(offsetY))
+        }
+
+    canvas.save().let { saveCount ->
+      if (computedBorderRadii?.hasRoundedBorders() == true) {
+        drawShadowRoundRect(canvas, shadowRect, spreadExtent, computedBorderRadii)
       } else {
-        clipOutRect(bounds)
+        drawShadowRect(canvas, shadowRect)
       }
-
-      drawRenderNode(renderNode)
-      restore()
+      canvas.restoreToCount(saveCount)
     }
+  }
+
+  private fun drawShadowRoundRect(
+      canvas: Canvas,
+      shadowRect: RectF,
+      spreadExtent: Float,
+      computedBorderRadii: ComputedBorderRadius
+  ) {
+    // We inset the clip slightly, to avoid Skia artifacts with antialiased
+    // clipping. This inset is only visible when no background is present.
+    // https://neugierig.org/software/chromium/notes/2010/07/clipping.html
+    val subpixelInsetBounds = RectF(bounds).apply { inset(0.4f, 0.4f) }
+    canvas.clipOutPath(
+        Path().apply {
+          addRoundRect(
+              subpixelInsetBounds,
+              floatArrayOf(
+                  computedBorderRadii.topLeft.horizontal,
+                  computedBorderRadii.topLeft.vertical,
+                  computedBorderRadii.topRight.horizontal,
+                  computedBorderRadii.topRight.vertical,
+                  computedBorderRadii.bottomRight.horizontal,
+                  computedBorderRadii.bottomRight.vertical,
+                  computedBorderRadii.bottomLeft.horizontal,
+                  computedBorderRadii.bottomLeft.vertical),
+              Path.Direction.CW)
+        })
+
+    canvas.drawPath(
+        Path().apply {
+          addRoundRect(
+              shadowRect,
+              floatArrayOf(
+                  adjustRadiusForSpread(computedBorderRadii.topLeft.horizontal, spreadExtent),
+                  adjustRadiusForSpread(computedBorderRadii.topLeft.vertical, spreadExtent),
+                  adjustRadiusForSpread(computedBorderRadii.topRight.horizontal, spreadExtent),
+                  adjustRadiusForSpread(computedBorderRadii.topRight.vertical, spreadExtent),
+                  adjustRadiusForSpread(computedBorderRadii.bottomRight.horizontal, spreadExtent),
+                  adjustRadiusForSpread(computedBorderRadii.bottomRight.vertical, spreadExtent),
+                  adjustRadiusForSpread(computedBorderRadii.bottomLeft.horizontal, spreadExtent),
+                  adjustRadiusForSpread(computedBorderRadii.bottomLeft.vertical, spreadExtent)),
+              Path.Direction.CW)
+        },
+        shadowPaint)
+  }
+
+  private fun drawShadowRect(canvas: Canvas, shadowRect: RectF) {
+    canvas.clipOutRect(bounds)
+    canvas.drawRect(shadowRect, shadowPaint)
   }
 }

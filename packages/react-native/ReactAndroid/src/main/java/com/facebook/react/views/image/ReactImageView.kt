@@ -57,6 +57,7 @@ import com.facebook.react.uimanager.BackgroundStyleApplicator
 import com.facebook.react.uimanager.FloatUtil.floatsEqual
 import com.facebook.react.uimanager.LengthPercentage
 import com.facebook.react.uimanager.LengthPercentageType
+import com.facebook.react.uimanager.PixelUtil.toDIPFromPixel
 import com.facebook.react.uimanager.PixelUtil.toPixelFromDIP
 import com.facebook.react.uimanager.Spacing
 import com.facebook.react.uimanager.UIManagerHelper
@@ -160,7 +161,7 @@ public class ReactImageView(
                       total))
             }
 
-            override fun onSubmit(id: String, callerContext: Any) {
+            override fun onSubmit(id: String, callerContext: Any?) {
               if (eventDispatcher == null) {
                 return
               }
@@ -257,7 +258,7 @@ public class ReactImageView(
     if (enableBackgroundStyleApplicator()) {
       val radius =
           if (borderRadius.isNaN()) null
-          else LengthPercentage(borderRadius, LengthPercentageType.POINT)
+          else LengthPercentage(toDIPFromPixel(borderRadius), LengthPercentageType.POINT)
       BackgroundStyleApplicator.setBorderRadius(this, BorderRadiusProp.BORDER_RADIUS, radius)
     } else if (useNewReactImageViewBackgroundDrawing()) {
       reactBackgroundManager.setBorderRadius(borderRadius)
@@ -271,7 +272,7 @@ public class ReactImageView(
     if (enableBackgroundStyleApplicator()) {
       val radius =
           if (borderRadius.isNaN()) null
-          else LengthPercentage(borderRadius, LengthPercentageType.POINT)
+          else LengthPercentage(toDIPFromPixel(borderRadius), LengthPercentageType.POINT)
       BackgroundStyleApplicator.setBorderRadius(this, BorderRadiusProp.values()[position], radius)
     } else if (useNewReactImageViewBackgroundDrawing()) {
       reactBackgroundManager.setBorderRadius(borderRadius, position + 1)
@@ -389,8 +390,9 @@ public class ReactImageView(
     this.headers = headers
   }
 
-  public override fun hasOverlappingRendering(): Boolean =
-      backgroundImageDrawable != null || super.hasOverlappingRendering()
+  // Disable rasterizing to offscreen layer in order to preserve background effects like box-shadow
+  // or outline which may draw outside of bounds.
+  public override fun hasOverlappingRendering(): Boolean = false
 
   public override fun onDraw(canvas: Canvas) {
     if (enableBackgroundStyleApplicator()) {

@@ -12,13 +12,16 @@ import static com.facebook.react.common.ReactConstants.TAG;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.BlendMode;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import android.os.Build;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +30,7 @@ import android.view.animation.Animation;
 import androidx.annotation.Nullable;
 import com.facebook.common.logging.FLog;
 import com.facebook.infer.annotation.Assertions;
+import com.facebook.react.R;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactNoCrashSoftException;
 import com.facebook.react.bridge.ReactSoftExceptionLogger;
@@ -60,6 +64,7 @@ import com.facebook.react.uimanager.drawable.CSSBackgroundDrawable;
 import com.facebook.react.uimanager.style.BorderRadiusProp;
 import com.facebook.react.uimanager.style.BorderStyle;
 import com.facebook.react.uimanager.style.ComputedBorderRadius;
+import com.facebook.react.uimanager.style.CornerRadii;
 import com.facebook.react.uimanager.style.Gradient;
 import com.facebook.react.uimanager.style.LogicalEdge;
 import com.facebook.react.uimanager.style.Overflow;
@@ -466,7 +471,7 @@ public class ReactViewGroup extends ViewGroup
     if (!intersects && child.getParent() != null && !isAnimating) {
       // We can try saving on invalidate call here as the view that we remove is out of visible area
       // therefore invalidation is not necessary.
-      removeViewsInLayout(idx - clippedSoFar, 1);
+      removeViewInLayout(child);
       needUpdateClippingRecursive = true;
     } else if (intersects && child.getParent() == null) {
       addViewInLayout(child, idx - clippedSoFar, sDefaultLayoutParam, true);
@@ -673,7 +678,7 @@ public class ReactViewGroup extends ViewGroup
     // to it's children.
   }
 
-  /*package*/ void setPointerEvents(PointerEvents pointerEvents) {
+  public void setPointerEvents(PointerEvents pointerEvents) {
     mPointerEvents = pointerEvents;
   }
 
@@ -818,6 +823,20 @@ public class ReactViewGroup extends ViewGroup
     }
   }
 
+  private boolean needsIsolatedLayer() {
+    if (!ReactNativeFeatureFlags.enableAndroidMixBlendModeProp()) {
+      return false;
+    }
+
+    for (int i = 0; i < getChildCount(); i++) {
+      if (getChildAt(i).getTag(R.id.mix_blend_mode) != null) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   @VisibleForTesting
   public int getBackgroundColor() {
     if (ReactNativeFeatureFlags.enableBackgroundStyleApplicator()) {
@@ -865,7 +884,13 @@ public class ReactViewGroup extends ViewGroup
   }
 
   public void setOverflow(@Nullable String overflow) {
-    mOverflow = overflow == null ? Overflow.VISIBLE : Overflow.fromString(overflow);
+    if (overflow == null) {
+      mOverflow = Overflow.VISIBLE;
+    } else {
+      @Nullable Overflow parsedOverflow = Overflow.fromString(overflow);
+      mOverflow = parsedOverflow == null ? Overflow.VISIBLE : parsedOverflow;
+    }
+
     invalidate();
   }
 
@@ -885,6 +910,13 @@ public class ReactViewGroup extends ViewGroup
 
   @Override
   public void setOverflowInset(int left, int top, int right, int bottom) {
+    if (needsIsolatedLayer()
+        && (mOverflowInset.left != left
+            || mOverflowInset.top != top
+            || mOverflowInset.right != right
+            || mOverflowInset.bottom != bottom)) {
+      invalidate();
+    }
     mOverflowInset.set(left, top, right, bottom);
   }
 
@@ -902,6 +934,29 @@ public class ReactViewGroup extends ViewGroup
    */
   /* package */ void updateBackgroundDrawable(@Nullable Drawable drawable) {
     super.setBackground(drawable);
+  }
+
+  @Override
+  public void draw(Canvas canvas) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+        && ViewUtil.getUIManagerType(this) == UIManagerType.FABRIC
+        && needsIsolatedLayer()) {
+
+      // Check if the view is a stacking context and has children, if it does, do the rendering
+      // offscreen and then composite back. This follows the idea of group isolation on blending
+      // https://www.w3.org/TR/compositing-1/#isolationblending
+      Rect overflowInset = getOverflowInset();
+      canvas.saveLayer(
+          overflowInset.left,
+          overflowInset.top,
+          getWidth() + -overflowInset.right,
+          getHeight() + -overflowInset.bottom,
+          null);
+      super.draw(canvas);
+      canvas.restore();
+    } else {
+      super.draw(canvas);
+    }
   }
 
   @Override
@@ -943,7 +998,27 @@ public class ReactViewGroup extends ViewGroup
       CanvasUtil.enableZ(canvas, true);
     }
 
+    BlendMode mixBlendMode = null;
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && needsIsolatedLayer()) {
+      mixBlendMode = (BlendMode) child.getTag(R.id.mix_blend_mode);
+      if (mixBlendMode != null) {
+        Paint p = new Paint();
+        p.setBlendMode(mixBlendMode);
+        Rect overflowInset = getOverflowInset();
+        canvas.saveLayer(
+            overflowInset.left,
+            overflowInset.top,
+            getWidth() + -overflowInset.right,
+            getHeight() + -overflowInset.bottom,
+            p);
+      }
+    }
+
     boolean result = super.drawChild(canvas, child, drawingTime);
+
+    if (mixBlendMode != null) {
+      canvas.restore();
+    }
 
     if (drawWithZ) {
       CanvasUtil.enableZ(canvas, false);
@@ -988,18 +1063,23 @@ public class ReactViewGroup extends ViewGroup
               mPath = new Path();
             }
 
+            CornerRadii topLeftRadius = borderRadius.getTopLeft().toPixelFromDIP();
+            CornerRadii topRightRadius = borderRadius.getTopRight().toPixelFromDIP();
+            CornerRadii bottomLeftRadius = borderRadius.getBottomLeft().toPixelFromDIP();
+            CornerRadii bottomRightRadius = borderRadius.getBottomRight().toPixelFromDIP();
+
             mPath.rewind();
             mPath.addRoundRect(
                 new RectF(left, top, right, bottom),
                 new float[] {
-                  Math.max(borderRadius.getTopLeft() - borderWidth.left, 0),
-                  Math.max(borderRadius.getTopLeft() - borderWidth.top, 0),
-                  Math.max(borderRadius.getTopRight() - borderWidth.right, 0),
-                  Math.max(borderRadius.getTopRight() - borderWidth.top, 0),
-                  Math.max(borderRadius.getBottomRight() - borderWidth.right, 0),
-                  Math.max(borderRadius.getBottomRight() - borderWidth.bottom, 0),
-                  Math.max(borderRadius.getBottomLeft() - borderWidth.left, 0),
-                  Math.max(borderRadius.getBottomLeft() - borderWidth.bottom, 0),
+                  Math.max(topLeftRadius.getHorizontal() - borderWidth.left, 0),
+                  Math.max(topLeftRadius.getVertical() - borderWidth.top, 0),
+                  Math.max(topRightRadius.getHorizontal() - borderWidth.right, 0),
+                  Math.max(topRightRadius.getVertical() - borderWidth.top, 0),
+                  Math.max(bottomRightRadius.getHorizontal() - borderWidth.right, 0),
+                  Math.max(bottomRightRadius.getVertical() - borderWidth.bottom, 0),
+                  Math.max(bottomLeftRadius.getHorizontal() - borderWidth.left, 0),
+                  Math.max(bottomLeftRadius.getVertical() - borderWidth.bottom, 0),
                 },
                 Path.Direction.CW);
             canvas.clipPath(mPath);

@@ -64,28 +64,16 @@ target_compile_options(${CMAKE_PROJECT_NAME}
 
 # Prefab packages from React Native
 find_package(ReactAndroid REQUIRED CONFIG)
-add_library(fabricjni ALIAS ReactAndroid::fabricjni)
 add_library(jsi ALIAS ReactAndroid::jsi)
-add_library(mapbufferjni ALIAS ReactAndroid::mapbufferjni)
-add_library(react_render_mapbuffer ALIAS ReactAndroid::react_render_mapbuffer)
-add_library(react_render_textlayoutmanager ALIAS ReactAndroid::react_render_textlayoutmanager)
-add_library(react_newarchdefaults ALIAS ReactAndroid::react_newarchdefaults)
 add_library(reactnative ALIAS ReactAndroid::reactnative)
-add_library(turbomodulejsijni ALIAS ReactAndroid::turbomodulejsijni)
-add_library(yoga ALIAS ReactAndroid::yoga)
 
 find_package(fbjni REQUIRED CONFIG)
 add_library(fbjni ALIAS fbjni::fbjni)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
-        fabricjni                           # prefab ready
-        mapbufferjni                        # prefab ready
         fbjni                               # via 3rd party prefab
         jsi                                 # prefab ready
-        react_newarchdefaults               # prefab ready
         reactnative                         # prefab ready
-        turbomodulejsijni                   # prefab ready
-        yoga                                # prefab ready
 )
 
 # We use an interface target to propagate flags to all the generated targets

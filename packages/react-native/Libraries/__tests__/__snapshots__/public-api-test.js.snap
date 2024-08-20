@@ -1507,7 +1507,48 @@ declare export default typeof NativeFileReaderModule;
 "
 `;
 
-exports[`public API should not change unintentionally Libraries/Blob/URL.js 1`] = `"UNTYPED MODULE (unsupported-syntax suppression)"`;
+exports[`public API should not change unintentionally Libraries/Blob/URL.js 1`] = `
+"export { URLSearchParams } from \\"./URLSearchParams\\";
+declare export class URL {
+  _url: string;
+  _searchParamsInstance: ?URLSearchParams;
+  static createObjectURL(blob: Blob): string;
+  static revokeObjectURL(url: string): void;
+  constructor(url: string, base: string | URL): void;
+  get hash(): string;
+  get host(): string;
+  get hostname(): string;
+  get href(): string;
+  get origin(): string;
+  get password(): string;
+  get pathname(): string;
+  get port(): string;
+  get protocol(): string;
+  get search(): string;
+  get searchParams(): URLSearchParams;
+  toJSON(): string;
+  toString(): string;
+  get username(): string;
+}
+"
+`;
+
+exports[`public API should not change unintentionally Libraries/Blob/URLSearchParams.js.flow 1`] = `
+"declare export class URLSearchParams {
+  _searchParams: Array<Array<string>>;
+  constructor(params: any): void;
+  append(key: string, value: string): void;
+  delete(name: string): void;
+  get(name: string): void;
+  getAll(name: string): void;
+  has(name: string): void;
+  set(name: string, value: string): void;
+  sort(): void;
+  @@iterator: Iterator<Array<string>>;
+  toString(): string;
+}
+"
+`;
 
 exports[`public API should not change unintentionally Libraries/BugReporting/BugReporting.js 1`] = `
 "type ExtraData = { [key: string]: string, ... };
@@ -2106,7 +2147,7 @@ export type Props = $ReadOnly<{|
   snapToStart?: ?boolean,
   snapToEnd?: ?boolean,
   removeClippedSubviews?: ?boolean,
-  refreshControl?: ?React.Element<any>,
+  refreshControl?: ?ExactReactElement_DEPRECATED<any>,
   children?: React.Node,
   innerViewRef?: React.RefSetter<InnerViewInstance>,
   scrollViewRef?: React.RefSetter<PublicScrollViewInstance>,
@@ -2227,7 +2268,7 @@ declare class ScrollView extends React.Component<Props, State> {
   _handleTouchCancel: (e: PressEvent) => void;
   _handleTouchStart: (e: PressEvent) => void;
   _handleTouchMove: (e: PressEvent) => void;
-  render(): React.Node | React.Element<string>;
+  render(): React.Node;
 }
 type RefForwarder<TNativeInstance, TPublicInstance> = {
   getForwardingRef: (
@@ -2360,7 +2401,7 @@ exports[`public API should not change unintentionally Libraries/Components/Scrol
 
 exports[`public API should not change unintentionally Libraries/Components/ScrollView/ScrollViewStickyHeader.js 1`] = `
 "export type Props = $ReadOnly<{
-  children?: React.Element<$FlowFixMe>,
+  children?: ExactReactElement_DEPRECATED<$FlowFixMe>,
   nextHeaderLayoutY: ?number,
   onLayout: (event: LayoutEvent) => void,
   scrollAnimatedValue: Animated.Value,
@@ -3850,6 +3891,8 @@ exports[`public API should not change unintentionally Libraries/Components/View/
   accessibilityValue: true,
   accessibilityHint: true,
   accessibilityLanguage: true,
+  accessibilityShowsLargeContentViewer: true,
+  accessibilityLargeContentTitle: true,
   importantForAccessibility: true,
   nativeID: true,
   testID: true,
@@ -4136,6 +4179,8 @@ type AndroidViewProps = $ReadOnly<{|
 type IOSViewProps = $ReadOnly<{|
   accessibilityIgnoresInvertColors?: ?boolean,
   accessibilityViewIsModal?: ?boolean,
+  accessibilityShowsLargeContentViewer?: ?boolean,
+  accessibilityLargeContentTitle?: ?string,
   \\"aria-modal\\"?: ?boolean,
   accessibilityElementsHidden?: ?boolean,
   accessibilityLanguage?: ?Stringish,
@@ -4327,6 +4372,8 @@ exports[`public API should not change unintentionally Libraries/Core/ExtendedErr
 "
 `;
 
+exports[`public API should not change unintentionally Libraries/Core/InitializeCore.js 1`] = `""`;
+
 exports[`public API should not change unintentionally Libraries/Core/NativeExceptionsManager.js 1`] = `
 "export * from \\"../../src/private/specs/modules/NativeExceptionsManager\\";
 declare export default typeof NativeExceptionsManager;
@@ -4432,6 +4479,10 @@ exports[`public API should not change unintentionally Libraries/Core/Timers/queu
 "
 `;
 
+exports[`public API should not change unintentionally Libraries/Core/checkNativeVersion.js 1`] = `""`;
+
+exports[`public API should not change unintentionally Libraries/Core/polyfillPromise.js 1`] = `""`;
+
 exports[`public API should not change unintentionally Libraries/Core/registerCallableModule.js 1`] = `
 "type Module = { ... };
 type RegisterCallableModule = (
@@ -4442,6 +4493,26 @@ declare const registerCallableModule: RegisterCallableModule;
 declare export default typeof registerCallableModule;
 "
 `;
+
+exports[`public API should not change unintentionally Libraries/Core/setUpAlert.js 1`] = `""`;
+
+exports[`public API should not change unintentionally Libraries/Core/setUpBatchedBridge.js 1`] = `""`;
+
+exports[`public API should not change unintentionally Libraries/Core/setUpDeveloperTools.js 1`] = `""`;
+
+exports[`public API should not change unintentionally Libraries/Core/setUpErrorHandling.js 1`] = `""`;
+
+exports[`public API should not change unintentionally Libraries/Core/setUpGlobals.js 1`] = `""`;
+
+exports[`public API should not change unintentionally Libraries/Core/setUpNavigator.js 1`] = `""`;
+
+exports[`public API should not change unintentionally Libraries/Core/setUpPerformance.js 1`] = `""`;
+
+exports[`public API should not change unintentionally Libraries/Core/setUpReactDevTools.js 1`] = `""`;
+
+exports[`public API should not change unintentionally Libraries/Core/setUpReactRefresh.js 1`] = `""`;
+
+exports[`public API should not change unintentionally Libraries/Core/setUpRegeneratorRuntime.js 1`] = `""`;
 
 exports[`public API should not change unintentionally Libraries/Core/setUpSegmentFetcher.js 1`] = `
 "export type FetchSegmentFunction = typeof __fetchSegment;
@@ -4456,6 +4527,10 @@ declare function __fetchSegment(
 ): void;
 "
 `;
+
+exports[`public API should not change unintentionally Libraries/Core/setUpTimers.js 1`] = `""`;
+
+exports[`public API should not change unintentionally Libraries/Core/setUpXHR.js 1`] = `""`;
 
 exports[`public API should not change unintentionally Libraries/Debugging/DebuggingOverlay.js 1`] = `
 "type DebuggingOverlayHandle = {
@@ -4679,6 +4754,7 @@ declare class AssetSourceResolver {
   isLoadedFromServer(): boolean;
   isLoadedFromFileSystem(): boolean;
   defaultAsset(): ResolvedAssetSource;
+  getAssetUsingResolver(resolver: AssetDestPathResolver): ResolvedAssetSource;
   assetServerURL(): ResolvedAssetSource;
   scaledAssetPath(): ResolvedAssetSource;
   scaledAssetURLNearBundle(): ResolvedAssetSource;
@@ -4930,8 +5006,8 @@ export type { ImageProps } from \\"./ImageProps\\";
 exports[`public API should not change unintentionally Libraries/Image/ImageUtils.js 1`] = `
 "type ResizeMode = \\"cover\\" | \\"contain\\" | \\"stretch\\" | \\"repeat\\" | \\"center\\";
 declare export function convertObjectFitToResizeMode(
-  objectFit: string
-): ResizeMode;
+  objectFit: ?string
+): ?ResizeMode;
 "
 `;
 
@@ -5743,7 +5819,7 @@ type OptionalProps<SectionT: SectionBase<any>> = {|
       ...
     },
     ...
-  }) => null | Element<any>,
+  }) => null | React.MixedElement,
   extraData?: any,
   initialNumToRender?: ?number,
   inverted?: ?boolean,
@@ -7496,7 +7572,7 @@ declare module.exports: ReactNativeRuntimeDiagnostics;
 
 exports[`public API should not change unintentionally Libraries/ReactNative/RendererImplementation.js 1`] = `
 "declare export function renderElement({
-  element: Element<ElementType>,
+  element: React.MixedElement,
   rootTag: number,
   useFabric: boolean,
   useConcurrentRoot: boolean,
@@ -7599,6 +7675,8 @@ exports[`public API should not change unintentionally Libraries/ReactNative/requ
 declare export default typeof requireNativeComponent;
 "
 `;
+
+exports[`public API should not change unintentionally Libraries/ReactPrivate/ReactNativePrivateInitializeCore.js 1`] = `""`;
 
 exports[`public API should not change unintentionally Libraries/ReactPrivate/ReactNativePrivateInterface.js 1`] = `
 "declare module.exports: {
@@ -7834,7 +7912,7 @@ export type ReactNativeType = {
     eventType: string
   ): void,
   render(
-    element: Element<ElementType>,
+    element: MixedElement,
     containerTag: number,
     callback: ?() => void,
     options: ?RenderRootOptions
@@ -7867,7 +7945,7 @@ export type ReactFabricType = {
     eventType: string
   ): void,
   render(
-    element: Element<ElementType>,
+    element: MixedElement,
     containerTag: number,
     callback: ?() => void,
     concurrentRoot: ?boolean,
@@ -8256,7 +8334,7 @@ export type GradientValue = {
   direction?: string,
   colorStops: $ReadOnlyArray<{
     color: ____ColorValue_Internal,
-    position?: string,
+    positions?: $ReadOnlyArray<string>,
   }>,
 };
 export type BoxShadowPrimitive = {
@@ -8330,6 +8408,7 @@ export type ____ViewStyle_InternalCore = $ReadOnly<{
   experimental_filter?: $ReadOnlyArray<FilterFunction> | string,
   experimental_mixBlendMode?: ____BlendMode_Internal,
   experimental_backgroundImage?: $ReadOnlyArray<GradientValue> | string,
+  isolation?: \\"auto\\" | \\"isolate\\",
 }>;
 export type ____ViewStyle_Internal = $ReadOnly<{
   ...____ViewStyle_InternalCore,
@@ -9403,7 +9482,7 @@ declare function expectNoConsoleWarn(): void;
 declare function expectNoConsoleError(): void;
 declare function expectRendersMatchingSnapshot(
   name: string,
-  ComponentProvider: () => React.Element<any>,
+  ComponentProvider: () => React.MixedElement,
   unmockComponent: () => mixed
 ): void;
 declare function maximumDepthOfJSON(node: ?ReactTestRendererJSON): number;

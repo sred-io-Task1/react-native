@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<763d10f3232028a26f5ed194fdb3b4f7>>
+ * @generated SignedSource<<0a5c752e7d7ae1edd9c495dce0557347>>
  */
 
 /**
@@ -23,10 +23,6 @@ namespace facebook::react {
 
 bool ReactNativeFeatureFlags::commonTestFlag() {
   return getAccessor().commonTestFlag();
-}
-
-bool ReactNativeFeatureFlags::allowCollapsableChildren() {
-  return getAccessor().allowCollapsableChildren();
 }
 
 bool ReactNativeFeatureFlags::allowRecursiveCommitsWithSynchronousMountOnAndroid() {
@@ -53,6 +49,10 @@ bool ReactNativeFeatureFlags::enableAlignItemsBaselineOnFabricIOS() {
   return getAccessor().enableAlignItemsBaselineOnFabricIOS();
 }
 
+bool ReactNativeFeatureFlags::enableAndroidMixBlendModeProp() {
+  return getAccessor().enableAndroidMixBlendModeProp();
+}
+
 bool ReactNativeFeatureFlags::enableBackgroundStyleApplicator() {
   return getAccessor().enableBackgroundStyleApplicator();
 }
@@ -63,6 +63,10 @@ bool ReactNativeFeatureFlags::enableCleanTextInputYogaNode() {
 
 bool ReactNativeFeatureFlags::enableEagerRootViewAttachment() {
   return getAccessor().enableEagerRootViewAttachment();
+}
+
+bool ReactNativeFeatureFlags::enableEventEmitterRetentionDuringGesturesOnAndroid() {
+  return getAccessor().enableEventEmitterRetentionDuringGesturesOnAndroid();
 }
 
 bool ReactNativeFeatureFlags::enableFabricLogs() {

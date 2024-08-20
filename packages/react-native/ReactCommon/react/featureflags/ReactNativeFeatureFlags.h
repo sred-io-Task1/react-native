@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<14d7dd1b3690775bb8df6dc17d18c43c>>
+ * @generated SignedSource<<0f3eb0af6d8f2012fc5169d59d38cbc4>>
  */
 
 /**
@@ -43,11 +43,6 @@ class ReactNativeFeatureFlags {
   RN_EXPORT static bool commonTestFlag();
 
   /**
-   * Enables the differentiator to understand the "collapsableChildren" prop
-   */
-  RN_EXPORT static bool allowCollapsableChildren();
-
-  /**
    * Adds support for recursively processing commits that mount synchronously (Android only).
    */
   RN_EXPORT static bool allowRecursiveCommitsWithSynchronousMountOnAndroid();
@@ -78,6 +73,11 @@ class ReactNativeFeatureFlags {
   RN_EXPORT static bool enableAlignItemsBaselineOnFabricIOS();
 
   /**
+   * Enables mix-blend-mode prop on Android.
+   */
+  RN_EXPORT static bool enableAndroidMixBlendModeProp();
+
+  /**
    * Use BackgroundStyleApplicator in place of other background/border drawing code
    */
   RN_EXPORT static bool enableBackgroundStyleApplicator();
@@ -91,6 +91,11 @@ class ReactNativeFeatureFlags {
    * Feature flag to configure eager attachment of the root view/initialisation of the JS code.
    */
   RN_EXPORT static bool enableEagerRootViewAttachment();
+
+  /**
+   * Enables the retention of EventEmitterWrapper on Android till the touch gesture is over to fix a bug on pressable (#44610)
+   */
+  RN_EXPORT static bool enableEventEmitterRetentionDuringGesturesOnAndroid();
 
   /**
    * This feature flag enables logs for Fabric.

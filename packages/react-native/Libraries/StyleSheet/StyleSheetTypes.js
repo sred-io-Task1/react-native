@@ -715,7 +715,7 @@ export type GradientValue = {
   direction?: string,
   colorStops: $ReadOnlyArray<{
     color: ____ColorValue_Internal,
-    position?: string,
+    positions?: $ReadOnlyArray<string>,
   }>,
 };
 
@@ -792,6 +792,7 @@ export type ____ViewStyle_InternalCore = $ReadOnly<{
   experimental_filter?: $ReadOnlyArray<FilterFunction> | string,
   experimental_mixBlendMode?: ____BlendMode_Internal,
   experimental_backgroundImage?: $ReadOnlyArray<GradientValue> | string,
+  isolation?: 'auto' | 'isolate',
 }>;
 
 export type ____ViewStyle_Internal = $ReadOnly<{

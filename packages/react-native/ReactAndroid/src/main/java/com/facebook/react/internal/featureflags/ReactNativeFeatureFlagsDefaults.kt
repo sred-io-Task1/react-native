@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<2fe2a37cfa83ae9a6a53d1e2e17382b7>>
+ * @generated SignedSource<<86db65691c73cff2843e81e053268892>>
  */
 
 /**
@@ -25,8 +25,6 @@ public open class ReactNativeFeatureFlagsDefaults : ReactNativeFeatureFlagsProvi
 
   override fun commonTestFlag(): Boolean = false
 
-  override fun allowCollapsableChildren(): Boolean = true
-
   override fun allowRecursiveCommitsWithSynchronousMountOnAndroid(): Boolean = false
 
   override fun batchRenderingUpdatesInEventLoop(): Boolean = false
@@ -39,11 +37,15 @@ public open class ReactNativeFeatureFlagsDefaults : ReactNativeFeatureFlagsProvi
 
   override fun enableAlignItemsBaselineOnFabricIOS(): Boolean = true
 
+  override fun enableAndroidMixBlendModeProp(): Boolean = false
+
   override fun enableBackgroundStyleApplicator(): Boolean = true
 
   override fun enableCleanTextInputYogaNode(): Boolean = false
 
   override fun enableEagerRootViewAttachment(): Boolean = false
+
+  override fun enableEventEmitterRetentionDuringGesturesOnAndroid(): Boolean = false
 
   override fun enableFabricLogs(): Boolean = false
 

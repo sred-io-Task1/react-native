@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<e96f638fecb353c9bcf98fb03e97c12d>>
+ * @generated SignedSource<<23af9284953b14cb18ff1ad71145c29b>>
  */
 
 /**
@@ -37,8 +37,6 @@ class NativeReactNativeFeatureFlags
 
   bool commonTestFlag(jsi::Runtime& runtime);
 
-  bool allowCollapsableChildren(jsi::Runtime& runtime);
-
   bool allowRecursiveCommitsWithSynchronousMountOnAndroid(jsi::Runtime& runtime);
 
   bool batchRenderingUpdatesInEventLoop(jsi::Runtime& runtime);
@@ -51,11 +49,15 @@ class NativeReactNativeFeatureFlags
 
   bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime& runtime);
 
+  bool enableAndroidMixBlendModeProp(jsi::Runtime& runtime);
+
   bool enableBackgroundStyleApplicator(jsi::Runtime& runtime);
 
   bool enableCleanTextInputYogaNode(jsi::Runtime& runtime);
 
   bool enableEagerRootViewAttachment(jsi::Runtime& runtime);
+
+  bool enableEventEmitterRetentionDuringGesturesOnAndroid(jsi::Runtime& runtime);
 
   bool enableFabricLogs(jsi::Runtime& runtime);
 

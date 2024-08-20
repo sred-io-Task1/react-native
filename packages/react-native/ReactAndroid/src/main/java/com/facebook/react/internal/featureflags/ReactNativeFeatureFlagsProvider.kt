@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<ede274d7ec557bdc870c7f87bf1e0b9b>>
+ * @generated SignedSource<<7260472dccd3ec3c9612727c6c337f24>>
  */
 
 /**
@@ -25,8 +25,6 @@ import com.facebook.proguard.annotations.DoNotStrip
 public interface ReactNativeFeatureFlagsProvider {
   @DoNotStrip public fun commonTestFlag(): Boolean
 
-  @DoNotStrip public fun allowCollapsableChildren(): Boolean
-
   @DoNotStrip public fun allowRecursiveCommitsWithSynchronousMountOnAndroid(): Boolean
 
   @DoNotStrip public fun batchRenderingUpdatesInEventLoop(): Boolean
@@ -39,11 +37,15 @@ public interface ReactNativeFeatureFlagsProvider {
 
   @DoNotStrip public fun enableAlignItemsBaselineOnFabricIOS(): Boolean
 
+  @DoNotStrip public fun enableAndroidMixBlendModeProp(): Boolean
+
   @DoNotStrip public fun enableBackgroundStyleApplicator(): Boolean
 
   @DoNotStrip public fun enableCleanTextInputYogaNode(): Boolean
 
   @DoNotStrip public fun enableEagerRootViewAttachment(): Boolean
+
+  @DoNotStrip public fun enableEventEmitterRetentionDuringGesturesOnAndroid(): Boolean
 
   @DoNotStrip public fun enableFabricLogs(): Boolean
 

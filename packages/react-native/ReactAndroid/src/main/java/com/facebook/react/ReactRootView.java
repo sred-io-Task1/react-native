@@ -360,7 +360,7 @@ public class ReactRootView extends FrameLayout implements RootView, ReactRoot {
     EventDispatcher eventDispatcher =
         UIManagerHelper.getEventDispatcher(getCurrentReactContext(), getUIManagerType());
     if (eventDispatcher != null) {
-      mJSTouchDispatcher.handleTouchEvent(event, eventDispatcher);
+      mJSTouchDispatcher.handleTouchEvent(event, eventDispatcher, getCurrentReactContext());
     }
   }
 
@@ -895,7 +895,7 @@ public class ReactRootView extends FrameLayout implements RootView, ReactRoot {
           sendEvent(
               "keyboardDidHide",
               createKeyboardEventPayload(
-                  PixelUtil.toDIPFromPixel(mLastHeight),
+                  PixelUtil.toDIPFromPixel(mVisibleViewArea.height()),
                   0,
                   PixelUtil.toDIPFromPixel(mVisibleViewArea.width()),
                   0));
@@ -944,7 +944,7 @@ public class ReactRootView extends FrameLayout implements RootView, ReactRoot {
         sendEvent(
             "keyboardDidHide",
             createKeyboardEventPayload(
-                PixelUtil.toDIPFromPixel(mLastHeight),
+                PixelUtil.toDIPFromPixel(mVisibleViewArea.height()),
                 0,
                 PixelUtil.toDIPFromPixel(mVisibleViewArea.width()),
                 0));
