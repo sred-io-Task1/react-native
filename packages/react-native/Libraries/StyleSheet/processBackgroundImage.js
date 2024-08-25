@@ -51,28 +51,41 @@ export default function processBackgroundImage(
       }> = [];
       for (let index = 0; index < bgImage.colorStops.length; index++) {
         const colorStop = bgImage.colorStops[index];
-        const processedColor = processColor(colorStop.color);
-        if (processedColor == null) {
-          // If a color is invalid, return an empty array and do not apply gradient. Same as web.
-          return [];
-        }
-        if (colorStop.positions != null && colorStop.positions.length > 0) {
-          for (const position of colorStop.positions) {
-            if (position.endsWith('%')) {
-              processedColorStops.push({
-                color: processedColor,
-                position: parseFloat(position) / 100,
-              });
-            } else {
-              // If a position is invalid, return an empty array and do not apply gradient. Same as web.
-              return [];
-            }
-          }
-        } else {
+        // Transition hint
+        if (
+          colorStop.color == null &&
+          Array.isArray(colorStop.positions) &&
+          colorStop.positions.length === 1 &&
+          colorStop.positions[0].endsWith('%')
+        ) {
           processedColorStops.push({
-            color: processedColor,
-            position: null,
+            color: null,
+            position: parseFloat(colorStop.positions[0]) / 100,
           });
+        } else {
+          const processedColor = processColor(colorStop.color);
+          if (processedColor == null) {
+            // If a color is invalid, return an empty array and do not apply gradient. Same as web.
+            return [];
+          }
+          if (colorStop.positions != null && colorStop.positions.length > 0) {
+            for (const position of colorStop.positions) {
+              if (position.endsWith('%')) {
+                processedColorStops.push({
+                  color: processedColor,
+                  position: parseFloat(position) / 100,
+                });
+              } else {
+                // If a position is invalid, return an empty array and do not apply gradient. Same as web.
+                return [];
+              }
+            }
+          } else {
+            processedColorStops.push({
+              color: processedColor,
+              position: null,
+            });
+          }
         }
       }
 
@@ -341,100 +354,68 @@ function getFixedColorStops(
 
 function parseColorStops(input: string) {
   const colorStops = [];
-  const tokens = tokenize(input);
-  let i = 0;
-  while (i < tokens.length) {
-    let color = null;
-    let position1 = null;
-    let position2 = null;
-    const first = tokens[i].toLowerCase();
-    const second = tokens[i + 1]?.toLowerCase();
-    const third = tokens[i + 2]?.toLowerCase();
-
-    // Four cases
-
-    // 1. [color, position, position] syntax
-    if (isColor(first) && isPosition(second) && isPosition(third)) {
-      i = i + 3;
-      const processedColor = processColor(first);
-      if (processedColor != null) {
-        color = processedColor;
+  const stops = input.split(/,(?![^(]*\))/);
+  for (const stop of stops) {
+    const trimmedStop = stop.trim().toLowerCase();
+    const parts = trimmedStop.match(/\S+\([^)]*\)|\S+/g) || [];
+    // Case 1: [color, position, position]
+    if (parts.length === 3) {
+      const color = parts[0];
+      const position1 = parts[1];
+      const position2 = parts[2];
+      if (isColor(color) && isPosition(position1) && isPosition(position2)) {
+        const processedColor = processColor(color);
+        if (processedColor == null) {
+          return [];
+        }
+        colorStops.push({
+          color: processedColor,
+          position: parseFloat(position1) / 100,
+        });
+        colorStops.push({
+          color: processedColor,
+          position: parseFloat(position2) / 100,
+        });
       } else {
         return [];
       }
-
-      if (second.endsWith('%')) {
-        position1 = parseFloat(second) / 100;
-      } else {
-        return [];
-      }
-
-      if (third.endsWith('%')) {
-        position2 = parseFloat(third) / 100;
-      } else {
-        return [];
-      }
-
-      colorStops.push({
-        color,
-        position: position1,
-      });
-      colorStops.push({
-        color,
-        position: position2,
-      });
     }
-    // 2. [color, position] syntax
-    else if (isColor(first) && isPosition(second)) {
-      i = i + 2;
-      const processedColor = processColor(first);
-      if (processedColor != null) {
-        color = processedColor;
+    // Case 2: [color, position]
+    else if (parts.length === 2) {
+      if (isColor(parts[0]) && isPosition(parts[1])) {
+        const processedColor = processColor(parts[0]);
+        if (processedColor == null) {
+          return [];
+        }
+        colorStops.push({
+          color: processedColor,
+          position: parseFloat(parts[1]) / 100,
+        });
       } else {
         return [];
       }
-
-      if (second.endsWith('%')) {
-        position1 = parseFloat(second) / 100;
+    }
+    // Case 3: [color]
+    // Case 4: [position] - transition hint
+    else if (parts.length === 1) {
+      if (isColor(parts[0])) {
+        const processedColor = processColor(parts[0]);
+        if (processedColor == null) {
+          return [];
+        }
+        colorStops.push({
+          color: processedColor,
+          position: null,
+        });
+      } else if (isPosition(parts[0])) {
+        colorStops.push({
+          color: null,
+          position: parseFloat(parts[0]) / 100,
+        });
       } else {
         return [];
       }
-
-      colorStops.push({
-        color,
-        position: position1,
-      });
-    }
-    // 3. [color] syntax
-    else if (isColor(first)) {
-      i = i + 1;
-      const processedColor = processColor(first);
-      if (processedColor != null) {
-        color = processedColor;
-      } else {
-        return [];
-      }
-      colorStops.push({
-        color,
-        position: null,
-      });
-    }
-    // // 4. [position] syntax i.e. transition hints
-    else if (isPosition(first)) {
-      // i = i + 1;
-      // if (first.endsWith('%')) {
-      //   position1 = parseFloat(first) / 100;
-      // } else {
-      //   return [];
-      // }
-      // colorStops.push({
-      //   color: null,
-      //   position: position1,
-      // });
-      return [];
-    }
-    // Invalid syntax
-    else {
+    } else {
       return [];
     }
   }
@@ -445,25 +426,12 @@ function parseColorStops(input: string) {
 const HEX_COLOR = /#[0-9a-f]{3,8}/i;
 const RGB_HSL_COLOR = /\b(?:rgb|hsl)a?\([^)]*\)/i;
 const NAMED_COLOR = /\b[a-z]+\b/i;
-const NUMBER = /[-+]?(?:\d*\.)?\d+%?/;
+const NUMBER = /[-+]?(?:\d*\.)?\d+%/;
 
 const COLOR_PATTERN = new RegExp(
   `^(${HEX_COLOR.source}|${RGB_HSL_COLOR.source}|${NAMED_COLOR.source})$`,
   'i',
 );
-
-function tokenize(input: string) {
-  const pattern = new RegExp(
-    [
-      HEX_COLOR.source,
-      RGB_HSL_COLOR.source,
-      NAMED_COLOR.source,
-      NUMBER.source,
-    ].join('|'),
-    'gi',
-  );
-  return input.match(pattern) || [];
-}
 
 function isColor(token: string) {
   return COLOR_PATTERN.test(token);
