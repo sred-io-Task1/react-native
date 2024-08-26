@@ -112,6 +112,7 @@ export default function processBackgroundImage(
 
       const fixedColorStops = getFixedColorStops(processedColorStops);
 
+      replaceColorHintsWithColorStops(fixedColorStops);
       if (points != null) {
         result = result.concat({
           type: 'linearGradient',
@@ -164,6 +165,7 @@ function parseCSSLinearGradient(
     const colorStops = parseColorStops(remainingContent);
     if (colorStops.length > 0) {
       const fixedColorStops = getFixedColorStops(colorStops);
+      replaceColorHintsWithColorStops(fixedColorStops);
       gradients.push({
         type: 'linearGradient',
         start: points.start,
@@ -423,6 +425,113 @@ function parseColorStops(input: string) {
   return colorStops;
 }
 
+function replaceColorHintsWithColorStops(
+  colorStops: Array<{
+    color: ProcessedColorValue | null,
+    position: number,
+  }>,
+) {
+  let indexOffset = 0;
+  for (let i = 1; i < colorStops.length - 1; i++) {
+    const colorStop = colorStops[i];
+    // Is a color hint
+    if (colorStop.color !== null) {
+      continue;
+    }
+    let x = i + indexOffset;
+    if (x < 1) {
+      continue;
+    }
+
+    let offsetLeft = colorStops[x - 1].position;
+    let offsetRight = colorStops[x + 1].position;
+    let offset = colorStops[x].position;
+    let leftDist = offset - offsetLeft;
+    let rightDist = offsetRight - offset;
+    let totalDist = offsetRight - offsetLeft;
+    let leftColor = colorStops[x - 1].color;
+    let rightColor = colorStops[x + 1].color;
+
+    if (areFloatsNearlyEqual(leftDist, rightDist)) {
+      colorStops.splice(x, 1);
+      indexOffset--;
+    }
+
+    if (areFloatsNearlyEqual(leftDist, 0)) {
+      colorStops[x].color = rightColor;
+      continue;
+    }
+
+    if (areFloatsNearlyEqual(rightDist, 0)) {
+      colorStops[x].color = leftColor;
+      continue;
+    }
+    let newStops: typeof colorStops = [];
+
+    // Position the new color stops
+    if (leftDist > rightDist) {
+      for (let y = 0; y < 7; y++) {
+        newStops[y] = {position: offsetLeft + leftDist * ((7 + y) / 13)};
+      }
+      newStops[7] = {position: offset + rightDist * (1 / 3)};
+      newStops[8] = {position: offset + rightDist * (2 / 3)};
+    } else {
+      newStops[0] = {position: offsetLeft + leftDist * (1 / 3)};
+      newStops[1] = {position: offsetLeft + leftDist * (2 / 3)};
+      for (let y = 0; y < 7; y++) {
+        newStops[y + 2] = {position: offset + rightDist * (y / 13)};
+      }
+    }
+
+    // Calculate colors for the new color stops
+    let hintRelativeOffset = leftDist / totalDist;
+    for (let newStop of newStops) {
+      let pointRelativeOffset = (newStop.position - offsetLeft) / totalDist;
+      let weighting = Math.pow(
+        pointRelativeOffset,
+        Math.log(0.5) / Math.log(hintRelativeOffset),
+      );
+      if (!isFinite(weighting) || isNaN(weighting)) {
+        continue;
+      }
+
+      newStop.color = interpolateNormalizedColor(
+        leftColor,
+        rightColor,
+        weighting,
+      );
+    }
+
+    colorStops.splice(x, 1, ...newStops);
+    indexOffset += 8;
+  }
+}
+
+function interpolateNormalizedColor(
+  color1: number,
+  color2: number,
+  weight: number,
+) {
+  const newWeight = Math.max(0, Math.min(1, weight));
+
+  const r1 = (color1 >> 24) & 0xff;
+  const g1 = (color1 >> 16) & 0xff;
+  const b1 = (color1 >> 8) & 0xff;
+  const a1 = color1 & 0xff;
+
+  const r2 = (color2 >> 24) & 0xff;
+  const g2 = (color2 >> 16) & 0xff;
+  const b2 = (color2 >> 8) & 0xff;
+  const a2 = color2 & 0xff;
+
+  const r = Math.round(r1 + (r2 - r1) * newWeight);
+  const g = Math.round(g1 + (g2 - g1) * newWeight);
+  const b = Math.round(b1 + (b2 - b1) * newWeight);
+  const a = Math.round(a1 + (a2 - a1) * newWeight);
+
+  return (r << 24) | (g << 16) | (b << 8) | a;
+}
+
 const HEX_COLOR = /#[0-9a-f]{3,8}/i;
 const RGB_HSL_COLOR = /\b(?:rgb|hsl)a?\([^)]*\)/i;
 const NAMED_COLOR = /\b[a-z]+\b/i;
@@ -439,4 +548,9 @@ function isColor(token: string) {
 
 function isPosition(token: string) {
   return new RegExp(`^${NUMBER.source}$`).test(token);
+}
+
+function areFloatsNearlyEqual(a: number, b: number) {
+  const epsilon = 1e-6;
+  return Math.abs(a - b) < epsilon;
 }

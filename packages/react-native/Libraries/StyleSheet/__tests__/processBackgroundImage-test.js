@@ -571,29 +571,35 @@ describe('processBackgroundImage', () => {
         type: 'linearGradient',
         colorStops: [
           {color: 'red', positions: []},
-          {positions: ['30%']},
+          {positions: ['20%']},
           {color: 'green'},
         ],
       },
     ]);
     const result1 = processBackgroundImage(
-      'linear-gradient(red,   30%, green)',
+      'linear-gradient(red,   20%  , green)',
     );
     const expected = [
       {
-        color: processColor('red'),
-        position: 0,
-      },
-      {
-        color: null,
-        position: 0.3,
-      },
-      {
-        color: processColor('green'),
-        position: 1,
+        type: 'linearGradient',
+        start: {x: 0.5, y: 0},
+        end: {x: 0.5, y: 1},
+        colorStops: [
+          {color: 4294901760, position: 0},
+          {position: 0.06666666666666667, color: -5232640},
+          {position: 0.13333333333333333, color: -7064064},
+          {position: 0.2, color: -8372224},
+          {position: 0.26153846153846155, color: -9418752},
+          {position: 0.3230769230769231, color: -10334464},
+          {position: 0.38461538461538464, color: -11119360},
+          {position: 0.4461538461538462, color: -11838976},
+          {position: 0.5076923076923077, color: -12492800},
+          {position: 0.5692307692307692, color: -13147136},
+          {color: 4278222848, position: 1},
+        ],
       },
     ];
-    expect(result[0].colorStops).toEqual(expected);
-    expect(result1[0].colorStops).toEqual(expected);
+    expect(result[0].colorStops).toEqual(expected[0].colorStops);
+    expect(result1[0].colorStops).toEqual(expected[0].colorStops);
   });
 });
