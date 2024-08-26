@@ -425,6 +425,9 @@ function parseColorStops(input: string) {
   return colorStops;
 }
 
+// Spec: https://drafts.csswg.org/css-images-4/#coloring-gradient-line (Refer transition hint section)
+// Exact algorithm is referred from Blink engine. Browsers add 9 intermediate color stops when a transition hint is present:
+// https://github.com/chromium/chromium/blob/a296b1bad6dc1ed9d751b7528f7ca2134227b828/third_party/blink/renderer/core/css/css_gradient_value.cc#L240
 function replaceColorHintsWithColorStops(
   colorStops: Array<{
     color: ProcessedColorValue | null,
