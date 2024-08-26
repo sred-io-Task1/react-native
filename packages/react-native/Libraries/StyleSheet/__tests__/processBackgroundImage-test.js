@@ -160,7 +160,7 @@ describe('processBackgroundImage', () => {
 
   it('should process multiple linear gradients', () => {
     const input = `
-      linear-gradient(to right, red, blue),
+      linear-gradient(to right, red, blue), 
       linear-gradient(to bottom, green, yellow)`;
     const result = processBackgroundImage(input);
     expect(result).toHaveLength(2);
@@ -233,7 +233,7 @@ describe('processBackgroundImage', () => {
   });
 
   it('should process multiple gradients with spaces', () => {
-    const input = `linear-gradient(to right ,
+    const input = `linear-gradient(to right , 
     rgba(255,0,0,0.5), rgba(0,0,255,0.8)),
               linear-gradient(to bottom , rgba(255,0,0,0.9)  , rgba(0,0,255,0.2)  )`;
     const result = processBackgroundImage(input);
