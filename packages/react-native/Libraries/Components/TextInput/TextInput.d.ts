@@ -483,6 +483,9 @@ export interface TextInputKeyPressEventData {
 export interface TextInputChangeEventData extends TargetedEvent {
   eventCount: number;
   text: string;
+  before: number;
+  start: number;
+  count: number;
 }
 
 /**
