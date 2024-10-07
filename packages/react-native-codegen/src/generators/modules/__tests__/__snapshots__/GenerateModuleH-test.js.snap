@@ -31,8 +31,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeSampleTurboModuleCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = \\"SampleTurboModule\\";
@@ -103,8 +107,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeSampleTurboModuleCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = \\"SampleTurboModule\\";
@@ -703,8 +711,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeSampleTurboModuleCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = \\"SampleTurboModuleCxx\\";
@@ -984,8 +996,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeSampleTurboModuleCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = \\"SampleTurboModule\\";
@@ -1106,8 +1122,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeSampleTurboModuleCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = \\"SampleTurboModule\\";
@@ -1297,8 +1317,12 @@ public:
 template <typename T>
 class JSI_EXPORT AliasTurboModuleCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = \\"AliasTurboModule\\";
@@ -1642,8 +1666,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeCameraRollManagerCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = \\"CameraRollManager\\";
@@ -1886,8 +1914,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeExceptionsManagerCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = \\"ExceptionsManager\\";
@@ -2091,8 +2123,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeSampleTurboModuleCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = \\"SampleTurboModule\\";
@@ -2268,8 +2304,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeSampleTurboModuleCxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = \\"SampleTurboModule\\";
@@ -2319,8 +2359,12 @@ public:
 template <typename T>
 class JSI_EXPORT NativeSampleTurboModule2CxxSpec : public TurboModule {
 public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
   }
 
   static constexpr std::string_view kModuleName = \\"SampleTurboModule2\\";
@@ -2358,6 +2402,83 @@ private:
 
   private:
     friend class NativeSampleTurboModule2CxxSpec;
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+} // namespace facebook::react
+",
+}
+`;
+
+exports[`GenerateModuleH can generate fixture union_module 1`] = `
+Map {
+  "union_moduleJSI.h" => "/**
+ * This code was generated by [react-native-codegen](https://www.npmjs.com/package/react-native-codegen).
+ *
+ * Do not edit this file as changes may cause incorrect behavior and will be lost
+ * once the code is regenerated.
+ *
+ * @generated by codegen project: GenerateModuleH.js
+ */
+
+#pragma once
+
+#include <ReactCommon/TurboModule.h>
+#include <react/bridging/Bridging.h>
+
+namespace facebook::react {
+
+
+  class JSI_EXPORT NativeSampleTurboModuleCxxSpecJSI : public TurboModule {
+protected:
+  NativeSampleTurboModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual jsi::Object getUnion(jsi::Runtime &rt, double chooseInt, double chooseFloat, jsi::Object chooseObject, jsi::String chooseString) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeSampleTurboModuleCxxSpec : public TurboModule {
+public:
+  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.create(rt, propName);
+  }
+
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
+    return delegate_.getPropertyNames(runtime);
+  }
+
+  static constexpr std::string_view kModuleName = \\"SampleTurboModule\\";
+
+protected:
+  NativeSampleTurboModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeSampleTurboModuleCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+
+private:
+  class Delegate : public NativeSampleTurboModuleCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeSampleTurboModuleCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+
+    }
+
+    jsi::Object getUnion(jsi::Runtime &rt, double chooseInt, double chooseFloat, jsi::Object chooseObject, jsi::String chooseString) override {
+      static_assert(
+          bridging::getParameterCount(&T::getUnion) == 5,
+          \\"Expected getUnion(...) to have 5 parameters\\");
+
+      return bridging::callFromJs<jsi::Object>(
+          rt, &T::getUnion, jsInvoker_, instance_, std::move(chooseInt), std::move(chooseFloat), std::move(chooseObject), std::move(chooseString));
+    }
+
+  private:
+    friend class NativeSampleTurboModuleCxxSpec;
     T *instance_;
   };
 

@@ -20,7 +20,7 @@ import type {
   NativeModuleBaseTypeAnnotation,
   NativeModuleEnumDeclaration,
   NativeModuleEnumMap,
-  NativeModuleFloatTypeAnnotation,
+  FloatTypeAnnotation,
   NativeModuleFunctionTypeAnnotation,
   NativeModuleGenericObjectTypeAnnotation,
   NativeModuleMixedTypeAnnotation,
@@ -316,6 +316,9 @@ function emitPromise(
   ) {
     return wrapNullable(nullable, {
       type: 'PromiseTypeAnnotation',
+      elementType: {
+        type: 'VoidTypeAnnotation',
+      },
     });
   } else {
     try {
@@ -335,6 +338,9 @@ function emitPromise(
     } catch {
       return wrapNullable(nullable, {
         type: 'PromiseTypeAnnotation',
+        elementType: {
+          type: 'VoidTypeAnnotation',
+        },
       });
     }
   }
@@ -368,9 +374,7 @@ function emitObject(
   });
 }
 
-function emitFloat(
-  nullable: boolean,
-): Nullable<NativeModuleFloatTypeAnnotation> {
+function emitFloat(nullable: boolean): Nullable<FloatTypeAnnotation> {
   return wrapNullable(nullable, {
     type: 'FloatTypeAnnotation',
   });
@@ -468,6 +472,9 @@ function translateArrayTypeAnnotation(
   } catch (ex) {
     return wrapNullable(nullable, {
       type: 'ArrayTypeAnnotation',
+      elementType: {
+        type: 'AnyTypeAnnotation',
+      },
     });
   }
 }

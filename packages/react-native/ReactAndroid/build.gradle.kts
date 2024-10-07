@@ -220,10 +220,20 @@ val preparePrefab by
                       Pair(
                           "../ReactCommon/react/renderer/observers/events/",
                           "react/renderer/observers/events/"),
+                      // react_timing
+                      Pair("../ReactCommon/react/timing/", "react/timing/"),
                       // yoga
                       Pair("../ReactCommon/yoga/", ""),
                       Pair("src/main/jni/first-party/yogajni/jni", ""),
                   )),
+              PrefabPreprocessingEntry(
+                  "hermestooling",
+                  // hermes_executor
+                  Pair("../ReactCommon/hermes/inspector-modern/", "hermes/inspector-modern/")),
+              PrefabPreprocessingEntry(
+                  "jsctooling",
+                  // jsc
+                  Pair("../ReactCommon/jsc/", "jsc/")),
           ))
       outputDir.set(prefabHeadersDir)
     }
@@ -242,6 +252,7 @@ val downloadBoost by
       onlyIfModified(true)
       overwrite(false)
       retries(5)
+      quiet(true)
       dest(File(downloadsDir, "boost_${BOOST_VERSION}.tar.gz"))
     }
 
@@ -261,6 +272,7 @@ val downloadDoubleConversion by
       onlyIfModified(true)
       overwrite(false)
       retries(5)
+      quiet(true)
       dest(File(downloadsDir, "double-conversion-${DOUBLE_CONVERSION_VERSION}.tar.gz"))
     }
 
@@ -281,6 +293,7 @@ val downloadFolly by
       onlyIfModified(true)
       overwrite(false)
       retries(5)
+      quiet(true)
       dest(File(downloadsDir, "folly-${FOLLY_VERSION}.tar.gz"))
     }
 
@@ -302,6 +315,7 @@ val downloadFmt by
       onlyIfModified(true)
       overwrite(false)
       retries(5)
+      quiet(true)
       dest(File(downloadsDir, "fmt-${FMT_VERSION}.tar.gz"))
     }
 
@@ -323,6 +337,7 @@ val downloadGlog by
       onlyIfModified(true)
       overwrite(false)
       retries(5)
+      quiet(true)
       dest(File(downloadsDir, "glog-${GLOG_VERSION}.tar.gz"))
     }
 
@@ -333,6 +348,7 @@ val downloadGtest by
       onlyIfModified(true)
       overwrite(false)
       retries(5)
+      quiet(true)
       dest(File(downloadsDir, "gtest.tar.gz"))
     }
 
@@ -344,8 +360,6 @@ val prepareGtest by
       into(File(thirdPartyNdkDir, "googletest"))
     }
 
-// Prepare glog sources to be compiled, this task will perform steps that normally should've been
-// executed by automake. This way we can avoid dependencies on make/automake
 val prepareGlog by
     tasks.registering(PrepareGlogTask::class) {
       dependsOn(if (dependenciesPath != null) emptyList() else listOf(downloadGlog))
@@ -550,7 +564,6 @@ android {
             "src/main/res/views/alert",
             "src/main/res/views/modal",
             "src/main/res/views/uimanager"))
-    kotlin.srcDir(project.file("../sdks/ossonly-soloader/src/main/java"))
     java.exclude("com/facebook/react/processing")
     java.exclude("com/facebook/react/module/processing")
   }
@@ -580,6 +593,8 @@ android {
   prefab {
     create("jsi") { headers = File(prefabHeadersDir, "jsi").absolutePath }
     create("reactnative") { headers = File(prefabHeadersDir, "reactnative").absolutePath }
+    create("hermestooling") { headers = File(prefabHeadersDir, "hermestooling").absolutePath }
+    create("jsctooling") { headers = File(prefabHeadersDir, "jsctooling").absolutePath }
   }
 
   publishing {
@@ -598,11 +613,6 @@ android {
 tasks.withType<KotlinCompile>().configureEach { exclude("com/facebook/annotationprocessors/**") }
 
 dependencies {
-  implementation(libs.fresco)
-  implementation(libs.fresco.middleware)
-  implementation(libs.fresco.imagepipeline.okhttp3)
-  implementation(libs.fresco.ui.common)
-
   api(libs.androidx.appcompat)
   api(libs.androidx.appcompat.resources)
   api(libs.androidx.autofill)
@@ -610,7 +620,12 @@ dependencies {
   api(libs.androidx.tracing)
 
   api(libs.fbjni)
+  api(libs.fresco)
+  api(libs.fresco.imagepipeline.okhttp3)
+  api(libs.fresco.middleware)
+  api(libs.fresco.ui.common)
   api(libs.infer.annotation)
+  api(libs.soloader)
   api(libs.yoga.proguard.annotations)
 
   api(libs.jsr305)
@@ -630,8 +645,6 @@ dependencies {
   testImplementation(libs.robolectric)
   testImplementation(libs.thoughtworks)
 }
-
-configurations.all { exclude(group = "com.facebook.soloader") }
 
 react {
   // TODO: The library name is chosen for parity with Fabric components & iOS

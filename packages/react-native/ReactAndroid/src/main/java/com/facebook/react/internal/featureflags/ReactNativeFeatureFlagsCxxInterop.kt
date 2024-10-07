@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @generated SignedSource<<c5d5be97ecf6d9ab7cfb6e705d859cbf>>
+ * @generated SignedSource<<c64a6ab675deefabc00c7a2876de2bee>>
  */
 
 /**
@@ -36,15 +36,15 @@ public object ReactNativeFeatureFlagsCxxInterop {
 
   @DoNotStrip @JvmStatic public external fun completeReactInstanceCreationOnBgThreadOnAndroid(): Boolean
 
-  @DoNotStrip @JvmStatic public external fun destroyFabricSurfacesInReactInstanceManager(): Boolean
-
   @DoNotStrip @JvmStatic public external fun enableAlignItemsBaselineOnFabricIOS(): Boolean
 
-  @DoNotStrip @JvmStatic public external fun enableAndroidMixBlendModeProp(): Boolean
+  @DoNotStrip @JvmStatic public external fun enableAndroidLineHeightCentering(): Boolean
 
-  @DoNotStrip @JvmStatic public external fun enableBackgroundStyleApplicator(): Boolean
+  @DoNotStrip @JvmStatic public external fun enableBridgelessArchitecture(): Boolean
 
   @DoNotStrip @JvmStatic public external fun enableCleanTextInputYogaNode(): Boolean
+
+  @DoNotStrip @JvmStatic public external fun enableDeletionOfUnmountedViews(): Boolean
 
   @DoNotStrip @JvmStatic public external fun enableEagerRootViewAttachment(): Boolean
 
@@ -52,9 +52,13 @@ public object ReactNativeFeatureFlagsCxxInterop {
 
   @DoNotStrip @JvmStatic public external fun enableFabricLogs(): Boolean
 
+  @DoNotStrip @JvmStatic public external fun enableFabricRenderer(): Boolean
+
   @DoNotStrip @JvmStatic public external fun enableFabricRendererExclusively(): Boolean
 
   @DoNotStrip @JvmStatic public external fun enableGranularShadowTreeStateReconciliation(): Boolean
+
+  @DoNotStrip @JvmStatic public external fun enableIOSViewClipToPaddingBox(): Boolean
 
   @DoNotStrip @JvmStatic public external fun enableLayoutAnimationsOnIOS(): Boolean
 
@@ -62,11 +66,15 @@ public object ReactNativeFeatureFlagsCxxInterop {
 
   @DoNotStrip @JvmStatic public external fun enableMicrotasks(): Boolean
 
+  @DoNotStrip @JvmStatic public external fun enablePreciseSchedulingForPremountItemsOnAndroid(): Boolean
+
   @DoNotStrip @JvmStatic public external fun enablePropsUpdateReconciliationAndroid(): Boolean
 
   @DoNotStrip @JvmStatic public external fun enableReportEventPaintTime(): Boolean
 
   @DoNotStrip @JvmStatic public external fun enableSynchronousStateUpdates(): Boolean
+
+  @DoNotStrip @JvmStatic public external fun enableTextPreallocationOptimisation(): Boolean
 
   @DoNotStrip @JvmStatic public external fun enableUIConsistency(): Boolean
 
@@ -76,11 +84,9 @@ public object ReactNativeFeatureFlagsCxxInterop {
 
   @DoNotStrip @JvmStatic public external fun fetchImagesInViewPreallocation(): Boolean
 
-  @DoNotStrip @JvmStatic public external fun fixIncorrectScrollViewStateUpdateOnAndroid(): Boolean
-
   @DoNotStrip @JvmStatic public external fun fixMappingOfEventPrioritiesBetweenFabricAndReact(): Boolean
 
-  @DoNotStrip @JvmStatic public external fun fixMissedFabricStateUpdatesOnAndroid(): Boolean
+  @DoNotStrip @JvmStatic public external fun fixMountingCoordinatorReportedPendingTransactionsOnAndroid(): Boolean
 
   @DoNotStrip @JvmStatic public external fun forceBatchingMountItemsOnAndroid(): Boolean
 
@@ -94,6 +100,8 @@ public object ReactNativeFeatureFlagsCxxInterop {
 
   @DoNotStrip @JvmStatic public external fun loadVectorDrawablesOnImages(): Boolean
 
+  @DoNotStrip @JvmStatic public external fun removeNestedCallsToDispatchMountItemsOnAndroid(): Boolean
+
   @DoNotStrip @JvmStatic public external fun setAndroidLayoutDirection(): Boolean
 
   @DoNotStrip @JvmStatic public external fun traceTurboModulePromiseRejectionsOnAndroid(): Boolean
@@ -106,17 +114,17 @@ public object ReactNativeFeatureFlagsCxxInterop {
 
   @DoNotStrip @JvmStatic public external fun useNativeViewConfigsInBridgelessMode(): Boolean
 
-  @DoNotStrip @JvmStatic public external fun useNewReactImageViewBackgroundDrawing(): Boolean
-
   @DoNotStrip @JvmStatic public external fun useOptimisedViewPreallocationOnAndroid(): Boolean
+
+  @DoNotStrip @JvmStatic public external fun useOptimizedEventBatchingOnAndroid(): Boolean
 
   @DoNotStrip @JvmStatic public external fun useRuntimeShadowNodeReferenceUpdate(): Boolean
 
   @DoNotStrip @JvmStatic public external fun useRuntimeShadowNodeReferenceUpdateOnLayout(): Boolean
 
-  @DoNotStrip @JvmStatic public external fun useStateAlignmentMechanism(): Boolean
-
   @DoNotStrip @JvmStatic public external fun useTurboModuleInterop(): Boolean
+
+  @DoNotStrip @JvmStatic public external fun useTurboModules(): Boolean
 
   @DoNotStrip @JvmStatic public external fun override(provider: Any)
 

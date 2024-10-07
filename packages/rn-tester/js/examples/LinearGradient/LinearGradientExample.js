@@ -13,7 +13,7 @@
 import type {ViewStyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
 
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Platform, PlatformColor, StyleSheet, Text, View} from 'react-native';
 
 type Props = $ReadOnly<{
   style: ViewStyleProp,
@@ -165,6 +165,35 @@ exports.examples = [
           testID="linear-gradient-color-transition-hints"
           style={{
             experimental_backgroundImage: 'linear-gradient(red, 20%, green)',
+          }}
+        />
+      );
+    },
+  },
+  {
+    title: 'Gradient with Platform colors',
+    render(): React.Node {
+      return (
+        <GradientBox
+          testID="linear-gradient-with-non-uniform-borders"
+          style={{
+            experimental_backgroundImage: [
+              {
+                type: 'linearGradient',
+                direction: 'to bottom',
+                colorStops: [
+                  {
+                    color: Platform.select({
+                      ios: PlatformColor('systemTealColor'),
+                      android: PlatformColor('@android:color/holo_purple'),
+                      default: 'blue',
+                    }),
+                    positions: ['0%'],
+                  },
+                  {color: 'green', positions: ['100%']},
+                ],
+              },
+            ],
           }}
         />
       );

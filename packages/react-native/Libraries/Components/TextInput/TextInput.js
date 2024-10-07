@@ -8,7 +8,7 @@
  * @format
  */
 
-import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
+import type {HostInstance} from '../../Renderer/shims/ReactNativeTypes';
 import type {____TextStyle_Internal as TextStyleInternal} from '../../StyleSheet/StyleSheetTypes';
 import type {
   PressEvent,
@@ -37,10 +37,10 @@ import * as React from 'react';
 import {useCallback, useLayoutEffect, useRef, useState} from 'react';
 
 type ReactRefSetter<T> = {current: null | T, ...} | ((ref: null | T) => mixed);
-type TextInputInstance = React.ElementRef<HostComponent<mixed>> & {
+type TextInputInstance = HostInstance & {
   +clear: () => void,
   +isFocused: () => boolean,
-  +getNativeRef: () => ?React.ElementRef<HostComponent<mixed>>,
+  +getNativeRef: () => ?HostInstance,
   +setSelection: (start: number, end: number) => void,
 };
 
@@ -238,7 +238,10 @@ export type TextContentType =
   | 'birthdate'
   | 'birthdateDay'
   | 'birthdateMonth'
-  | 'birthdateYear';
+  | 'birthdateYear'
+  | 'dateTime'
+  | 'flightNumber'
+  | 'shipmentTrackingNumber';
 
 export type enterKeyHintType =
   // Cross Platform
@@ -357,6 +360,19 @@ type IOSProps = $ReadOnly<{|
    * @platform ios
    */
   lineBreakStrategyIOS?: ?('none' | 'standard' | 'hangul-word' | 'push-out'),
+
+  /**
+   * Set line break mode on iOS.
+   * @platform ios
+   */
+  lineBreakModeIOS?: ?(
+    | 'wordWrapping'
+    | 'char'
+    | 'clip'
+    | 'head'
+    | 'middle'
+    | 'tail'
+  ),
 
   /**
    * If `false`, the iOS system will not insert an extra space after a paste operation
@@ -988,7 +1004,7 @@ function useTextInputStateSynchronization_STATE({
   props: Props,
   mostRecentEventCount: number,
   selection: ?Selection,
-  inputRef: React.RefObject<null | React.ElementRef<HostComponent<mixed>>>,
+  inputRef: React.RefObject<null | HostInstance>,
   text: string,
   viewCommands: ViewCommands,
 }): {
@@ -1069,7 +1085,7 @@ function useTextInputStateSynchronization_REFS({
   props: Props,
   mostRecentEventCount: number,
   selection: ?Selection,
-  inputRef: React.RefObject<null | React.ElementRef<HostComponent<mixed>>>,
+  inputRef: React.RefObject<null | HostInstance>,
   text: string,
   viewCommands: ViewCommands,
 }): {
@@ -1269,7 +1285,7 @@ function InternalTextInput(props: Props): React.Node {
     ...otherProps
   } = props;
 
-  const inputRef = useRef<null | React.ElementRef<HostComponent<mixed>>>(null);
+  const inputRef = useRef<null | HostInstance>(null);
 
   const selection: ?Selection =
     propsSelection == null
@@ -1367,7 +1383,7 @@ function InternalTextInput(props: Props): React.Node {
           isFocused(): boolean {
             return TextInputState.currentlyFocusedInput() === inputRef.current;
           },
-          getNativeRef(): ?React.ElementRef<HostComponent<mixed>> {
+          getNativeRef(): ?HostInstance {
             return inputRef.current;
           },
           setSelection(start: number, end: number): void {
@@ -1538,15 +1554,26 @@ function InternalTextInput(props: Props): React.Node {
   // Keep the original (potentially nested) style when possible, as React can diff these more efficiently
   let _style = props.style;
   const flattenedStyle = flattenStyle<TextStyleProp>(props.style);
-  if (typeof flattenedStyle?.fontWeight === 'number') {
-    _style = [
-      _style,
-      {
-        fontWeight:
-          // $FlowFixMe[incompatible-cast]
-          (flattenedStyle.fontWeight.toString(): TextStyleInternal['fontWeight']),
-      },
-    ];
+  if (flattenedStyle != null) {
+    let overrides: ?{...TextStyleInternal} = null;
+    if (typeof flattenedStyle?.fontWeight === 'number') {
+      overrides = overrides || ({}: {...TextStyleInternal});
+      overrides.fontWeight =
+        // $FlowFixMe[incompatible-cast]
+        (flattenedStyle.fontWeight.toString(): TextStyleInternal['fontWeight']);
+    }
+
+    if (flattenedStyle.verticalAlign != null) {
+      overrides = overrides || ({}: {...TextStyleInternal});
+      overrides.textAlignVertical =
+        verticalAlignToTextAlignVerticalMap[flattenedStyle.verticalAlign];
+      overrides.verticalAlign = undefined;
+    }
+
+    if (overrides != null) {
+      // $FlowFixMe[incompatible-type]
+      _style = [_style, overrides];
+    }
   }
 
   if (Platform.OS === 'ios') {
@@ -1782,20 +1809,6 @@ const ExportedForwardRef: React.AbstractComponent<
   },
   forwardedRef: ReactRefSetter<TextInputInstance>,
 ) {
-  // $FlowFixMe[underconstrained-implicit-instantiation]
-  let style = flattenStyle(restProps.style);
-
-  if (style?.verticalAlign != null) {
-    // $FlowFixMe[prop-missing]
-    // $FlowFixMe[cannot-write]
-    style.textAlignVertical =
-      // $FlowFixMe[invalid-computed-prop]
-      verticalAlignToTextAlignVerticalMap[style.verticalAlign];
-    // $FlowFixMe[prop-missing]
-    // $FlowFixMe[cannot-write]
-    delete style.verticalAlign;
-  }
-
   return (
     <InternalTextInput
       allowFontScaling={allowFontScaling}
@@ -1832,7 +1845,6 @@ const ExportedForwardRef: React.AbstractComponent<
       }
       {...restProps}
       forwardedRef={forwardedRef}
-      style={style}
     />
   );
 });

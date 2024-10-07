@@ -227,6 +227,28 @@ inline void fromRawValue(
 }
 
 inline void fromRawValue(
+    const PropsParserContext& /*context*/,
+    const RawValue& value,
+    yoga::BoxSizing& result) {
+  result = yoga::BoxSizing::BorderBox;
+  react_native_expect(value.hasType<std::string>());
+  if (!value.hasType<std::string>()) {
+    return;
+  }
+  auto stringValue = (std::string)value;
+  if (stringValue == "border-box") {
+    result = yoga::BoxSizing::BorderBox;
+    return;
+  }
+  if (stringValue == "content-box") {
+    result = yoga::BoxSizing::ContentBox;
+    return;
+  }
+
+  LOG(ERROR) << "Could not parse yoga::BoxSizing: " << stringValue;
+}
+
+inline void fromRawValue(
     const PropsParserContext& context,
     const RawValue& value,
     yoga::Justify& result) {
@@ -752,6 +774,32 @@ inline void fromRawValue(
     return;
   }
   LOG(ERROR) << "Could not parse BorderStyle:" << stringValue;
+  react_native_expect(false);
+}
+
+inline void fromRawValue(
+    const PropsParserContext& context,
+    const RawValue& value,
+    OutlineStyle& result) {
+  result = OutlineStyle::Solid;
+  react_native_expect(value.hasType<std::string>());
+  if (!value.hasType<std::string>()) {
+    return;
+  }
+  auto stringValue = (std::string)value;
+  if (stringValue == "solid") {
+    result = OutlineStyle::Solid;
+    return;
+  }
+  if (stringValue == "dotted") {
+    result = OutlineStyle::Dotted;
+    return;
+  }
+  if (stringValue == "dashed") {
+    result = OutlineStyle::Dashed;
+    return;
+  }
+  LOG(ERROR) << "Could not parse OutlineStyle:" << stringValue;
   react_native_expect(false);
 }
 
