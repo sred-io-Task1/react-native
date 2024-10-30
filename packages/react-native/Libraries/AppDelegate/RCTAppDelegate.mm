@@ -305,6 +305,10 @@ class RCTAppDelegateBridgelessFeatureFlags : public ReactNativeFeatureFlagsDefau
   {
     return true;
   }
+  bool useFabricInterop() override
+  {
+    return true;
+  }
   bool useTurboModules() override
   {
     return true;
