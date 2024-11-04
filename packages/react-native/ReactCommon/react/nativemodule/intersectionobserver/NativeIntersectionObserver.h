@@ -25,7 +25,9 @@ using NativeIntersectionObserverObserveOptions =
         // targetShadowNode
         jsi::Object,
         // thresholds
-        std::vector<Float>>;
+        std::vector<Float>,
+        // rootShadowNode
+        jsi::Value>;
 
 template <>
 struct Bridging<NativeIntersectionObserverObserveOptions>

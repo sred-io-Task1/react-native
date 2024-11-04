@@ -112,9 +112,11 @@ export function unregisterObserver(
  */
 export function observe({
   intersectionObserverId,
+  root,
   target,
 }: {
   intersectionObserverId: IntersectionObserverId,
+  root: ?ReactNativeElement,
   target: ReactNativeElement,
 }): boolean {
   if (NativeIntersectionObserver == null) {
@@ -146,6 +148,14 @@ export function observe({
     return false;
   }
 
+  const rootShadowNode = root != null ? getShadowNode(root) : null;
+  if (root != null && rootShadowNode == null) {
+    console.error(
+      'IntersectionObserverManager: could not find shadow node for observation root',
+    );
+    return false;
+  }
+
   // Store the mapping between the instance handle and the target so we can
   // access it even after the instance handle has been unmounted.
   setTargetForInstanceHandle(instanceHandle, target);
@@ -160,6 +170,7 @@ export function observe({
 
   NativeIntersectionObserver.observe({
     intersectionObserverId,
+    rootShadowNode,
     targetShadowNode,
     thresholds: registeredObserver.observer.thresholds,
   });

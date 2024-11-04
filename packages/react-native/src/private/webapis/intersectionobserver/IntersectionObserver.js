@@ -22,7 +22,7 @@ export type IntersectionObserverCallback = (
 ) => mixed;
 
 type IntersectionObserverInit = {
-  // root?: ReactNativeElement, // This option exists on the Web but it's not currently supported in React Native.
+  root?: ?ReactNativeElement,
   // rootMargin?: string, // This option exists on the Web but it's not currently supported in React Native.
   threshold?: number | $ReadOnlyArray<number>,
 };
@@ -51,6 +51,7 @@ export default class IntersectionObserver {
   _thresholds: $ReadOnlyArray<number>;
   _observationTargets: Set<ReactNativeElement> = new Set();
   _intersectionObserverId: ?IntersectionObserverId;
+  _root: ReactNativeElement | null;
 
   constructor(
     callback: IntersectionObserverCallback,
@@ -69,13 +70,6 @@ export default class IntersectionObserver {
     }
 
     // $FlowExpectedError[prop-missing] it's not typed in React Native but exists on Web.
-    if (options?.root != null) {
-      throw new TypeError(
-        "Failed to construct 'IntersectionObserver': root is not supported",
-      );
-    }
-
-    // $FlowExpectedError[prop-missing] it's not typed in React Native but exists on Web.
     if (options?.rootMargin != null) {
       throw new TypeError(
         "Failed to construct 'IntersectionObserver': rootMargin is not supported",
@@ -84,6 +78,7 @@ export default class IntersectionObserver {
 
     this._callback = callback;
     this._thresholds = normalizeThresholds(options?.threshold);
+    this._root = validateRoot(options?.root ?? null);
   }
 
   /**
@@ -95,7 +90,7 @@ export default class IntersectionObserver {
    * NOTE: This cannot currently be configured and `root` is always `null`.
    */
   get root(): ReactNativeElement | null {
-    return null;
+    return this._root;
   }
 
   /**
@@ -149,6 +144,7 @@ export default class IntersectionObserver {
 
     const didStartObserving = IntersectionObserverManager.observe({
       intersectionObserverId: this._getOrCreateIntersectionObserverId(),
+      root: this._root,
       target,
     });
 
@@ -215,6 +211,21 @@ export default class IntersectionObserver {
   __getObserverID(): ?IntersectionObserverId {
     return this._intersectionObserverId;
   }
+}
+
+function validateRoot(
+  root: ReactNativeElement | null,
+): ReactNativeElement | null {
+  if (root == null) {
+    return null;
+  }
+
+  if (!(root instanceof ReactNativeElement)) {
+    throw new TypeError(
+      "Failed to construct 'IntersectionObserver': Failed to read the 'root' property from 'IntersectionObserverInit': The provided value is not of type '(null or ReactNativeElement)",
+    );
+  }
+  return root;
 }
 
 /**
