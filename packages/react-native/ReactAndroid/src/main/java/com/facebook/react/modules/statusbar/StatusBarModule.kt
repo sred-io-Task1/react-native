@@ -17,6 +17,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.facebook.common.logging.FLog
 import com.facebook.fbreact.specs.NativeStatusBarManagerAndroidSpec
+import com.facebook.react.ReactActivity
 import com.facebook.react.bridge.GuardedRunnable
 import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
@@ -57,6 +58,9 @@ public class StatusBarModule(reactContext: ReactApplicationContext?) :
         .toFloat()
   }
 
+  private fun isEdgeToEdge() =
+    (currentActivity as? ReactActivity)?.isEdgeToEdge ?: false
+
   @Suppress("DEPRECATION")
   override fun setColor(colorDouble: Double, animated: Boolean) {
     val color = colorDouble.toInt()
@@ -65,6 +69,12 @@ public class StatusBarModule(reactContext: ReactApplicationContext?) :
       FLog.w(
           ReactConstants.TAG,
           "StatusBarModule: Ignored status bar change, current activity is null.")
+      return
+    }
+    if (isEdgeToEdge()) {
+      FLog.w(
+        ReactConstants.TAG,
+        "StatusBarModule: Ignored status bar change, current activity is edge-to-edge.")
       return
     }
     UiThreadUtil.runOnUiThread(
@@ -96,6 +106,12 @@ public class StatusBarModule(reactContext: ReactApplicationContext?) :
           "StatusBarModule: Ignored status bar change, current activity is null.")
       return
     }
+    if (isEdgeToEdge()) {
+      FLog.w(
+        ReactConstants.TAG,
+        "StatusBarModule: Ignored status bar change, current activity is edge-to-edge.")
+      return
+    }
     UiThreadUtil.runOnUiThread(
         object : GuardedRunnable(reactApplicationContext) {
           override fun runGuarded() {
@@ -113,7 +129,9 @@ public class StatusBarModule(reactContext: ReactApplicationContext?) :
           "StatusBarModule: Ignored status bar change, current activity is null.")
       return
     }
-    UiThreadUtil.runOnUiThread { activity.window?.setStatusBarVisibility(hidden) }
+    UiThreadUtil.runOnUiThread {
+      activity.window?.setStatusBarVisibility(hidden, isEdgeToEdge())
+    }
   }
 
   @Suppress("DEPRECATION")

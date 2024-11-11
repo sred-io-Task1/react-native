@@ -7,7 +7,6 @@
 
 package com.facebook.react.views.view
 
-import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
 import android.view.Window
@@ -15,6 +14,7 @@ import android.view.WindowManager
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import com.facebook.react.views.common.ContextUtils
 
 @Suppress("DEPRECATION")
 public fun Window.setStatusBarTranslucency(isTranslucent: Boolean) {
@@ -35,17 +35,17 @@ public fun Window.setStatusBarTranslucency(isTranslucent: Boolean) {
   ViewCompat.requestApplyInsets(decorView)
 }
 
-public fun Window.setStatusBarVisibility(isHidden: Boolean) {
+public fun Window.setStatusBarVisibility(isHidden: Boolean, isEdgeToEdge: Boolean) {
   if (isHidden) {
-    this.statusBarHide()
+    this.statusBarHide(isEdgeToEdge)
   } else {
-    this.statusBarShow()
+    this.statusBarShow(isEdgeToEdge)
   }
 }
 
 @Suppress("DEPRECATION")
-private fun Window.statusBarHide() {
-  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+private fun Window.statusBarHide(isEdgeToEdge: Boolean) {
+  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !isEdgeToEdge) {
     // Ensure the content extends into the cutout area
     attributes.layoutInDisplayCutoutMode =
         WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
@@ -56,8 +56,8 @@ private fun Window.statusBarHide() {
 }
 
 @Suppress("DEPRECATION")
-private fun Window.statusBarShow() {
-  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+private fun Window.statusBarShow(isEdgeToEdge: Boolean) {
+  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !isEdgeToEdge) {
     attributes.layoutInDisplayCutoutMode =
         WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT
     setDecorFitsSystemWindows(true)
@@ -67,39 +67,39 @@ private fun Window.statusBarShow() {
 }
 
 @Suppress("DEPRECATION")
-public fun Window.setSystemBarsTranslucency(isTranslucent: Boolean) {
-  WindowCompat.setDecorFitsSystemWindows(this, !isTranslucent)
+public fun Window.enableEdgeToEdge() {
+  val isDarkMode = ContextUtils.isDarkMode(context)
 
-  if (isTranslucent) {
-    val isDarkMode =
-        context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
-            Configuration.UI_MODE_NIGHT_YES
+  WindowCompat.setDecorFitsSystemWindows(this, false)
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-      isStatusBarContrastEnforced = false
-      isNavigationBarContrastEnforced = true
-    }
-
-    statusBarColor = Color.TRANSPARENT
-    navigationBarColor =
-        when {
-          Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> Color.TRANSPARENT
-          Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 && !isDarkMode ->
-              Color.argb(0xe6, 0xFF, 0xFF, 0xFF)
-          else -> Color.argb(0x80, 0x1b, 0x1b, 0x1b)
-        }
-
-    WindowInsetsControllerCompat(this, this.decorView).run {
-      isAppearanceLightNavigationBars = !isDarkMode
-    }
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-      attributes.layoutInDisplayCutoutMode =
-          when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R ->
-                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
-            else -> WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
-          }
-    }
+  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+    isStatusBarContrastEnforced = false
+    isNavigationBarContrastEnforced = true
   }
+
+  statusBarColor = Color.TRANSPARENT
+  navigationBarColor =
+    when {
+      Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> Color.TRANSPARENT
+      Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !isDarkMode ->
+        Color.argb(0xe6, 0xFF, 0xFF, 0xFF)
+      else -> Color.argb(0x80, 0x1b, 0x1b, 0x1b)
+    }
+
+  WindowInsetsControllerCompat(this, this.decorView).run {
+    isAppearanceLightNavigationBars = !isDarkMode
+  }
+
+  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+    attributes.layoutInDisplayCutoutMode =
+      when {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.R ->
+          WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
+        else -> WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+      }
+  }
+}
+
+public fun Window.disableEdgeToEdge() {
+  WindowCompat.setDecorFitsSystemWindows(this, true)
 }

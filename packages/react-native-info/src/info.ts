@@ -19,6 +19,7 @@ import {CliOptions} from './types';
 type PlatformValues = {
   hermesEnabled: boolean | string;
   newArchEnabled: boolean | string;
+  edgeToEdgeEnabled: boolean | string;
 };
 
 interface Platforms {
@@ -46,10 +47,12 @@ export default async function getInfo(options: CliOptions, ctx: Config) {
       Android: {
         hermesEnabled: notFound,
         newArchEnabled: notFound,
+        edgeToEdgeEnabled: notFound,
       },
       iOS: {
         hermesEnabled: notFound,
         newArchEnabled: notFound,
+        edgeToEdgeEnabled: notFound,
       },
     };
 
@@ -64,6 +67,7 @@ export default async function getInfo(options: CliOptions, ctx: Config) {
         'Pods.xcodeproj',
         'project.pbxproj',
       ]);
+      platforms.iOS.edgeToEdgeEnabled = true;
     }
 
     if (ctx.project.android?.sourceDir) {
@@ -75,6 +79,10 @@ export default async function getInfo(options: CliOptions, ctx: Config) {
         ctx.project.Android.sourceDir,
         'Podfile.lock',
       ]);
+      platforms.Android.edgeToEdgeEnabled = fileContains(
+        'edgeToEdgeEnabled=true',
+        [ctx.project.Android.sourceDir, 'Podfile.lock'],
+      );
     }
 
     const output = {
