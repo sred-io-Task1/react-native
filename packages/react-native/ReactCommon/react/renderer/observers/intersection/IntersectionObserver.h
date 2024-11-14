@@ -34,6 +34,7 @@ class IntersectionObserver {
  public:
   IntersectionObserver(
       IntersectionObserverObserverId intersectionObserverId,
+      ShadowNode::Shared observationRootShadowNode,
       ShadowNode::Shared targetShadowNode,
       std::vector<Float> thresholds);
 
@@ -74,6 +75,7 @@ class IntersectionObserver {
       double time);
 
   IntersectionObserverObserverId intersectionObserverId_;
+  ShadowNode::Shared observationRootShadowNode_;
   ShadowNode::Shared targetShadowNode_;
   std::vector<Float> thresholds_;
   mutable IntersectionObserverState state_ =

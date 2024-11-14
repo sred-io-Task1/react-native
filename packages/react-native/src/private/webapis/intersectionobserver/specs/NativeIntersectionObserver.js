@@ -26,6 +26,7 @@ export type NativeIntersectionObserverObserveOptions = {
   intersectionObserverId: number,
   targetShadowNode: mixed,
   thresholds: $ReadOnlyArray<number>,
+  rootShadowNode?: ?mixed,
 };
 
 export interface Spec extends TurboModule {
