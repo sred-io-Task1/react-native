@@ -195,6 +195,7 @@ public abstract class ReactBaseTextShadowNode extends LayoutShadowNode {
       }
       if (textShadowNode.mFontStyle != ReactConstants.UNSET
           || textShadowNode.mFontWeight != ReactConstants.UNSET
+          || textShadowNode.mFontVariationSettings != null
           || textShadowNode.mFontFamily != null) {
         ops.add(
             new SetSpanOperation(
@@ -205,6 +206,7 @@ public abstract class ReactBaseTextShadowNode extends LayoutShadowNode {
                     textShadowNode.mFontWeight,
                     textShadowNode.mFontFeatureSettings,
                     textShadowNode.mFontFamily,
+                    textShadowNode.mFontVariationSettings,
                     textShadowNode.getThemedContext().getAssets())));
       }
       if (textShadowNode.mIsUnderlineTextDecorationSet) {
@@ -353,6 +355,11 @@ public abstract class ReactBaseTextShadowNode extends LayoutShadowNode {
   protected int mFontStyle = ReactConstants.UNSET;
 
   protected int mFontWeight = ReactConstants.UNSET;
+
+  /**
+   * mFontVariationSettings can be used for variable font features e.g: 'wght' 850
+   */
+  protected String mFontVariationSettings;
 
   /**
    * NB: If a font family is used that does not have a style in a certain Android version (ie.
@@ -529,6 +536,12 @@ public abstract class ReactBaseTextShadowNode extends LayoutShadowNode {
       mFontWeight = fontWeight;
       markUpdated();
     }
+  }
+
+  @ReactProp(name = ViewProps.FONT_VARIATION_SETTINGS)
+  public void setFontVariationSettings(@Nullable String fontVariationSettings) {
+    mFontVariationSettings = fontVariationSettings;
+    markUpdated();
   }
 
   @ReactProp(name = ViewProps.FONT_VARIANT)
