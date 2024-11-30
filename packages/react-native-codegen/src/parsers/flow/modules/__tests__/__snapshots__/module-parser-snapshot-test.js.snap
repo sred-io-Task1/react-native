@@ -146,12 +146,20 @@ exports[`RN Codegen Flow Parser can generate fixture CXX_ONLY_NATIVE_MODULE 1`] 
           'memberType': 'StringTypeAnnotation',
           'members': [
             {
+              'type': 'EnumDeclarationMemberTypeAnnotation',
               'name': 'SD',
-              'value': 'SD'
+              'value': {
+                'type': 'StringLiteralTypeAnnotation',
+                'value': 'SD'
+              }
             },
             {
+              'type': 'EnumDeclarationMemberTypeAnnotation',
               'name': 'HD',
-              'value': 'HD'
+              'value': {
+                'type': 'StringLiteralTypeAnnotation',
+                'value': 'HD'
+              }
             }
           ]
         },
@@ -162,15 +170,26 @@ exports[`RN Codegen Flow Parser can generate fixture CXX_ONLY_NATIVE_MODULE 1`] 
           'members': [
             {
               'name': 'Corrupted',
-              'value': -1
+              'value': {
+                'type': 'NumberLiteralTypeAnnotation',
+                'value': -1
+              }
             },
             {
+              'type': 'EnumDeclarationMemberTypeAnnotation',
               'name': 'Low',
-              'value': 720
+              'value': {
+                'type': 'NumberLiteralTypeAnnotation',
+                'value': 720
+              }
             },
             {
+              'type': 'EnumDeclarationMemberTypeAnnotation',
               'name': 'High',
-              'value': 1080
+              'value': {
+                'type': 'NumberLiteralTypeAnnotation',
+                'value': 1080
+              }
             }
           ]
         },
@@ -180,16 +199,28 @@ exports[`RN Codegen Flow Parser can generate fixture CXX_ONLY_NATIVE_MODULE 1`] 
           'memberType': 'StringTypeAnnotation',
           'members': [
             {
+              'type': 'EnumDeclarationMemberTypeAnnotation',
               'name': 'One',
-              'value': 'one'
+              'value': {
+                'type': 'StringLiteralTypeAnnotation',
+                'value': 'one'
+              }
             },
             {
+              'type': 'EnumDeclarationMemberTypeAnnotation',
               'name': 'Two',
-              'value': 'two'
+              'value': {
+                'type': 'StringLiteralTypeAnnotation',
+                'value': 'two'
+              }
             },
             {
+              'type': 'EnumDeclarationMemberTypeAnnotation',
               'name': 'Three',
-              'value': 'three'
+              'value': {
+                'type': 'StringLiteralTypeAnnotation',
+                'value': 'three'
+              }
             }
           ]
         }
@@ -470,12 +501,20 @@ exports[`RN Codegen Flow Parser can generate fixture IOS_ONLY_NATIVE_MODULE 1`] 
           'memberType': 'StringTypeAnnotation',
           'members': [
             {
+              'type': 'EnumDeclarationMemberTypeAnnotation',
               'name': 'SD',
-              'value': 'SD'
+              'value': {
+                'type': 'StringLiteralTypeAnnotation',
+                'value': 'SD'
+              }
             },
             {
+              'type': 'EnumDeclarationMemberTypeAnnotation',
               'name': 'HD',
-              'value': 'HD'
+              'value': {
+                'type': 'StringLiteralTypeAnnotation',
+                'value': 'HD'
+              }
             }
           ]
         },
@@ -485,12 +524,20 @@ exports[`RN Codegen Flow Parser can generate fixture IOS_ONLY_NATIVE_MODULE 1`] 
           'memberType': 'NumberTypeAnnotation',
           'members': [
             {
+              'type': 'EnumDeclarationMemberTypeAnnotation',
               'name': 'Low',
-              'value': 720
+              'value': {
+                'type': 'NumberLiteralTypeAnnotation',
+                'value': 720
+              }
             },
             {
+              'type': 'EnumDeclarationMemberTypeAnnotation',
               'name': 'High',
-              'value': 1080
+              'value': {
+                'type': 'NumberLiteralTypeAnnotation',
+                'value': 1080
+              }
             }
           ]
         },
@@ -500,16 +547,28 @@ exports[`RN Codegen Flow Parser can generate fixture IOS_ONLY_NATIVE_MODULE 1`] 
           'memberType': 'StringTypeAnnotation',
           'members': [
             {
+              'type': 'EnumDeclarationMemberTypeAnnotation',
               'name': 'One',
-              'value': 'one'
+              'value': {
+                'type': 'StringLiteralTypeAnnotation',
+                'value': 'one'
+              }
             },
             {
+              'type': 'EnumDeclarationMemberTypeAnnotation',
               'name': 'Two',
-              'value': 'two'
+              'value': {
+                'type': 'StringLiteralTypeAnnotation',
+                'value': 'two'
+              }
             },
             {
+              'type': 'EnumDeclarationMemberTypeAnnotation',
               'name': 'Three',
-              'value': 'three'
+              'value': {
+                'type': 'StringLiteralTypeAnnotation',
+                'value': 'three'
+              }
             }
           ]
         }
