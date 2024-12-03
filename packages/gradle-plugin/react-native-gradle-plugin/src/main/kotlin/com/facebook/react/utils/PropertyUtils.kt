@@ -18,10 +18,6 @@ object PropertyUtils {
   const val HERMES_ENABLED = "hermesEnabled"
   const val SCOPED_HERMES_ENABLED = "react.hermesEnabled"
 
-  /** Public property that toggles Edge-to-edge */
-  const val EDGE_TO_EDGE_ENABLED = "edgeToEdgeEnabled"
-  const val SCOPED_EDGE_TO_EDGE_ENABLED = "react.edgeToEdgeEnabled"
-
   /** Public property that allows to control which architectures to build for React Native. */
   const val REACT_NATIVE_ARCHITECTURES = "reactNativeArchitectures"
   const val SCOPED_REACT_NATIVE_ARCHITECTURES = "react.nativeArchitectures"
