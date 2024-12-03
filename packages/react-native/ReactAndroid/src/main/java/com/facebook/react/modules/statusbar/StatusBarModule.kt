@@ -17,6 +17,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.facebook.common.logging.FLog
 import com.facebook.fbreact.specs.NativeStatusBarManagerAndroidSpec
+import com.facebook.react.BuildConfig
 import com.facebook.react.ReactActivity
 import com.facebook.react.bridge.GuardedRunnable
 import com.facebook.react.bridge.NativeModule
@@ -58,9 +59,6 @@ public class StatusBarModule(reactContext: ReactApplicationContext?) :
         .toFloat()
   }
 
-  private fun isEdgeToEdge() =
-    (currentActivity as? ReactActivity)?.isEdgeToEdge ?: false
-
   @Suppress("DEPRECATION")
   override fun setColor(colorDouble: Double, animated: Boolean) {
     val color = colorDouble.toInt()
@@ -71,7 +69,7 @@ public class StatusBarModule(reactContext: ReactApplicationContext?) :
           "StatusBarModule: Ignored status bar change, current activity is null.")
       return
     }
-    if (isEdgeToEdge()) {
+    if (BuildConfig.IS_EDGE_TO_EDGE_ENABLED) {
       FLog.w(
         ReactConstants.TAG,
         "StatusBarModule: Ignored status bar change, current activity is edge-to-edge.")
@@ -106,7 +104,7 @@ public class StatusBarModule(reactContext: ReactApplicationContext?) :
           "StatusBarModule: Ignored status bar change, current activity is null.")
       return
     }
-    if (isEdgeToEdge()) {
+    if (BuildConfig.IS_EDGE_TO_EDGE_ENABLED) {
       FLog.w(
         ReactConstants.TAG,
         "StatusBarModule: Ignored status bar change, current activity is edge-to-edge.")
@@ -129,9 +127,7 @@ public class StatusBarModule(reactContext: ReactApplicationContext?) :
           "StatusBarModule: Ignored status bar change, current activity is null.")
       return
     }
-    UiThreadUtil.runOnUiThread {
-      activity.window?.setStatusBarVisibility(hidden, isEdgeToEdge())
-    }
+    UiThreadUtil.runOnUiThread { activity.window?.setStatusBarVisibility(hidden) }
   }
 
   @Suppress("DEPRECATION")

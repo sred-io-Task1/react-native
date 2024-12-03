@@ -14,6 +14,7 @@ import android.view.WindowManager
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import com.facebook.react.BuildConfig
 import com.facebook.react.views.common.ContextUtils
 
 @Suppress("DEPRECATION")
@@ -35,17 +36,17 @@ public fun Window.setStatusBarTranslucency(isTranslucent: Boolean) {
   ViewCompat.requestApplyInsets(decorView)
 }
 
-public fun Window.setStatusBarVisibility(isHidden: Boolean, isEdgeToEdge: Boolean) {
+public fun Window.setStatusBarVisibility(isHidden: Boolean) {
   if (isHidden) {
-    this.statusBarHide(isEdgeToEdge)
+    this.statusBarHide()
   } else {
-    this.statusBarShow(isEdgeToEdge)
+    this.statusBarShow()
   }
 }
 
 @Suppress("DEPRECATION")
-private fun Window.statusBarHide(isEdgeToEdge: Boolean) {
-  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !isEdgeToEdge) {
+private fun Window.statusBarHide() {
+  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !BuildConfig.IS_EDGE_TO_EDGE_ENABLED) {
     // Ensure the content extends into the cutout area
     attributes.layoutInDisplayCutoutMode =
         WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
@@ -56,8 +57,8 @@ private fun Window.statusBarHide(isEdgeToEdge: Boolean) {
 }
 
 @Suppress("DEPRECATION")
-private fun Window.statusBarShow(isEdgeToEdge: Boolean) {
-  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !isEdgeToEdge) {
+private fun Window.statusBarShow() {
+  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !BuildConfig.IS_EDGE_TO_EDGE_ENABLED) {
     attributes.layoutInDisplayCutoutMode =
         WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT
     setDecorFitsSystemWindows(true)

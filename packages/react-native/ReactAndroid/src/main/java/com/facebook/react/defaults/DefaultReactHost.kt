@@ -61,7 +61,6 @@ public object DefaultReactHost {
       jsBundleAssetPath: String = "index",
       jsBundleFilePath: String? = null,
       isHermesEnabled: Boolean = true,
-      isEdgeToEdgeEnabled: Boolean = false,
       useDevSupport: Boolean = ReactBuildConfig.DEBUG,
       cxxReactPackageProviders: List<(ReactContext) -> CxxReactPackage> = emptyList(),
   ): ReactHost =
@@ -146,7 +145,6 @@ public object DefaultReactHost {
               defaultReactHostDelegate,
               componentFactory,
               true /* allowPackagerServerAccess */,
-              isEdgeToEdgeEnabled,
               useDevSupport,
           )
     }

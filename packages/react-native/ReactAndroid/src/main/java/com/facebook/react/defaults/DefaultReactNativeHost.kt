@@ -100,14 +100,6 @@ protected constructor(
     get() = null
 
   /**
-   * Returns whether the user wants to use edge-to-edge.
-  *
-   * If true, the app content will be drawn behind system bars.
-   */
-  protected open val isEdgeToEdgeEnabled: Boolean
-    get() = false
-
-  /**
    * Converts this [ReactNativeHost] (bridge-mode) to a [ReactHost] (bridgeless-mode).
    *
    * @param context the Android [Context] to use for creating the [ReactHost]
@@ -121,7 +113,6 @@ protected constructor(
           bundleAssetName ?: "index",
           jsBundleFile,
           isHermesEnabled ?: true,
-          isEdgeToEdgeEnabled,
           useDeveloperSupport,
       )
 }
