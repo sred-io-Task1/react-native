@@ -20,8 +20,10 @@ import static com.facebook.react.uimanager.UIManagerHelper.PADDING_TOP_INDEX;
 import static com.facebook.react.uimanager.common.UIManagerType.FABRIC;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.SystemClock;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
@@ -48,6 +50,7 @@ import com.facebook.react.bridge.UIManager;
 import com.facebook.react.bridge.UIManagerListener;
 import com.facebook.react.bridge.UiThreadUtil;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.common.build.ReactBuildConfig;
 import com.facebook.react.common.mapbuffer.ReadableMapBuffer;
 import com.facebook.react.fabric.events.EventEmitterWrapper;
@@ -876,6 +879,43 @@ public class FabricUIManager
           affectedLayoutNodesCount);
       ReactMarker.logFabricMarker(ReactMarkerConstants.FABRIC_COMMIT_END, null, commitNumber);
     }
+  }
+
+  @SuppressWarnings("unused")
+  @Nullable
+  private NativeMap getDisplaySizes(int surfaceId) {
+    ReactContext context;
+    if (surfaceId > 0) {
+      SurfaceMountingManager surfaceMountingManager =
+        mMountingManager.getSurfaceManagerEnforced(surfaceId, "measure");
+      if (surfaceMountingManager.isStopped()) {
+        return null;
+      }
+      context = surfaceMountingManager.getContext();
+    } else {
+      context = mReactApplicationContext;
+    }
+
+    if (context == null) {
+      return null;
+    }
+
+    Activity activity = context.getCurrentActivity();
+    if (activity == null) {
+      return null;
+    }
+    
+    Rect rectangle = new Rect();
+    activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(rectangle);
+    double topOffset = PixelUtil.toDIPFromPixel(rectangle.top);
+    double bottomOffset = PixelUtil.toDIPFromPixel(rectangle.bottom);
+    double leftOffset = PixelUtil.toDIPFromPixel(rectangle.left);
+    double rightOffset = PixelUtil.toDIPFromPixel(rectangle.right);
+
+    WritableMap sizes = new WritableNativeMap();
+    sizes.putDouble("height", bottomOffset - topOffset);
+    sizes.putDouble("width", rightOffset - leftOffset);
+    return (NativeMap) sizes;
   }
 
   public void setBinding(FabricUIManagerBinding binding) {

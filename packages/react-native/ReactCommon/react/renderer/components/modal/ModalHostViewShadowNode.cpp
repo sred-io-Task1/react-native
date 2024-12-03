@@ -14,4 +14,16 @@ namespace facebook::react {
 
 extern const char ModalHostViewComponentName[] = "ModalHostView";
 
+void ModalHostViewShadowNode::setScreenSize(float width, float height) {
+    ensureUnsealed();
+
+    setStateData(ModalHostViewState{
+        Size{
+            .width =  width,
+            .height =  height
+        }
+    });
+}
+
 } // namespace facebook::react
+
